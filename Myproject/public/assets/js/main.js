@@ -24,14 +24,15 @@ function validateForm() {
 
 }
 /**
- * Author:Willian Moreno
- * Date:07/01/2024
- * Update Date:07/01/2024
- * Descriptions:
- * 
+ * Author:DIEGO CASALLAS
+ * Date:08/01/2024
+ * Update Date:
+ * Descriptions: This functions is for get form object and validate
+ * Return:value boolean
+ * Parameter: 
+ * @id is identification the form
+ * @e is event the form
  */
-
-/**This funtions is general for validate the form HTML */
 function getData(id,e) {
 
         var objForm=document.getElementById(id);
