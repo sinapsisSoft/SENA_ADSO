@@ -10,12 +10,16 @@
             rel="stylesheet"
             integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
             crossorigin="anonymous">
-            <style>
+        <style>
                 .input1{
                     
                     background: red;
                     border: white;
                     width: 100%;
+                }
+                .errorInput{
+                    border: solid 1px #ff00003d;
+                    box-shadow: 0px 3px 3px #392e2e;
                 }
             </style>
 
@@ -26,11 +30,11 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-6 mx-auto">
-                    <form id="form_login">
+                    <form id="form_login" onsubmit="getData(this.id,event)">
                         <div class="mb-3">
                             <label for="user_email" class="form-label">Email
                                 address</label>
-                            <input type="email" class="form-control" 
+                            <input type="email" class="form-control"
                                 maxlength="20" minlength="10" name="user_email"
                                 id="user_email" aria-describedby="emailHelp">
 
@@ -43,7 +47,7 @@
                                 maxlength="20" minlength="10">
                         </div>
 
-                        <button type="button" onclick="validateForm()"
+                        <button type="submit"
                             class="btn btn-primary">Submit</button>
                     </form>
                 </div>
