@@ -44,9 +44,9 @@
                 <div class="col-6 mx-auto">
                     <h3>List User</h3>
                     <!---Btn Add -->
-                    <button type="button" class="btn btn-success"
+                    <button type="button" class="btn btn-success" onclick="createUser('form_login')"
                         data-bs-toggle="modal"
-                        data-bs-target="#staticBackdrop"><img
+                        ><img
                             src="../../../public/assets/img/icons/person-fill-add.svg"></button>
                     <!---Btn Add -->
                     <!---Table -->
@@ -73,15 +73,15 @@
                                         <!---Container button actions-->
                                         <div class="btn-group" role="group"
                                             aria-label="Basic mixed styles example">
-                                            <button type="button"
+                                            <button type="button" onclick="viewUser('form_login')"
                                                 class="btn btn-success"><img
                                                     src="../../../public/assets/img/icons/eye-fill.svg"></button>
 
-                                            <button type="button"
+                                            <button type="button" onclick="editUser('form_login')"
                                                 class="btn btn-warning"><img
                                                     src="../../../public/assets/img/icons/pencil-square.svg"></button>
 
-                                            <button type="button"
+                                            <button type="button" onclick="deleteUser('form_login')"
                                                 class="btn btn-danger"><img
                                                     src="../../../public/assets/img/icons/trash3-fill.svg"></button>
                                         </div>
@@ -112,14 +112,14 @@
         <!-- Button trigger modal -->
 
         <!-- Modal -->
-        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static"
+        <div class="modal fade" id="modalUser" data-bs-backdrop="static"
             data-bs-keyboard="false" tabindex="-1"
-            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            aria-labelledby="modalUserLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h1 class="modal-title fs-5"
-                            id="staticBackdropLabel">Modal title</h1>
+                            id="modalUserLabel">Modal title</h1>
                         <button type="button" class="btn-close"
                             data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
@@ -128,7 +128,7 @@
                             <div class="mb-3">
                                 <label for="user_email" class="form-label">Email
                                     address</label>
-                                <input type="email" class="form-control"
+                                <input type="email" class="form-control input_disabled"
                                     maxlength="20" minlength="10"
                                     name="user_email"
                                     id="user_email"
@@ -145,7 +145,7 @@
                             <div class="mb-3">
                                 <label for="user_password_repeat"
                                     class="form-label">Confirm Password</label>
-                                <input type="password" class="form-control"
+                                <input type="password" class="form-control input_disabled"
                                     id="user_password_repeat" name="user_password_repeat"
                                     maxlength="20" minlength="10">
                             </div>
@@ -178,7 +178,7 @@
                         <button type="button" class="btn btn-secondary"
                             data-bs-dismiss="modal">Close</button>
                         <button type="submit"
-                            class="btn btn-primary">Send</button>
+                            class="btn btn-primary" form="form_login" >Send</button>
                     </div>
                 </div>
             </div>
@@ -190,7 +190,9 @@
             integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
             crossorigin="anonymous"></script>
         <!---Container javascript-->
+        <script src="../../../public/assets/js/getDataServices.js"></script>
         <script src="../../../public/assets/js/main.js"></script>
+        
 
     </body>
 </html>

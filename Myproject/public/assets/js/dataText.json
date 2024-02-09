@@ -1,0 +1,9 @@
+{"users":[{"user_id":1,"user_email":"admin@gmail.com","user_password":"123456","user_role_id":"1","user_role_name":"Admin","user_state_id":"1","user_state_name":"Active" },
+{"user_id":2,"user_email":"client@gmail.com","user_password":"123456","user_role_id":"2","user_role_name":"Client","user_state_id":"1","user_state_name":"Active" },
+{"user_id":3,"user_email":"client1@gmail.com","user_password":"123456","user_role_id":"2","user_role_name":"Client","user_state_id":"1","user_state_name":"Active" },
+{"user_id":4,"user_email":"client2@gmail.com","user_password":"123456","user_role_id":"2","user_role_name":"Client","user_state_id":"1","user_state_name":"Active" },
+{"user_id":5,"user_email":"client3@gmail.com","user_password":"123456","user_role_id":"2","user_role_name":"Client","user_state_id":"1","user_state_name":"Active" },
+{"user_id":6,"user_email":"client4@gmail.com","user_password":"123456","user_role_id":"3","user_role_name":"Employed","user_state_id":"1","user_state_name":"Active" },
+{"user_id":7,"user_email":"client5@gmail.com","user_password":"123456","user_role_id":"2","user_role_name":"Client","user_state_id":"2","user_state_name":"Inactive" },
+{"user_id":8,"user_email":"client6@gmail.com","user_password":"123456","user_role_id":"2","user_role_name":"Client","user_state_id":"2","user_state_name":"Inactive" }
+]}
