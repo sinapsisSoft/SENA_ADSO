@@ -8,10 +8,12 @@ function getDataJson(){
       "Content-Type": "application/json"
     },
   })
-  .then(response=>response.json)
-  .then(data=>{
+  .then(response => response.json())
+  .then(data =>{
+    let dataResult=data;
+    console.log(dataResult);
+  })
+  .catch(error => console.error('Error:', error));
 
-    console.log(data);
-  }).catch(error=>console.error('Error:',error));
 
 }
