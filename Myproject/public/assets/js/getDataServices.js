@@ -10,8 +10,8 @@ function getDataJson(){
   })
   .then(response => response.json())
   .then(data =>{
-    let dataResult=data;
-    console.log(dataResult);
+
+    createTableArray(data);
   })
   .catch(error => console.error('Error:', error));
 

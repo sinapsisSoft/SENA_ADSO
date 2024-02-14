@@ -1,5 +1,11 @@
 <?php
-
+/**
+ * Author:DIEGO CASALLAS
+ * Date:13/02/2024
+ * Update Date:
+ * Descriptions:
+ * 
+ */
 $host = "localhost";
 $user = "root";
 $password = "";

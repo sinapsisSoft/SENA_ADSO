@@ -62,32 +62,8 @@
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>Mark@gmail.com</td>
-                                    <td>123456</td>
-                                    <td>Activo</td>
-                                    <td>Administrador</td>
-                                    <td>
-                                        <!---Container button actions-->
-                                        <div class="btn-group" role="group"
-                                            aria-label="Basic mixed styles example">
-                                            <button type="button" onclick="viewUser('form_login')"
-                                                class="btn btn-success"><img
-                                                    src="../../../public/assets/img/icons/eye-fill.svg"></button>
-
-                                            <button type="button" onclick="editUser('form_login')"
-                                                class="btn btn-warning"><img
-                                                    src="../../../public/assets/img/icons/pencil-square.svg"></button>
-
-                                            <button type="button" onclick="deleteUser('form_login')"
-                                                class="btn btn-danger"><img
-                                                    src="../../../public/assets/img/icons/trash3-fill.svg"></button>
-                                        </div>
-                                        <!---End Container button actions-->
-                                    </td>
-                                </tr>
+                            <tbody id="idTbody">
+                                
 
                             </tbody>
                             <tfoot>
@@ -183,6 +159,9 @@
                 </div>
             </div>
         </div>
+
+      
+
         <!--Container Modal-->
         <!---Cnd  Bootstrap-->
         <script

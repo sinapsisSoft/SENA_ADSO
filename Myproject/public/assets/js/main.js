@@ -67,6 +67,7 @@ function getData(id, e) {
 
 */
 function clearData(id) {
+
     objForm = document.getElementById(id);
     elements = objForm.querySelectorAll("input");
     elementsLeng = elements.length;
@@ -162,11 +163,12 @@ function createUser(id) {
  * @id is identification the form
 
 */
-function editUser(id) {
+function editUser(id,idUser) {
     clearData(id);
     formEnable(id);
     formEnableEdit(id);
     showModal();
+    alert("ID USER"+idUser);
 }
 
 /**
@@ -197,10 +199,12 @@ function deleteUser(id) {
  * Parameter: 
  * @id is identification the form
  */
-function viewUser(id) {
+function viewUser(id,idUser) {
+
     clearData(id);
     formDisabled(id);
     showModal();
+    alert("ID USER"+idUser);
 }
 
 /**
@@ -228,3 +232,33 @@ function showModal() {
 function hiddenModal() {
     myModal.hidden();
 }
+
+
+function createTable(getArray) {
+    const containerTable = document.getElementById('id_table');
+    const textTable = '<table class="table">';
+    const tHead = '<thead><tr><th scope="col">#</th><th scope="col">First</th><th scope="col">Last</th><th scope="col">Handle</th></tr></thead><tbody>';
+    const textTableEnd = '</tbody></table>';
+    let rowTable = '';
+    let row = getArray.length;
+    for (let i = 0; i < row; i++) {
+        rowTable = rowTable+'<tr><th scope="row">'+getArray[i].User_id+'</th><td>'+getArray[i].User_user+'</td><td>Otto</td><td>@mdo</td></tr>';
+        
+    }
+    containerTable.innerHTML = textTable + tHead + rowTable + textTableEnd;
+}
+
+function createTableArray(getArray) {
+    const containerTbody = document.getElementById('idTbody');
+    var formId="'form_login'";
+    let rowTable = '';
+    let row = getArray.length;
+    for (let i = 0; i < row; i++) {
+        rowTable = rowTable+'<tr><th scope="row">'+(i+1)+'</th><td>'+getArray[i].User_user+'</td><td>'+getArray[i].User_password+'</td><td>'+getArray[i].User_status_name+'</td><td>'+getArray[i].Role_name +'</td><td><div class="btn-group" role="group"aria-label="Basic mixed styles example"><button type="button" onclick="viewUser('+formId+','+getArray[i].User_id+')"class="btn btn-success"><img src="../../../public/assets/img/icons/eye-fill.svg"></button><button type="button" onclick="editUser('+formId+','+getArray[i].User_id+')"class="btn btn-warning"><img src="../../../public/assets/img/icons/pencil-square.svg"></button><button type="button" onclick="deleteUser('+formId+','+getArray[i].User_id+')"class="btn btn-danger"><img src="../../../public/assets/img/icons/trash3-fill.svg"></button></div></td></tr>';
+        
+    }
+    containerTbody.innerHTML = rowTable;
+}
+
+
+// createTable();
