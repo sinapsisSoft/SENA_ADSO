@@ -11,7 +11,9 @@ var objForm = null;
 var elements = null;
 var elementsLeng = 0
 
-getDataJson();
+/*************/
+getUserJson();
+getUserStatusJson();
 
 /**This funtions is general for validate the form HTML */
 function validateForm() {
@@ -38,22 +40,48 @@ function validateForm() {
  * @e is event the form
  */
 function getData(id, e) {
+
+    if (validateForm(id)) {
+        getDataForm(id);
+    }
+
+
+
+    e.preventDefault();
+    return false;
+}
+function validateForm(id) {
     objForm = document.getElementById(id);
     elements = objForm.querySelectorAll("input");
     elementsLeng = elements.length;
+
     for (let i = 0; i < elementsLeng; i++) {
         let element = elements[i];
         if (element.value == "" || element.length == 0) {
             alert("Error: Validate Element");
             element.classList.add('errorInput');
-            e.preventDefault();
             return false;
         } else {
             element.classList.remove('errorInput');
         }
     }
-    e.preventDefault();
-    return false;
+    return true;
+}
+
+function getDataForm(id) {
+    objForm = document.getElementById(id);
+    elementsInput = objForm.querySelectorAll("input");
+    elementsSelect = objForm.querySelectorAll("select");
+    elementsLeng = elementsInput.length;
+    elementsLengSelect = elementsSelect.length;
+    for (let i = 0; i < elementsLeng; i++) {
+        let element = elementsInput[i];
+        console.log(element.value);
+    }
+    for (let i = 0; i < elementsLengSelect; i++) {
+        let element = elementsSelect[i];
+        console.log(element.value);
+    }
 }
 
 /**
@@ -163,12 +191,12 @@ function createUser(id) {
  * @id is identification the form
 
 */
-function editUser(id,idUser) {
+function editUser(id, idUser) {
     clearData(id);
     formEnable(id);
     formEnableEdit(id);
     showModal();
-    alert("ID USER"+idUser);
+    alert("ID USER" + idUser);
 }
 
 /**
@@ -199,12 +227,12 @@ function deleteUser(id) {
  * Parameter: 
  * @id is identification the form
  */
-function viewUser(id,idUser) {
+function viewUser(id, idUser) {
 
     clearData(id);
     formDisabled(id);
     showModal();
-    alert("ID USER"+idUser);
+    alert("ID USER" + idUser);
 }
 
 /**
@@ -242,23 +270,46 @@ function createTable(getArray) {
     let rowTable = '';
     let row = getArray.length;
     for (let i = 0; i < row; i++) {
-        rowTable = rowTable+'<tr><th scope="row">'+getArray[i].User_id+'</th><td>'+getArray[i].User_user+'</td><td>Otto</td><td>@mdo</td></tr>';
-        
+        rowTable = rowTable + '<tr><th scope="row">' + getArray[i].User_id + '</th><td>' + getArray[i].User_user + '</td><td>Otto</td><td>@mdo</td></tr>';
+
     }
     containerTable.innerHTML = textTable + tHead + rowTable + textTableEnd;
 }
 
 function createTableArray(getArray) {
     const containerTbody = document.getElementById('idTbody');
-    var formId="'form_login'";
+    var formId = "'form_login'";
     let rowTable = '';
     let row = getArray.length;
     for (let i = 0; i < row; i++) {
-        rowTable = rowTable+'<tr><th scope="row">'+(i+1)+'</th><td>'+getArray[i].User_user+'</td><td>'+getArray[i].User_password+'</td><td>'+getArray[i].User_status_name+'</td><td>'+getArray[i].Role_name +'</td><td><div class="btn-group" role="group"aria-label="Basic mixed styles example"><button type="button" onclick="viewUser('+formId+','+getArray[i].User_id+')"class="btn btn-success"><img src="../../../public/assets/img/icons/eye-fill.svg"></button><button type="button" onclick="editUser('+formId+','+getArray[i].User_id+')"class="btn btn-warning"><img src="../../../public/assets/img/icons/pencil-square.svg"></button><button type="button" onclick="deleteUser('+formId+','+getArray[i].User_id+')"class="btn btn-danger"><img src="../../../public/assets/img/icons/trash3-fill.svg"></button></div></td></tr>';
-        
+        rowTable = rowTable + '<tr><th scope="row">' + (i + 1) + '</th><td>' + getArray[i].User_user + '</td><td>' + getArray[i].User_password + '</td><td>' + getArray[i].User_status_name + '</td><td>' + getArray[i].Role_name + '</td><td><div class="btn-group" role="group"aria-label="Basic mixed styles example"><button type="button" onclick="viewUser(' + formId + ',' + getArray[i].User_id + ')"class="btn btn-success"><img src="../../../public/assets/img/icons/eye-fill.svg"></button><button type="button" onclick="editUser(' + formId + ',' + getArray[i].User_id + ')"class="btn btn-warning"><img src="../../../public/assets/img/icons/pencil-square.svg"></button><button type="button" onclick="deleteUser(' + formId + ',' + getArray[i].User_id + ')"class="btn btn-danger"><img src="../../../public/assets/img/icons/trash3-fill.svg"></button></div></td></tr>';
+
     }
     containerTbody.innerHTML = rowTable;
 }
+
+function createSelectArray(getArray) {
+    const containerSelect = document.getElementById('user_state');
+
+    var optionSelect = '<option selected>Open this select menu</option>';
+    let row = getArray.length;
+    for (let i = 0; i < row; i++) {
+        optionSelect = optionSelect + '<option value="' + getArray[i].User_status_id + '">' + getArray[i].User_status_name + '</option>';
+
+    }
+    containerSelect.innerHTML = optionSelect;
+}
+
+const OBJpreload = document.getElementById('preload');
+function showPreload() {
+    OBJpreload.style.display = "block";
+}
+
+function hideenPreload() {
+    OBJpreload.style.display = "none";
+    //console.log(OBJpreload);
+}
+
 
 
 // createTable();

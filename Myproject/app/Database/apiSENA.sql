@@ -39,3 +39,7 @@ INSERT INTO `user`(`User_id`, `User_user`, `User_password`, `User_status_id`, `R
 SELECT US.User_id,US.User_user,US.User_password,US.User_status_id,UST.User_status_name, US.Role_id,ROL.Role_name FROM `user` US
 INNER JOIN role ROL ON US.Role_id=ROL.Role_id
 INNER JOIN user_status UST ON US.User_status_id=UST.User_status_id;
+
+SELECT * FROM `user_status` WHERE 1; 
+
+

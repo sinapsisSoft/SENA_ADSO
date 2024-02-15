@@ -19,7 +19,8 @@ if ($mysqli->connect_error) {
   //echo("Connect OK");
 }
 
-$query = "CALL sp_select_all_user()";
+$query = "SELECT * FROM `user_status` WHERE 1; ";
+
 
 $result = $mysqli->query($query);
 
