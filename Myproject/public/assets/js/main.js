@@ -12,8 +12,12 @@ var elements = null;
 var elementsLeng = 0
 
 /*************/
-getUserJson();
-getUserStatusJson();
+window.addEventListener("load",function(){
+    getUserJson();
+    getUserStatusJson();
+    getRoleJson();  
+});
+
 
 /**This funtions is general for validate the form HTML */
 function validateForm() {
@@ -40,15 +44,16 @@ function validateForm() {
  * @e is event the form
  */
 function getData(id, e) {
-
+    var validate=false;
     if (validateForm(id)) {
-        getDataForm(id);
+        //getDataForm(id);
+        validate=true;
     }
 
 
-
+    alert(validate);
     e.preventDefault();
-    return false;
+    return validate;
 }
 function validateForm(id) {
     objForm = document.getElementById(id);
@@ -288,13 +293,14 @@ function createTableArray(getArray) {
     containerTbody.innerHTML = rowTable;
 }
 
-function createSelectArray(getArray) {
-    const containerSelect = document.getElementById('user_state');
+function createSelectArray(getArray,id) {
+    const containerSelect = document.getElementById(id);
 
     var optionSelect = '<option selected>Open this select menu</option>';
     let row = getArray.length;
     for (let i = 0; i < row; i++) {
-        optionSelect = optionSelect + '<option value="' + getArray[i].User_status_id + '">' + getArray[i].User_status_name + '</option>';
+        let element=Object.values(getArray[i]);
+        optionSelect = optionSelect + '<option value="' +element[0] + '">' + element[1] + '</option>';
 
     }
     containerSelect.innerHTML = optionSelect;
@@ -308,6 +314,25 @@ function showPreload() {
 function hideenPreload() {
     OBJpreload.style.display = "none";
     //console.log(OBJpreload);
+}
+
+function viewPassword(idBtn) {
+    let objBtn = document.getElementById(idBtn);
+    let mySrc = "";
+    let objImg = objBtn.firstChild;
+    let textInput = "";
+    let objInput = objBtn.parentElement.children[0];
+
+    if (objInput.type == "text") {
+        mySrc = "../../../public/assets/img/icons/eye-slash-fill.svg";
+        textInput = "password";
+    } else {
+        mySrc = "../../../public/assets/img/icons/eye-fill.svg";
+        textInput = "text";
+    }
+    objImg.src = mySrc;
+    objInput.type = textInput;
+
 }
 
 
