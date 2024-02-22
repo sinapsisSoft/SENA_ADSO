@@ -11,7 +11,7 @@ function getUserJson(){
   .then(response => response.json())
   .then(data =>{
 
-    createTableArray(data);
+    createTableArrayPhp(data);
   })
   .catch(error => console.error('Error:', error));
 

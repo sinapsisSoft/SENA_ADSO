@@ -19,6 +19,6 @@ if(!empty($_POST) && isset($_POST)){
 
 
   $result = $mysqli->query($query);
-  header('Location: http://localhost/SENA/SENA_ADSO/Myproject/app/Views/user/user.html');
+  header('Location: http://localhost/SENA/SENA_ADSO/Myproject/app/Views/user/user.php');
   
 }

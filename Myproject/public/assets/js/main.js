@@ -292,6 +292,17 @@ function createTableArray(getArray) {
     }
     containerTbody.innerHTML = rowTable;
 }
+function createTableArrayPhp(getArray) {
+    const containerTbody = document.getElementById('idTbody');
+    var formId = "'form_login'";
+    let rowTable = '';
+    let row = getArray.length;
+    for (let i = 0; i < row; i++) {
+        rowTable = rowTable + '<tr><th scope="row">' + (i + 1) + '</th><td>' + getArray[i].User_user + '</td><td>' + getArray[i].User_password + '</td><td>' + getArray[i].User_status_name + '</td><td>' + getArray[i].Role_name + '</td><td><div class="btn-group" role="group"aria-label="Basic mixed styles example"><a href="../../Config/UserControllerShowID.php?User_id=' + getArray[i].User_id + '"><button type="button" onclick="//viewUser(' + formId + ',' + getArray[i].User_id + ')"class="btn btn-success"><img src="../../../public/assets/img/icons/eye-fill.svg"></button></a><a href="../../Config/UserControllerEdit.php?User_id=' + getArray[i].User_id + '"><button type="button" onclick="//editUser(' + formId + ',' + getArray[i].User_id + ')"class="btn btn-warning"><img src="../../../public/assets/img/icons/pencil-square.svg"></button></a><button type="button" onclick="deleteUser(' + formId + ',' + getArray[i].User_id + ')"class="btn btn-danger"><img src="../../../public/assets/img/icons/trash3-fill.svg"></button></div></td></tr>';
+
+    }
+    containerTbody.innerHTML = rowTable;
+}
 
 function createSelectArray(getArray,id) {
     const containerSelect = document.getElementById(id);
