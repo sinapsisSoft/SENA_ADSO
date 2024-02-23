@@ -25,44 +25,40 @@
 
     </head>
     <body>
-
+    <?php include('../header/navLogin.php') ?>
         <!---Container body-->
         <div class="container-fluid">
             <div class="row">
                 <div class="col-6 mx-auto">
-                    <form id="form_login" onsubmit="getData(this.id,event)">
+                    <form id="form_login" action="../../Config/LoginControllerValidate.php" method="POST" >
                         <div class="mb-3">
-                            <label for="user_email" class="form-label">Email
+                            <label for="User_user" class="form-label">Email
                                 address</label>
                             <input type="email" class="form-control"
-                                maxlength="20" minlength="10" name="user_email"
-                                id="user_email" aria-describedby="emailHelp">
+                                maxlength="20" minlength="10" name="User_user"
+                                id="User_user" aria-describedby="User">
 
                         </div>
-                        <div class="mb-3">
-                            <label for="user_password"
-                                class="form-label">Password</label>
-                            <input type="password" class="form-control"
-                                id="user_password" name="user_password"
-                                maxlength="20" minlength="10">
-                        </div>
+                       
 
-                        <button type="submit"
-                            class="btn btn-primary">Submit</button>
+                        <a href="../login/login.php" class="btn btn-primary" >INICIAR</a>
+                        <button type="submit" class="btn btn-primary" >VALIDAR</button>
+                           
                     </form>
                 </div>
             </div>
         </div>
 
         <!---End Container body-->
-
+        <!--- Container footer-->
+        <?php include('../footer/footer.php') ?>
+        <!--- End Container footer-->
         <!---Container javascript-->
         <script
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
             crossorigin="anonymous"></script>
 
-        <script src="../../../public/assets/js/main.js"></script>
 
     </body>
 </html>
