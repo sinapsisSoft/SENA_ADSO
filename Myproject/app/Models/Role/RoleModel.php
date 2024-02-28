@@ -7,7 +7,7 @@
  * Descriptions: this is class model role
  * 
  */
-include("../../Config/ConnectDB.php");
+require_once("../../Config/ConnectDB.php");
 // 
 class RoleModel
 {

@@ -31,7 +31,7 @@ class ConnectDB
       if ($this->mysqli->connect_error) {
         echo ("Faild to connect " . $this->mysqli->connect_error);
       } else {
-        echo ("Connected ... ");
+        echo ("Connected ... </br>");
       }
     } catch (Exception $e) {
       echo ("error: " . $e);
