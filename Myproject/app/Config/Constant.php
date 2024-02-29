@@ -1,10 +1,19 @@
 
 <?php
-define("SERVER","http://localhost/SENA/SENA_ADSO/Myproject/app");
+//VARIABLES  GENERALES
+
+define("BASE_URL","http://localhost/SENA/SENA_ADSO/Myproject/public");
 define("PASS","");
 define("USER","root");
-define("DB","online_store");
+define("DB","");
 define("URL_LOGO","../../assets/icons/logo.png");
-define("ROOT_VIEW","/Views/");
+
+//VARIABLES  URI
+
+define('URI',$_SERVER['REQUEST_URI']);
+
+
+
+
 
 ?>

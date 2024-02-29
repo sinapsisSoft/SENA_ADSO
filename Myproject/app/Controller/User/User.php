@@ -9,7 +9,7 @@
  */
 require_once('../../Interface/IController.php');
 require_once('../../Models/User/UserModel.php');
-require_once('../../Config/View.php');
+
 
 class User implements IController
 {
@@ -86,5 +86,3 @@ class User implements IController
   {
   }
 }
-$obj=new User();
-var_dump($obj->showId());

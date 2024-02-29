@@ -8,7 +8,7 @@
  * 
  */
 require_once('../../Interface/IModel.php');
-require_once('../../Config/ConnectDB.php');
+require_once('../../System/ConnectDB.php');
 
 class UserModel implements IModel
 {
