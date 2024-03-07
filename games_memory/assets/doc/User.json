@@ -1,0 +1,142 @@
+[
+  {
+    "id": 1,
+    "nickname": "user123",
+    "nombre": "Juan Pérez",
+    "img": "imagen1.jpg",
+    "valor": 1500
+  },
+  {
+    "id": 2,
+    "nickname": "cool_guy",
+    "nombre": "María García",
+    "img": "imagen2.jpg",
+    "valor": 2200
+  },
+  {
+    "id": 3,
+    "nickname": "awesome_dude",
+    "nombre": "Carlos Rodríguez",
+    "img": "imagen3.jpg",
+    "valor": 1800
+  },
+  {
+    "id": 4,
+    "nickname": "sunny_girl",
+    "nombre": "Laura Martínez",
+    "img": "imagen4.jpg",
+    "valor": 2100
+  },
+  {
+    "id": 5,
+    "nickname": "smiley_face",
+    "nombre": "Andrés López",
+    "img": "imagen5.jpg",
+    "valor": 1900
+  },
+  {
+    "id": 6,
+    "nickname": "tech_wizard",
+    "nombre": "Sofía Ruiz",
+    "img": "imagen6.jpg",
+    "valor": 2300
+  },
+  {
+    "id": 7,
+    "nickname": "mastermind",
+    "nombre": "Diego Hernández",
+    "img": "imagen7.jpg",
+    "valor": 2500
+  },
+  {
+    "id": 8,
+    "nickname": "happy_camper",
+    "nombre": "Ana Sánchez",
+    "img": "imagen8.jpg",
+    "valor": 1700
+  },
+  {
+    "id": 9,
+    "nickname": "gaming_guru",
+    "nombre": "Javier Fernández",
+    "img": "imagen9.jpg",
+    "valor": 2000
+  },
+  {
+    "id": 10,
+    "nickname": "code_ninja",
+    "nombre": "Elena Gómez",
+    "img": "imagen10.jpg",
+    "valor": 2400
+  },
+  {
+    "id": 11,
+    "nickname": "design_maven",
+    "nombre": "Miguel González",
+    "img": "imagen11.jpg",
+    "valor": 2100
+  },
+  {
+    "id": 12,
+    "nickname": "music_lover",
+    "nombre": "Luisa Jiménez",
+    "img": "imagen12.jpg",
+    "valor": 1800
+  },
+  {
+    "id": 13,
+    "nickname": "coffee_addict",
+    "nombre": "Pedro Pérez",
+    "img": "imagen13.jpg",
+    "valor": 2200
+  },
+  {
+    "id": 14,
+    "nickname": "bookworm",
+    "nombre": "Carmen Rodríguez",
+    "img": "imagen14.jpg",
+    "valor": 1900
+  },
+  {
+    "id": 15,
+    "nickname": "fitness_freak",
+    "nombre": "Roberto Martínez",
+    "img": "imagen15.jpg",
+    "valor": 2300
+  },
+  {
+    "id": 16,
+    "nickname": "adventure_seeker",
+    "nombre": "Isabel López",
+    "img": "imagen16.jpg",
+    "valor": 2000
+  },
+  {
+    "id": 17,
+    "nickname": "art_enthusiast",
+    "nombre": "Antonio Ruiz",
+    "img": "imagen17.jpg",
+    "valor": 2500
+  },
+  {
+    "id": 18,
+    "nickname": "traveler",
+    "nombre": "María Hernández",
+    "img": "imagen18.jpg",
+    "valor": 1700
+  },
+  {
+    "id": 19,
+    "nickname": "nature_lover",
+    "nombre": "Jorge Sánchez",
+    "img": "imagen19.jpg",
+    "valor": 2100
+  },
+  {
+    "id": 20,
+    "nickname": "foodie",
+    "nombre": "Lucía Fernández",
+    "img": "imagen20.jpg",
+    "valor": 2400
+  }
+]
