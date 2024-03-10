@@ -9,7 +9,9 @@ class Game {
   constructor(contGameGame, level) {
     this.contGame = document.getElementById(contGameGame); //Content game
     this.contCardGame = document.querySelectorAll('.contCard');//Content card
-    this.serverPath = window.location.origin; //server path name
+    this.getServer=window.location.origin; //server path name
+    this.folderPath = "/games_memory"; //name folder 
+    this.serverPath =   this.getServer+  this.folderPath; //server path name
     this.uriJson = this.serverPath + "/assets/doc/User.json"; // path data JSON
     this.pathImg = this.serverPath + "/assets/img/memory/"; // path data imgs 
     this.pathImgDafault = this.serverPath + "/assets/img/memory/img_default.jpg"; // path data img default 
