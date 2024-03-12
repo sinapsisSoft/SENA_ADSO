@@ -8,21 +8,23 @@ class Game {
   //receives two data, the game container and the difficulty level
   constructor(contGameGame, level) {
     this.contGame = document.getElementById(contGameGame); //Content game
-    this.contCardGame = document.querySelectorAll('.contCard');//Content card
-    this.getServer=window.location.origin; //server path name
+    this.contCardGame;//Content class img 
+    this.getServer = window.location.origin; //server path name
     this.folderPath = "/games_memory"; //name folder 
-    this.serverPath =   this.getServer+  this.folderPath; //server path name
+    this.serverPath = this.getServer + this.folderPath; //server path name
     this.uriJson = this.serverPath + "/assets/doc/User.json"; // path data JSON
     this.pathImg = this.serverPath + "/assets/img/memory/"; // path data imgs 
     this.pathImgDafault = this.serverPath + "/assets/img/memory/img_default.jpg"; // path data img default 
     this.longBootstrap = 12 / level; // Changes Grid bootstrap - The level value is divided by 12 spaces on the grid
-    this.newArrayGames = [];
+    this.newArrayGames = []; // New data matrix 
     this.arrayGamesCard = []; // New data matrix to create the cards
     this.getDataJson();
     this.num = level; // Attribute level 
     this.max = 19; // Attribute for maximum array length 
     this.min = 0;// Attribute for min array length 
     this.maxCard = (this.num * this.num) / 2; //Number of cards to be used
+    this.selected = true; //boolean validate click object
+    this.selectedCard = []; //array for add data selected 
   }
 
   //Method to read the JSON file, execute the setElements method sending an array of data
@@ -66,8 +68,9 @@ class Game {
     this.contGame.innerHTML = "";
     this.newArrayGames = arraJson;
     const getNewArray = this.getRandomArray(this.min, this.max, this.maxCard);
+
     for (let i = 0; i < getNewArray.length; i++) {
-      cardsAux += '<div class="contCard col-' + this.longBootstrap + ' pt-2 mx-auto"><div class="card" ><img data-src="' + this.pathImg + getNewArray[i].img + '" src="' + this.pathImgDafault + '" class="card-img-top" alt="..."> <div class="card-body"><h5 class="card-title">' + getNewArray[i].nombre + '</h5><p class="card-text">' + getNewArray[i].valor + '</p></div></div></div>';
+      cardsAux += '<div class="col-' + this.longBootstrap + ' pt-2 mx-auto contCard" disabled><div class="card" ><img data-src="' + this.pathImg + getNewArray[i].img + '" src="' + this.pathImgDafault + '" class="card-img-top" alt="..."> <div class="card-body"><h5 class="card-title">' + getNewArray[i].nombre + '</h5><p class="card-text">' + getNewArray[i].valor + '</p></div></div></div>';
       cont++;
       if (row == cont - 1) {
         cards += '<div class="row">' + cardsAux + '</div>';
@@ -81,16 +84,43 @@ class Game {
 
   //This method is to add event listener for container card, answer in the change de img 
   changeElementImg() {
-    var pathDefault = this.pathImgDafault
+    this.contCardGame = document.querySelectorAll('.contCard');//Content card
+    var pathDefault = this.pathImgDafault;
     for (let i = 0; i < this.contCardGame.length; i++) {
       const objImg = this.contCardGame[i].querySelector('img');
-      this.contCardGame[i].addEventListener('click', function () {
+      this.contCardGame[i].addEventListener('click',  ()=>{
+
         if (objImg.src == pathDefault) {
           objImg.src = objImg.dataset.src;
+          this.setSelectCard(objImg);
+          
         }
       });
     }
   }
+  //This method is  
+  setSelectCard(obj) {
+
+    if(this.selected){
+      this.selected=false;
+      this.selectedCard[0]=obj.dataset.src;
+    }else{
+      this.selectedCard[1]=obj.dataset.src;
+    }
+    if(this.selectedCard.length>1){
+      if(this.selectedCard[0]==this.selectedCard[1]){
+        alert("OK");
+      }else{
+        alert("Error");
+      }
+    }
+    
+  }
+
+
+
+
+
 }
 
 
