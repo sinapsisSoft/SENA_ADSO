@@ -3,11 +3,11 @@ Author:ING. DIEGO CASALLAS
 Date:13/04/2024
 Description:
 */
-class Choronometer {
+class Chronometer {
 
-  constructor(choronometerId, speed, maxMilliseconds) {
-    this.objChoronometer = document.getElementById(choronometerId);
-    this.getElementsLabel = this.objChoronometer.querySelectorAll('label');
+  constructor(chronometerId, speed, maxMilliseconds) {
+    this.objChronometer = document.getElementById(chronometerId);
+    this.getElementsLabel = this.objChronometer.querySelectorAll('label');
     this.conT = 0;
     this.seconds = "00";
     this.minutes = "00";
@@ -20,7 +20,7 @@ class Choronometer {
     this.intervalID;
   }
 
-  startChoronometer() {
+  startChronometer() {
     this.intervalID = setInterval(() => {
       this.seconds = this.secondsAux.toString().length == 1 ? "0" + this.secondsAux.toString() : this.secondsAux;
       this.getElementsLabel[2].innerHTML = this.seconds;
@@ -40,13 +40,13 @@ class Choronometer {
       }
       if (this.conT == this.maxMilliseconds) {
         this.conT = 0;
-        this.clearChoronometer();
+        this.clearChronometer();
       }
       this.conT++;
 
     }, this.speed);
   }
-  clearChoronometer() {
+  clearChronometer() {
     clearInterval(this.intervalID);
     this.getElementsLabel[0].innerHTML = "00";
     this.getElementsLabel[1].innerHTML = "00";

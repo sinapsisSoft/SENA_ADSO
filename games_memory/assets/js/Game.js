@@ -3,10 +3,10 @@ Author:ING. DIEGO CASALLAS
 Date:08/03/2024
 Description:This class is responsible for managing the memory game developed in JavaScript, HTML, CSS
 */
-class Game{
+class Game {
   //Constructor method responsible for initializing the attributes, 
   //receives three data, the game container and the difficulty level
-  constructor(contGame, level, prog,chor,speed,maxMilliseconds) {
+  constructor(contGame, level, prog, chor, speed, maxMilliseconds) {
     this.progCont = document.getElementById(prog);
     this.contGame = document.getElementById(contGame); //Content game
     this.contCardGame;//Content class img 
@@ -29,8 +29,8 @@ class Game{
     this.totalPointGame = 0; //accumulating Value Points game
     this.totalPoint = 0; //accumulating Value Points 
     this.contCardClass = "contCard";//This class container card
-    this.objChoronometer=new Choronometer(chor,speed,maxMilliseconds); 
-    
+    this.objChronometer = new Chronometer(chor, speed, maxMilliseconds);
+
   }
 
   //Method to read the JSON file, execute the setElements method sending an array of data
@@ -39,7 +39,7 @@ class Game{
       .then(response => response.json())
       .then(data => {
         this.setElements(data);
-        this.objChoronometer.startChoronometer();
+        this.objChronometer.startChronometer();
       });
   }
 
