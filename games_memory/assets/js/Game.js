@@ -1,13 +1,14 @@
 /*
-  Author:ING. DIEGO CASALLAS
-  Date:08/03/2024
-  Description:This class is responsible for managing the memory game developed in JavaScript, HTML, CSS
+Author:ING. DIEGO CASALLAS
+Date:08/03/2024
+Description:This class is responsible for managing the memory game developed in JavaScript, HTML, CSS
 */
-class Game {
+class Game{
   //Constructor method responsible for initializing the attributes, 
-  //receives two data, the game container and the difficulty level
-  constructor(contGameGame, level) {
-    this.contGame = document.getElementById(contGameGame); //Content game
+  //receives three data, the game container and the difficulty level
+  constructor(contGame, level, prog,chor,speed,maxMilliseconds) {
+    this.progCont = document.getElementById(prog);
+    this.contGame = document.getElementById(contGame); //Content game
     this.contCardGame;//Content class img 
     this.getServer = window.location.origin; //server path name
     this.folderPath = "/games_memory"; //name folder 
@@ -25,6 +26,11 @@ class Game {
     this.maxCard = (this.num * this.num) / 2; //Number of cards to be used
     this.selected = true; //boolean validate click object
     this.selectedCard = []; //array for add data selected 
+    this.totalPointGame = 0; //accumulating Value Points game
+    this.totalPoint = 0; //accumulating Value Points 
+    this.contCardClass = "contCard";//This class container card
+    this.objChoronometer=new Choronometer(chor,speed,maxMilliseconds); 
+    
   }
 
   //Method to read the JSON file, execute the setElements method sending an array of data
@@ -33,6 +39,7 @@ class Game {
       .then(response => response.json())
       .then(data => {
         this.setElements(data);
+        this.objChoronometer.startChoronometer();
       });
   }
 
@@ -61,6 +68,7 @@ class Game {
 
   //This method is to create the elements dynamically, Receive an agreement, create cards
   setElements(arraJson) {
+
     let cards = "";
     let cardsAux = "";
     let cont = 0;
@@ -70,7 +78,8 @@ class Game {
     const getNewArray = this.getRandomArray(this.min, this.max, this.maxCard);
 
     for (let i = 0; i < getNewArray.length; i++) {
-      cardsAux += '<div class="col-' + this.longBootstrap + ' pt-2 mx-auto contCard" disabled><div class="card" ><img data-src="' + this.pathImg + getNewArray[i].img + '" src="' + this.pathImgDafault + '" class="card-img-top" alt="..."> <div class="card-body"><h5 class="card-title">' + getNewArray[i].nombre + '</h5><p class="card-text">' + getNewArray[i].valor + '</p></div></div></div>';
+      this.totalPointGame += getNewArray[i].valor; ///Accumulating Value Points
+      cardsAux += '<div class="col-' + this.longBootstrap + ' pt-2 mx-auto ' + this.contCardClass + '"><div class="card" ><img data-value="' + getNewArray[i].valor + '" data-src="' + this.pathImg + getNewArray[i].img + '" src="' + this.pathImgDafault + '" class="card-img-top" alt="..."> <div class="card-body"><h5 class="card-title">' + getNewArray[i].nombre + '</h5><p class="card-text">' + getNewArray[i].valor + '</p></div></div></div>';
       cont++;
       if (row == cont - 1) {
         cards += '<div class="row">' + cardsAux + '</div>';
@@ -84,42 +93,53 @@ class Game {
 
   //This method is to add event listener for container card, answer in the change de img 
   changeElementImg() {
-    this.contCardGame = document.querySelectorAll('.contCard');//Content card
+
+    this.contCardGame = document.querySelectorAll('.' + this.contCardClass);//Content card
     var pathDefault = this.pathImgDafault;
     for (let i = 0; i < this.contCardGame.length; i++) {
+
       const objImg = this.contCardGame[i].querySelector('img');
-      this.contCardGame[i].addEventListener('click',  ()=>{
+      this.contCardGame[i].addEventListener('click', () => {
 
         if (objImg.src == pathDefault) {
           objImg.src = objImg.dataset.src;
           this.setSelectCard(objImg);
-          
         }
       });
     }
   }
-  //This method is  
+  //This method is for validating the part of the cards
   setSelectCard(obj) {
-
-    if(this.selected){
-      this.selected=false;
-      this.selectedCard[0]=obj.dataset.src;
-    }else{
-      this.selectedCard[1]=obj.dataset.src;
+    let selectedPoint = 0;
+    if (this.selected) {
+      this.selected = false;
+      this.selectedCard[0] = obj;
+    } else {
+      this.selectedCard[1] = obj;
+      this.selected = true;
     }
-    if(this.selectedCard.length>1){
-      if(this.selectedCard[0]==this.selectedCard[1]){
-        alert("OK");
-      }else{
-        alert("Error");
+    if (this.selectedCard.length > 1) {
+      if (this.selectedCard[0].dataset.src == this.selectedCard[1].dataset.src) {
+        this.selectedCard[0].parentElement.removeEventListener('click', () => { });
+        this.selectedCard[1].parentElement.removeEventListener('click', () => { });
+        selectedPoint = this.selectedCard[0].dataset.value;
+        this.selectedCard = [];
+        this.totalPoint += parseInt(selectedPoint);
+        this.setProgressData(((this.totalPoint) / (this.totalPointGame / 2)) * 100);
+
+      } else {
+        this.selectedCard[0].src = this.pathImgDafault;
+        this.selectedCard[1].src = this.pathImgDafault;
+        this.selectedCard = [];
       }
     }
-    
   }
 
-
-
-
+  //This method is for set progress data 
+  setProgressData(dataProgress) {
+    this.progCont.innerText = parseInt(dataProgress) + "%";
+    this.progCont.style.width = dataProgress + "%";
+  }
 
 }
 
