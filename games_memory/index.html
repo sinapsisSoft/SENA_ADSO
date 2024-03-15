@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GAME - HOME</title>
+  </head>
+  <body>
+
+    <script>
+      function getDataJson(){
+
+          const URL="https://www.sinapsissoft.com.co/Data/products.json";
+          fetch(URL,{      
+      mode: 'cors',      
+      headers: {
+'Access-Control-Allow-Origin': '*',
+},
+    	})
+          .then((response)=> response.json())  // convert a json
+          .then((data) => console.log(data))//print the data to the console
+          .catch((err) => console.log('Failed request', err))// Capture errors
+          .finally(console.log('Finally'));
+
+      }
+      getDataJson();
+  </script>
+  </body>
+</html>

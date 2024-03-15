@@ -1,7 +1,7 @@
 /*
 Author:ING. DIEGO CASALLAS
 Date:13/04/2024
-Description:
+Description: 
 */
 class Chronometer {
 

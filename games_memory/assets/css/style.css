@@ -1,3 +1,8 @@
+
 .contCard{
+
+  cursor: url('../img/icons/click-subscribe.gif'),url('../img/icons/click-subscribe.png'), url('../img/icons/click-subscribe.jpg'), auto;
   cursor: pointer;
 }
+
+
