@@ -1,0 +1,70 @@
+<html>
+  <head>
+
+  </head>
+  <body>
+    <!--Table and divs that hold the pie charts-->
+    <table class="columns">
+      <tr>
+        <td><div id="piechart_div" style="border: 1px solid #ccc"></div></td>
+        <td><div id="barchart_div" style="border: 1px solid #ccc"></div></td>
+      </tr>
+    </table>
+
+    <script type="text/javascript"
+      src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+ var arrayDataProducts=[];
+function getDataJson(){
+     
+     const URL="assets/doc/products.json";
+    
+     const headers = {
+Accept: "application/json",
+"Content-Type": "application/json",
+};
+fetch(URL)
+.then(response => response.json())
+.then(data => console.log(arrayDataProducts=data))
+.catch(error => console.log(error))
+.finally(() => console.log(/*{ aviso de fim de carregamento }*/+this))
+
+}
+ 
+
+      // Load Charts and the corechart and barchart packages.
+      google.charts.load('current', {'packages':['corechart']});
+
+      // Draw the pie chart and bar chart when Charts is loaded.
+      google.charts.setOnLoadCallback(drawChart);
+      getDataJson();
+      function drawChart() {
+       
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Topping');
+        data.addColumn('number', 'Slices');
+        console.log(arrayDataProducts[0]);
+for(let i=0;i<arrayDataProducts.length;i++){
+  data.addRows([[arrayDataProducts[i].name,arrayDataProducts[i].value]]);
+}
+       
+      
+
+        var piechart_options = {title:'Pie Chart: How Much Pizza I Ate Last Night',
+                       width:400,
+                       height:300};
+        var piechart = new google.visualization.PieChart(document.getElementById('piechart_div'));
+        piechart.draw(data, piechart_options);
+
+        var barchart_options = {title:'Barchart: How Much Pizza I Ate Last Night',
+                       width:400,
+                       height:300,
+                       legend: 'none'};
+        var barchart = new google.visualization.BarChart(document.getElementById('barchart_div'));
+        barchart.draw(data, barchart_options);
+      }
+
+
+    </script>
+  </body>
+</html>

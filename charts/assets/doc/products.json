@@ -1,0 +1,142 @@
+[
+  {
+    "code": "001",
+    "name": "Laptop",
+    "description": "A powerful laptop with high performance.",
+    "value": 1200,
+    "type": "electronics"
+  },
+  {
+    "code": "002",
+    "name": "Smartphone",
+    "description": "A sleek and modern smartphone with advanced features.",
+    "value": 800,
+    "type": "electronics"
+  },
+  {
+    "code": "003",
+    "name": "Headphones",
+    "description": "Wireless headphones with noise-cancelling technology.",
+    "value": 150,
+    "type": "electronics"
+  },
+  {
+    "code": "004",
+    "name": "Coffee Maker",
+    "description": "An efficient coffee maker for brewing delicious coffee.",
+    "value": 50,
+    "type": "appliances"
+  },
+  {
+    "code": "005",
+    "name": "Television",
+    "description": "A high-definition television with smart features.",
+    "value": 700,
+    "type": "electronics"
+  },
+  {
+    "code": "006",
+    "name": "Backpack",
+    "description": "A durable backpack with multiple compartments for storage.",
+    "value": 40,
+    "type": "accessories"
+  },
+  {
+    "code": "007",
+    "name": "Desk Lamp",
+    "description": "An adjustable desk lamp with LED lighting.",
+    "value": 30,
+    "type": "home"
+  },
+  {
+    "code": "008",
+    "name": "Smartwatch",
+    "description": "A stylish smartwatch with fitness tracking capabilities.",
+    "value": 200,
+    "type": "electronics"
+  },
+  {
+    "code": "009",
+    "name": "Blender",
+    "description": "A powerful blender for making smoothies and shakes.",
+    "value": 70,
+    "type": "appliances"
+  },
+  {
+    "code": "010",
+    "name": "Wireless Router",
+    "description": "A high-speed wireless router for internet connectivity.",
+    "value": 80,
+    "type": "electronics"
+  },
+  {
+    "code": "011",
+    "name": "Dining Table",
+    "description": "A sturdy dining table for family gatherings.",
+    "value": 300,
+    "type": "furniture"
+  },
+  {
+    "code": "012",
+    "name": "Digital Camera",
+    "description": "A professional-grade digital camera for capturing stunning photos.",
+    "value": 500,
+    "type": "electronics"
+  },
+  {
+    "code": "013",
+    "name": "Toaster",
+    "description": "A compact toaster for toasting bread slices.",
+    "value": 25,
+    "type": "appliances"
+  },
+  {
+    "code": "014",
+    "name": "Gaming Console",
+    "description": "A gaming console for immersive gaming experiences.",
+    "value": 400,
+    "type": "electronics"
+  },
+  {
+    "code": "015",
+    "name": "Vacuum Cleaner",
+    "description": "A powerful vacuum cleaner for cleaning carpets and floors.",
+    "value": 150,
+    "type": "appliances"
+  },
+  {
+    "code": "016",
+    "name": "Sunglasses",
+    "description": "Stylish sunglasses with UV protection.",
+    "value": 80,
+    "type": "accessories"
+  },
+  {
+    "code": "017",
+    "name": "Portable Speaker",
+    "description": "A portable speaker for enjoying music on the go.",
+    "value": 100,
+    "type": "electronics"
+  },
+  {
+    "code": "018",
+    "name": "Yoga Mat",
+    "description": "A comfortable yoga mat for yoga and exercise routines.",
+    "value": 20,
+    "type": "sports"
+  },
+  {
+    "code": "019",
+    "name": "Electric Kettle",
+    "description": "An electric kettle for quickly boiling water.",
+    "value": 35,
+    "type": "appliances"
+  },
+  {
+    "code": "020",
+    "name": "Alarm Clock",
+    "description": "A digital alarm clock with multiple alarm settings.",
+    "value": 15,
+    "type": "home"
+  }
+]
