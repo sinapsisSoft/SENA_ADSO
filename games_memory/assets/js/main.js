@@ -9,6 +9,7 @@ function setLevel(value){
 
     objClass=new Game(contId,value,progress,chronometer,speed,maxMilliseconds);  
     
+    
 }
 
 

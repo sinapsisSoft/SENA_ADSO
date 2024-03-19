@@ -13,9 +13,9 @@ class Game {
     this.getServer = window.location.origin; //server path name
     this.folderPath = "/games_memory"; //name folder 
     this.serverPath = this.getServer + this.folderPath; //server path name
-    this.uriJson = this.serverPath + "/assets/doc/User.json"; // path data JSON
-    this.pathImg = this.serverPath + "/assets/img/memory/"; // path data imgs 
-    this.pathImgDafault = this.serverPath + "/assets/img/memory/img_default.jpg"; // path data img default 
+    this.uriJson = "/assets/doc/User.json"; // path data JSON
+    this.pathImg = "/assets/img/memory/"; // path data imgs 
+    this.pathImgDafault =  "/assets/img/memory/img_default.jpg"; // path data img default 
     this.longBootstrap = 12 / level; // Changes Grid bootstrap - The level value is divided by 12 spaces on the grid
     this.newArrayGames = []; // New data matrix 
     this.arrayGamesCard = []; // New data matrix to create the cards
@@ -35,9 +35,11 @@ class Game {
 
   //Method to read the JSON file, execute the setElements method sending an array of data
   getDataJson() {
+    
     fetch(this.uriJson)
       .then(response => response.json())
       .then(data => {
+        //console.log( data);
         this.setElements(data);
         this.objChronometer.startChronometer();
       });
@@ -79,7 +81,7 @@ class Game {
 
     for (let i = 0; i < getNewArray.length; i++) {
       this.totalPointGame += getNewArray[i].valor; ///Accumulating Value Points
-      cardsAux += '<div class="col-' + this.longBootstrap + ' pt-2 mx-auto ' + this.contCardClass + '"><div class="card" ><img data-value="' + getNewArray[i].valor + '" data-src="' + this.pathImg + getNewArray[i].img + '" src="' + this.pathImgDafault + '" class="card-img-top" alt="..."> <div class="card-body"><h5 class="card-title">' + getNewArray[i].nombre + '</h5><p class="card-text">' + getNewArray[i].valor + '</p></div></div></div>';
+      cardsAux += '<div class="col-' + this.longBootstrap + ' pt-2 mx-auto ' + this.contCardClass + '"><div class="card" ><img data-value="' + getNewArray[i].valor + '" data-src="'+this.pathImg+getNewArray[i].img + '" src="'+this.pathImgDafault+'" class="card-img-top" alt="..."> <div class="card-body"><h5 class="card-title">' + getNewArray[i].nombre + '</h5><p class="card-text">' + getNewArray[i].valor + '</p></div></div></div>';
       cont++;
       if (row == cont - 1) {
         cards += '<div class="row">' + cardsAux + '</div>';
@@ -95,12 +97,10 @@ class Game {
   changeElementImg() {
 
     this.contCardGame = document.querySelectorAll('.' + this.contCardClass);//Content card
-    var pathDefault = this.pathImgDafault;
+    var pathDefault =  this.getServer+this.pathImgDafault;
     for (let i = 0; i < this.contCardGame.length; i++) {
-
       const objImg = this.contCardGame[i].querySelector('img');
       this.contCardGame[i].addEventListener('click', () => {
-
         if (objImg.src == pathDefault) {
           objImg.src = objImg.dataset.src;
           this.setSelectCard(objImg);
@@ -126,7 +126,6 @@ class Game {
         this.selectedCard = [];
         this.totalPoint += parseInt(selectedPoint);
         this.setProgressData(((this.totalPoint) / (this.totalPointGame / 2)) * 100);
-
       } else {
         this.selectedCard[0].src = this.pathImgDafault;
         this.selectedCard[1].src = this.pathImgDafault;
