@@ -8,17 +8,17 @@ Description:This functions
 const modelStorage = "User"; //This variable contains the name of the local storge model.
 const objForm = "FormUser"; //This variable contains the object of the form.
 const objSelect = "profile"; //This variable contains the object of the select.
-const uri = "../../games.html"; //This variable contains the object of the form.
-const storageGame = new StorageGame(); //This object Class Storage.
+const uri = "./games.html"; //This variable contains the object of the form.
+const storageGame = new StorageGame("User"); //This object Class Storage.
 
 
 /**This form gets the form data**/
 function getDataForm(obj) {
   let getData = obj.value;
   if (getData != "" || getData.length != 0) {
-    let objUser = "user=" + getData.toUpperCase() + "&points=0";
-    setDataStorage(getData.toUpperCase());
-    setLocation(uri + '?' + objUser);
+    getData = getData.toUpperCase();
+    setDataStorage(getData);
+    //setLocation(uri + '?' + getData);
 
   } else {
     alert("Error: data validation");
@@ -36,23 +36,23 @@ function setLocation(route) {
 }
 
 /**This create Select html**/
-function setCreateSelect() {
+function setCreateSelect(getJson) {
   var newOptions = '<option value="0" selected style="font-size: 1.5em;">SELECT PROFILE</option>';
   var contSelect = document.getElementById(objSelect);
-  let getData = JSON.parse(storageGame.getStorage());
+  let getData = JSON.parse(getJson);
   if (getData != null) {
     getData[modelStorage].forEach(element => {
-      newOptions +='<option value="'+ element.user +'">'+element.user+'</option>';
+      newOptions += '<option value="' + element.user + '">' + element.user + '</option>';
     });
   }
   contSelect.innerHTML = newOptions;
 }
 /**This create Select html**/
 function setProfile(data) {
-  let objInput=document.getElementById('username');
+  let objInput = document.getElementById('username');
   if (data != 0) {
     objInput.value = data;
-  }else{
+  } else {
     objInput.value = "";
   }
 }
@@ -63,10 +63,46 @@ document.getElementById(objForm).addEventListener('submit', function (event) {
   event.preventDefault();
 })
 
+function getDataUser(){
+  if(localStorage.length!=0){
+    setCreateSelect(storageGame.getStorage());
+  }
+}
+
+
 /**This load view**/
 window.addEventListener('load', () => {
-  setCreateSelect();
+  getDataUser();
 });
+
+function validarYAgregarUsuario(jsonData, nuevoUsuario) {
+  // Verificar si el archivo JSON está vacío
+
+
+  if (Object.keys(jsonData).length === 0) {
+    // Si está vacío, agregar el nuevo usuario directamente
+    jsonData.User = [nuevoUsuario];
+  } else {
+    // Si no está vacío, verificar si el usuario ya existe
+    if (!jsonData.User) {
+      jsonData.User = [];
+    }
+
+    const usuariosExistentes = jsonData.User.map(user => user.username);
+
+    if (!usuariosExistentes.includes(nuevoUsuario.username)) {
+      // Si el usuario no existe, agregarlo
+      jsonData.User.push(nuevoUsuario);
+
+    } else {
+      // Si el usuario ya existe, no hacer nada
+      console.log("El usuario ya existe en el JSON.");
+    }
+  }
+
+  return jsonData;
+}
+
 
 
 
