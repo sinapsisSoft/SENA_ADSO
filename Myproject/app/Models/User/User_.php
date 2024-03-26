@@ -7,10 +7,10 @@
  * Descriptions:This is user class have implemented the methods the interface IModel
  * 
  */
+require_once('../../Interface/IModel.php');
+require_once('../../System/ConnectDB.php');
 
-
-
-class UserModel 
+class User implements IModel
 {
   //This attributes
   private $objConn;
@@ -52,7 +52,22 @@ class UserModel
    */
   public function spShow()
   {
-    echo("</br>Models/User/User->spShow())");
+    try {
+
+      $this->conn =  $this->objConn->Connected();
+      $this->sql = "CALL sp_select_all_user()";
+      $this->result = $this->conn->query($this->sql);
+      $getRow = [];
+      while ($row = $this->result->fetch_assoc()) {
+        array_push($getRow, $row);
+      }
+      $this->result->free_result();
+      $this->conn->Close();
+      $this->data = $getRow;
+    } catch (Exception $e) {
+      $this->data = $e->getMessage();
+    }
+    return $this->data;
   }
   /**
    * Author:DIEGO CASALLAS
