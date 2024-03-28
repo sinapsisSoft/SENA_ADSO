@@ -1,0 +1,16 @@
+html, body {
+  height: 100% !important;
+}
+.tableApp{
+  min-height: 100% !important;
+  height: 100% !important;
+}
+body{
+  text-transform: uppercase;
+}
+input{
+  text-transform: lowercase;
+}
+button{
+  text-transform: uppercase;
+}
