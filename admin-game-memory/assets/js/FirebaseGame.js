@@ -13,8 +13,8 @@ class FirebaseGameUser {
   }
 
   /**this the method for get data users*/
-  getDataUsers() {
-    fetch(this.URL + ".json")
+  async getDataUsers() {
+    return fetch(this.URL + ".json")
       .then((res) => {
         if (!res.ok) {
           console.log('Result: Problem');
