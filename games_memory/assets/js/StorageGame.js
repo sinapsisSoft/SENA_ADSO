@@ -13,5 +13,7 @@ class StorageGame{
     return localStorage.setItem(this.modelStorage,json);
   }
 
+
+
 }   
 

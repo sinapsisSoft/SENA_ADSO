@@ -10,7 +10,7 @@ const objForm = "FormUser"; //This variable contains the object of the form.
 const objSelect = "profile"; //This variable contains the object of the select.
 const uri = "./games.html"; //This variable contains the object of the form.
 const storageGame = new StorageGame("User"); //This object Class Storage.
-
+var ObjJSON = JSON.parse(storageGame.getStorage());
 
 /**This form gets the form data**/
 function getDataForm(obj) {
@@ -18,7 +18,7 @@ function getDataForm(obj) {
   if (getData != "" || getData.length != 0) {
     getData = getData.toUpperCase();
     setDataStorage(getData);
-    //setLocation(uri + '?' + getData);
+    setLocation(uri + '?user=' + getData+'&points=0');
 
   } else {
     alert("Error: data validation");
@@ -27,11 +27,38 @@ function getDataForm(obj) {
 }
 /**This set data Storage**/
 function setDataStorage(data) {
+
   let object = '{"' + modelStorage + '":[{"user":"' + data + '","points":0}]}';
-  storageGame.setStorage(object)
+  if (ObjJSON == null) {
+    storageGame.setStorage(object);
+  } else {
+    object = '{"user":"' + data + '","points":0}';
+    ObjJSON = validateUserRegister(ObjJSON, object);
+    storageGame.setStorage(JSON.stringify(ObjJSON));
+  }
+}
+
+function validateUserRegister(jsonStorage, objectUser) {
+  if (Object.keys(jsonStorage).length === 0) {
+    jsonStorage.User = [objectUser];
+  } else {
+    if (!jsonStorage.User) {
+      jsonStorage.User = [];
+    }
+    let getDataObjet = JSON.parse(objectUser);
+    let nameUser = jsonStorage.User.map(user => user.user);
+    if (!nameUser.includes(getDataObjet.user)) {
+      jsonStorage.User.push(getDataObjet);
+    } else {
+      console.log("El usuario ya existe en el JSON.");
+    }
+  }
+  return jsonStorage;
+
 }
 /**This locations**/
 function setLocation(route) {
+  console.log(route);
   location.href = route;
 }
 
@@ -63,45 +90,17 @@ document.getElementById(objForm).addEventListener('submit', function (event) {
   event.preventDefault();
 })
 
-function getDataUser(){
-  if(localStorage.length!=0){
+function getDataUser() {
+  if (localStorage.length != 0) {
     setCreateSelect(storageGame.getStorage());
   }
 }
-
 
 /**This load view**/
 window.addEventListener('load', () => {
   getDataUser();
 });
 
-function validarYAgregarUsuario(jsonData, nuevoUsuario) {
-  // Verificar si el archivo JSON está vacío
-
-
-  if (Object.keys(jsonData).length === 0) {
-    // Si está vacío, agregar el nuevo usuario directamente
-    jsonData.User = [nuevoUsuario];
-  } else {
-    // Si no está vacío, verificar si el usuario ya existe
-    if (!jsonData.User) {
-      jsonData.User = [];
-    }
-
-    const usuariosExistentes = jsonData.User.map(user => user.username);
-
-    if (!usuariosExistentes.includes(nuevoUsuario.username)) {
-      // Si el usuario no existe, agregarlo
-      jsonData.User.push(nuevoUsuario);
-
-    } else {
-      // Si el usuario ya existe, no hacer nada
-      console.log("El usuario ya existe en el JSON.");
-    }
-  }
-
-  return jsonData;
-}
 
 
 
