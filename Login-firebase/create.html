@@ -21,52 +21,48 @@
     <title>CREATE USER - LOGIN FIREBASE</title>
   </head>
   <body>
+
     <!--Container-->
     <div class="container">
       <!--Container Form-->
       <div class="row">
         <div class="col-6 mx-auto mt-5 p-2 container-form">
           <h3 class="text-center mt-1">CREATE USER</h3>
+
           <form id="formUser" class="mt-5 p-2 mb-5 ">
             <div class="form-floating mb-3">
-              <input type="email" minlength="6" maxlength="30"
-                title="Validate the data entered" class="form-control" id="user"
+              <input type="email" minlength="6" maxlength="30"title="Validate the data entered" class="form-control" id="user"
                 placeholder="Enter User" required>
               <label for="user">User</label>
             </div>
             <label for="password">Password</label>
             <div class="input-group mb-3">
-              <input type="password" minlength="6" maxlength="12"
-                title="Validate the data entered" class="form-control"
-                id="password" placeholder="Enter Password" required>
+              <input type="password" minlength="6" maxlength="12" title="Validate the data entered" class="form-control"
+                id="password" data-type="password" placeholder="Enter Password" required>
               <button class="btn btn-outline-secondary"
-                onclick="viewText('password')" type="button"
-                id="btn-password"><img src="./assets/img/icons/eye-slash-fill.svg"
-                  alt></button>
+                type="button"
+                id="btn-password"><img src="./assets/img/icons/eye-slash-fill.svg" alt></button>
             </div>
             <label for="repeatPassword">Repeat Password</label>
             <div class="input-group mb-3">
-              <input type="password" minlength="6" maxlength="12"
-                title="Validate the data entered" class="form-control"
-                id="repeatPassword" placeholder="Repeat Password" required>
-              <button class="btn btn-outline-secondary"
-                onclick="viewText('repeatPassword')" type="button"
-                id="btn-passwordRP"><img src="./assets/img/icons/eye-slash-fill.svg"
+              <input type="password" minlength="6" maxlength="12" title="Validate the data entered" class="form-control"
+                id="repeatPassword" data-type="password" placeholder="Repeat Password" required>
+              <button class="btn btn-outline-secondary" type="button" id="btn-passwordRP"><img src="./assets/img/icons/eye-slash-fill.svg"
                   alt></button>
             </div>
             <div>
-              <button type="submit" class="btn btn-primary w-100 mb-3">SEND</button>
-                <a href="./login.html" class="btn btn-secondary w-100">SIGN
-                  IN</button>
+              <button type="submit"class="btn btn-primary w-100 mb-3">SEND</button>
+              <a href="./login.html" class="btn btn-secondary w-100">SIGN IN</button>
               <a href="./recoverPassword.html" class="link-success">Recover your password</a>
             </div>
           </form>
+
         </div>
       </div>
       <!--End Container Form-->
-
     </div>
     <!--End Container-->
+
     <!--Script bootstrap-->
     <script
       src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
@@ -76,11 +72,9 @@
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
       integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
       crossorigin="anonymous"></script>
-       <!--Script app-->
-    <script src="./assets/js/functions.js" ></script>
+
     <!--Script module-->
-    <script src="./assets/js/main.js" type="module"></script>
+    <script src="./assets/js/user/main.js" type="module"></script>
 
   </body>
 </html>
-
