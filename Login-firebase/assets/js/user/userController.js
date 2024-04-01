@@ -1,3 +1,5 @@
+/* These lines of code are importing specific functions and objects from external modules or scripts.
+Here's a breakdown of what each import statement is doing: */
 import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
 import { sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
 import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
