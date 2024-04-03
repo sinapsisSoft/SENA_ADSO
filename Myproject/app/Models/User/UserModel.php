@@ -1,5 +1,7 @@
 <?php
+namespace App\Models\User;
 
+use App\System\core\ConnectDB;
 /**
  * Author:DIEGO CASALLAS
  * Date:27/02/2024
@@ -7,8 +9,6 @@
  * Descriptions:This is user class have implemented the methods the interface IModel
  * 
  */
-
-
 
 class UserModel 
 {

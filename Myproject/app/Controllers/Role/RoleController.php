@@ -7,9 +7,11 @@
  * Descriptions: this is class controller role
  * 
  */
-include("../../Models/Role/RoleModel.php");
 
-class Role{
+
+use App\Models\Role\RoleModel;
+
+class RoleController{
   private $result;
   private $objModel;
   public function __construct()

@@ -7,7 +7,9 @@
  * Descriptions: this is class model role
  * 
  */
-require_once("../../Config/ConnectDB.php");
+
+namespace App\Models\Role;
+use App\System\core\ConnectDB;
 // 
 class RoleModel
 {

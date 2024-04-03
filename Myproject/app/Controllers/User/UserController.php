@@ -1,5 +1,5 @@
 <?php
-
+namespace App\Controllers\User;
 /**
  * Author:DIEGO CASALLAS
  * Date:27/02/2024
@@ -7,11 +7,9 @@
  * Descriptions:This is user class have implemented the methods the interface IController
  * 
  */
-require_once('../../Interface/IController.php');
-require_once('../../Models/User/UserModel.php');
+use App\Models\User\UserModel;
 
-
-class User implements IController
+class UserController 
 {
 
   private $model;
@@ -50,9 +48,10 @@ class User implements IController
   {
     try{
       $this->data['title']="User";
-      $this->data['data']=$this->model->spShow();
+      //$this->data['data']=$this->model->spShow();
       //$this->data['css']=$this->view->reder('assets/css/css');
-      
+      echo("</br>Show</br>");
+     
  
     }catch(Exception $e){
       $this->data['error']=$e->getMessage();

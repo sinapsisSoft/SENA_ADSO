@@ -1,4 +1,5 @@
 <?php
+namespace App\System\core;
 
 /**
  * Author:MAIRA MEDINA
