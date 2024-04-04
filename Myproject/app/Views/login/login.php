@@ -25,7 +25,8 @@
 
     </head>
     <body>
-
+    <p>Nombre: <?php echo $nombre ?></p>
+  <p>Edad: <?php echo $edad ?></p>
         <!---Container body-->
         <div class="container-fluid">
             <div class="row">

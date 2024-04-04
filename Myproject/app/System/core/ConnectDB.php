@@ -1,4 +1,5 @@
 <?php
+
 namespace App\System\core;
 
 /**
@@ -27,14 +28,14 @@ class ConnectDB
   {
     try {
 
-      $this->mysqli = new mysqli($this->host, $this->user, $this->password, $this->myDB);
+      $this->mysqli = new \mysqli($this->host, $this->user, $this->password, $this->myDB);
 
       if ($this->mysqli->connect_error) {
         echo ("Faild to connect " . $this->mysqli->connect_error);
       } else {
         echo ("Connected ... </br>");
       }
-    } catch (Exception $e) {
+    } catch (\Exception $e) {
       echo ("error: " . $e);
     }
     return $this->mysqli;
@@ -42,9 +43,8 @@ class ConnectDB
   public function Close()
   {
     try {
-
-    $this->mysqli->close();
-    } catch (Exception $e) {
+      $this->mysqli->close();
+    } catch (\Exception $e) {
       echo ("error: " . $e);
     }
   }

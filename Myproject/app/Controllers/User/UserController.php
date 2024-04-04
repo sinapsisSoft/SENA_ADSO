@@ -1,5 +1,5 @@
 <?php
-namespace App\Controllers\User;
+
 /**
  * Author:DIEGO CASALLAS
  * Date:27/02/2024
@@ -7,9 +7,14 @@ namespace App\Controllers\User;
  * Descriptions:This is user class have implemented the methods the interface IController
  * 
  */
-use App\Models\User\UserModel;
 
-class UserController 
+namespace App\Controllers\User;
+
+use App\System\interface\IController;
+use App\Models\User\UserModel;
+use App\Config\View;
+
+class UserController implements IController
 {
 
   private $model;
@@ -19,10 +24,10 @@ class UserController
 
   public function __construct()
   {
-    $this->model=new UserModel();
-    $this->primaryKey="User_id";
-    $this->data=[];
-    //$this->view=new View();
+    $this->model = new UserModel();
+    $this->primaryKey = "User_id";
+    $this->data = [];
+    $this->view = new View();
   }
   public function create()
   {
@@ -35,48 +40,33 @@ class UserController
   }
   public function delete()
   {
-    echo("This delete");
+    echo ("This delete");
   }
-  /**
- * Author:DIEGO CASALLAS
- * Date:27/02/2024
- * Update Date:
- * Descriptions:This method displays the data model of all registerd users
- * 
- */
+
   public function show()
   {
-    try{
-      $this->data['title']="User";
-      //$this->data['data']=$this->model->spShow();
-      //$this->data['css']=$this->view->reder('assets/css/css');
-      echo("</br>Show</br>");
-     
- 
-    }catch(Exception $e){
-      $this->data['error']=$e->getMessage();
+    try {
+      $this->data['title'] = "USER";
+      $this->data['data'] = $this->model->spShow();
+      $this->view->render('user/show', $this->data);
+    } catch (\Exception $e) {
+      $this->data['error'] = $e->getMessage();
     }
-
-    return  $this->data;
+    return $this->data;
   }
-    /**
- * Author:DIEGO CASALLAS
- * Date:27/02/2024
- * Update Date:
- * Descriptions:This method displays the data model of all registerd user for id 
- * 
- */
+
   public function showId()
   {
-    try{
-      $id=2;
-      
-      $this->data['data']=$this->model->spShowId($id);
+    try {
+      $id = 2;
+
+      $this->data['data'] = $this->model->spShowId($id);
       //$this->data['css']=$this->view->reder('assets/css/css');
       
- 
-    }catch(Exception $e){
-      $this->data['error']=$e->getMessage();
+
+
+    } catch (\Exception $e) {
+      $this->data['error'] = $e->getMessage();
     }
 
     return  $this->data;

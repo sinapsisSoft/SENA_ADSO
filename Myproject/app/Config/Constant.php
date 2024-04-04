@@ -2,7 +2,7 @@
 <?php
 //VARIABLES CONSTANTES GENERALES
 
-define("BASE_URL","http://localhost/SENA/SENA_ADSO/Myproject/public");
+define("BASE_URL",__DIR__);
 define("PASS","");
 define("USER","root");
 define("DB","");
@@ -17,7 +17,11 @@ define('REQUEST_METHOD', $_SERVER['REQUEST_METHOD']);
 //VARIABLES CONSTANTES DE RUTAS
 define('FOLDER_PATH', '/Myproject');
 define('ROOT', $_SERVER['DOCUMENT_ROOT']);
-define('PATH_VIEWS', FOLDER_PATH . '../app/Views/');
+define('PATH_CSS',  'assets/css/');
+define('PATH_JS',  'assets/js/');
+define('PATH_CONTROLLERS_JS',  'assets/js/controllers/');
+define('PATH_IMG_ICONS',  'assets/img/icons/');
+define('PATH_VIEWS',  '../app/Views/');
 define('PATH_CONTROLLERS', '../app/Controllers/');
 define('PATH_MODELS', '../app/Models/');
 define('PATH_INTERFACE', '../app/System/interface/');

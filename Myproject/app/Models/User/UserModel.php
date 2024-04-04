@@ -52,7 +52,21 @@ class UserModel
    */
   public function spShow()
   {
-    echo("</br>Models/User/User->spShow())");
+    try {
+      $this->conn =  $this->objConn->Connected();
+      $this->sql = "CALL sp_select_all_users()";
+      $this->result = $this->conn->query($this->sql);
+      $getRow = [];
+      while ($row = $this->result->fetch_assoc()) {
+        array_push($getRow, $row);
+      }
+      $this->result->free_result();
+      $this->conn->Close();
+      $this->data = $getRow;
+    } catch (\Exception $e) {
+      $this->data = $e->getMessage();
+    }
+    return $this->data;
   }
   /**
    * Author:DIEGO CASALLAS
@@ -64,7 +78,6 @@ class UserModel
   public function spShowId(int $id)
   {
     try {
-
       $this->conn =  $this->objConn->Connected();
       $this->sql = "CALL sp_select_id_user(" . $id . ")";
       $this->result = $this->conn->query($this->sql);
@@ -75,7 +88,7 @@ class UserModel
       $this->result->free_result();
       $this->conn->Close();
       $this->data = $getRow;
-    } catch (Exception $e) {
+    } catch (\Exception $e) {
       $this->data = $e->getMessage();
     }
     return $this->data;

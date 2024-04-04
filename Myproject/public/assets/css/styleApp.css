@@ -1,0 +1,25 @@
+.input1 {
+
+  background: red;
+  border: white;
+  width: 100%;
+}
+
+.errorInput {
+  border: solid 1px #ff00003d;
+  box-shadow: 0px 3px 3px #392e2e;
+}
+
+.btnradius {
+  border-radius: 51%;
+  font-size: 1.5em;
+}
+
+.preload {
+  width: 100%;
+  height: 100% !important;
+  background: #8080807a;
+  position: fixed;
+  z-index: 2000;
+  cursor: progress;
+}

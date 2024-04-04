@@ -1,6 +1,6 @@
 <?php
 
-
+namespace App\System\interface;
 /**
  * Author:DIEGO CASALLAS
  * Date:27/02/2024
