@@ -174,7 +174,7 @@ class Game {
     if(value==100){
       alert("OK");
       let elementImg=this.objContainerActions.childNodes[1].childNodes[0];
-      elementImg.src="https://media.tenor.com/FaxA2s_yG7AAAAAi/mystic-messenger-video-game.gif";
+      elementImg.src="https://media.tenor.com/PDxkcE116H8AAAAi/mystic-messenger-video-game.gif";
       elementImg.classList.add("animate__animated", "animate__heartBeat", "animate__delay-2s");
       this.setTimeOut();
     }
