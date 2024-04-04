@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Author:DIEGO CASALLAS
  * Date:15/02/2024
@@ -7,11 +6,9 @@
  * Descriptions: this is view role
  * 
  */
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,16 +17,15 @@
     <!---Style -->
     <?php include_once(PATH_VIEWS . PATH_CSS . 'style.php') ?>
 </head>
-
 <body>
     <!---Container preload-->
-    <!-- <div class="preload" id="preload">
+    <div class="preload" id="preload">
         <div class="text-center" style="margin-top: 25%;">
             <div class="spinner-grow text-danger" style="width: 3rem; height: 3rem;" role="status">
                 <span class="visually-hidden">Loading...</span>
             </div>
         </div>
-    </div> -->
+    </div>
     <!---End Container preload-->
     <!---Container table-->
     <div class="container-fluid">
@@ -94,15 +90,15 @@
     <!-- Button trigger modal -->
 
     <!-- Modal -->
-    <div class="modal fade" id="modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal fade" id="modalApp" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalAppLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="modalLabel">Modal title</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h1 class="modal-title fs-5" id="modalAppLabel">Modal title</h1>
+                    <button type="button" class="btn-close" onclick="createUser()" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="form_login" onsubmit="getData(this.id,event)">
+                    <form id="my-form" >
                         <div class="mb-3">
                             <label for="user_email" class="form-label">Email
                                 address</label>
