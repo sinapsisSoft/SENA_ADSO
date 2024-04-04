@@ -33,7 +33,7 @@
             <div class="col-10 mx-auto">
                 <h3>List User</h3>
                 <!---Btn Add -->
-                <button type="button" class="btn btn-success" onclick="createUser('form_login')" data-bs-toggle="modal"><img src="<?= PATH_IMG_ICONS ?>person-fill-add.svg"></button>
+                <button type="button" class="btn btn-success" onclick="createUser('form_login')" ><img src="<?= PATH_IMG_ICONS ?>person-fill-add.svg"></button>
                 <!---Btn Add -->
                 <!---Table -->
                 <div class="table-responsive">
@@ -87,18 +87,19 @@
 
     <!---End Container table-->
     <!--Container Modal-->
-    <!-- Button trigger modal -->
-
-    <!-- Modal -->
-    <div class="modal fade" id="modalApp" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalAppLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="modalAppLabel">Modal title</h1>
-                    <button type="button" class="btn-close" onclick="createUser()" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="my-form" >
+       <!-- Modal -->
+       <div class="modal fade" id="modalApp" tabindex="-1"
+      aria-labelledby="modalAppLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalAppLabel">USER</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"
+              aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <!-- Form -->
+            <form id="my-form" >
                         <div class="mb-3">
                             <label for="user_email" class="form-label">Email
                                 address</label>
@@ -134,16 +135,18 @@
                         </div>
 
                     </form>
-                </div>
-                <div class="modal-footer">
+            <!-- End Form -->
+          </div>
+          <div class="modal-footer">
+          <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" form="form_login">Send</button>
+                    <button type="submit" class="btn btn-primary" id="btnSubmit"  form="form_login">Send</button>
                 </div>
-            </div>
+          </div>
         </div>
+      </div>
     </div>
-
-    <!--Container Modal-->
+    <!--Container modal-->
 
     <!---Container javascript-->
     <?php include_once(PATH_VIEWS . PATH_JS . 'scriptJs.php') ?>
