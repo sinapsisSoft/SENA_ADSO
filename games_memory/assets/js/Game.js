@@ -6,7 +6,8 @@ Description:This class is responsible for managing the memory game developed in 
 class Game {
   //Constructor method responsible for initializing the attributes, 
   //receives three data, the game container and the difficulty level
-  constructor(contGame, level, prog, chor, speed, maxMilliseconds) {
+  constructor(contGame, level, prog, chor, speed, maxMilliseconds, containerActions) {
+    this.objContainerActions = document.getElementById(containerActions);
     this.progCont = document.getElementById(prog);
     this.contGame = document.getElementById(contGame); //Content game
     this.contCardGame;//Content class img 
@@ -15,7 +16,7 @@ class Game {
     this.serverPath = this.getServer + this.folderPath; //server path name
     this.uriJson = "/assets/doc/User.json"; // path data JSON
     this.pathImg = "/assets/img/memory/"; // path data imgs 
-    this.pathImgDafault =  "/assets/img/memory/img_default.jpg"; // path data img default 
+    this.pathImgDafault = "/assets/img/memory/img_default.jpg"; // path data img default 
     this.longBootstrap = 12 / level; // Changes Grid bootstrap - The level value is divided by 12 spaces on the grid
     this.newArrayGames = []; // New data matrix 
     this.arrayGamesCard = []; // New data matrix to create the cards
@@ -30,12 +31,13 @@ class Game {
     this.totalPoint = 0; //accumulating Value Points 
     this.contCardClass = "contCard";//This class container card
     this.objChronometer = new Chronometer(chor, speed, maxMilliseconds);
+    this.timeOut=2500;
 
   }
 
   //Method to read the JSON file, execute the setElements method sending an array of data
   getDataJson() {
-    
+
     fetch(this.uriJson)
       .then(response => response.json())
       .then(data => {
@@ -81,7 +83,7 @@ class Game {
 
     for (let i = 0; i < getNewArray.length; i++) {
       this.totalPointGame += getNewArray[i].valor; ///Accumulating Value Points
-      cardsAux += '<div class="col-' + this.longBootstrap + ' pt-2 mx-auto ' + this.contCardClass + '"><div class="card" ><img data-value="' + getNewArray[i].valor + '" data-src="'+this.pathImg+getNewArray[i].img + '" src="'+this.pathImgDafault+'" class="card-img-top" alt="..."> <div class="card-body"><h5 class="card-title">' + getNewArray[i].nombre + '</h5><p class="card-text">' + getNewArray[i].valor + '</p></div></div></div>';
+      cardsAux += '<div class="col-' + this.longBootstrap + ' pt-2 mx-auto ' + this.contCardClass + '"><div class="card" ><img data-value="' + getNewArray[i].valor + '" data-src="' + this.pathImg + getNewArray[i].img + '" src="' + this.pathImgDafault + '" class="card-img-top" alt="..."> <div class="card-body"><h5 class="card-title">' + getNewArray[i].nombre + '</h5><p class="card-text">' + getNewArray[i].valor + '</p></div></div></div>';
       cont++;
       if (row == cont - 1) {
         cards += '<div class="row">' + cardsAux + '</div>';
@@ -97,19 +99,33 @@ class Game {
   changeElementImg() {
 
     this.contCardGame = document.querySelectorAll('.' + this.contCardClass);//Content card
-    var pathDefault =  this.getServer+this.pathImgDafault;
+    var pathDefault = this.getServer + this.pathImgDafault;
     for (let i = 0; i < this.contCardGame.length; i++) {
       const objImg = this.contCardGame[i].querySelector('img');
       this.contCardGame[i].addEventListener('click', () => {
         if (objImg.src == pathDefault) {
-          objImg.src = objImg.dataset.src;
+
           this.setSelectCard(objImg);
+
+          objImg.classList.add("animate__animated", "animate__flipInY", "animate__delay-1s");
+          objImg.src = objImg.dataset.src;
+          //console.log(objImg);
+
+          this.setTimeOut();
         }
       });
     }
   }
+  setTimeOut() {
+    this.showContainerActions();
+    setTimeout(() => {
+      this.hiddenContainerActions();
+    }, this.timeOut);
+
+  }
   //This method is for validating the part of the cards
   setSelectCard(obj) {
+
     let selectedPoint = 0;
     if (this.selected) {
       this.selected = false;
@@ -119,7 +135,9 @@ class Game {
       this.selected = true;
     }
     if (this.selectedCard.length > 1) {
+
       if (this.selectedCard[0].dataset.src == this.selectedCard[1].dataset.src) {
+
         this.selectedCard[0].parentElement.removeEventListener('click', () => { });
         this.selectedCard[1].parentElement.removeEventListener('click', () => { });
         selectedPoint = this.selectedCard[0].dataset.value;
@@ -127,9 +145,13 @@ class Game {
         this.totalPoint += parseInt(selectedPoint);
         this.setProgressData(((this.totalPoint) / (this.totalPointGame / 2)) * 100);
       } else {
-        this.selectedCard[0].src = this.pathImgDafault;
-        this.selectedCard[1].src = this.pathImgDafault;
-        this.selectedCard = [];
+        this.selectedCard[0].classList.add("animate__animated", "animate__lightSpeedInRight", "animate__delay-1s");
+          this.selectedCard[1].classList.add("animate__animated", "animate__lightSpeedInRight", "animate__delay-1s");
+        setTimeout(() => {
+          this.selectedCard[1].src = this.pathImgDafault;
+          this.selectedCard[0].src = this.pathImgDafault;
+          this.selectedCard = [];
+        },  this.timeOut);
       }
     }
   }
@@ -138,6 +160,24 @@ class Game {
   setProgressData(dataProgress) {
     this.progCont.innerText = parseInt(dataProgress) + "%";
     this.progCont.style.width = dataProgress + "%";
+    this.getProgressvalue(dataProgress);
+  }
+
+  showContainerActions() {
+    this.objContainerActions.style.display = "block";
+  }
+  hiddenContainerActions() {
+    this.objContainerActions.style.display = "none";
+  }
+
+  getProgressvalue(value){
+    if(value==100){
+      alert("OK");
+      let elementImg=this.objContainerActions.childNodes[1].childNodes[0];
+      elementImg.src="https://media.tenor.com/FaxA2s_yG7AAAAAi/mystic-messenger-video-game.gif";
+      elementImg.classList.add("animate__animated", "animate__heartBeat", "animate__delay-2s");
+      this.setTimeOut();
+    }
   }
 
 }
