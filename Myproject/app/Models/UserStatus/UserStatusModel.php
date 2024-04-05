@@ -8,10 +8,11 @@
  * 
  */
 
-namespace App\Models\Role;
-use App\System\core\ConnectDB;
-// 
-class RoleModel
+ namespace App\Models\UserStatus;
+
+ use App\System\core\ConnectDB;
+
+class UserStatusModel
 {
   private $data;
   private $sql;
@@ -21,10 +22,10 @@ class RoleModel
     $this->conn = new ConnectDB();
     $this->data = array();
   }
-  public function getRoles()
+  public function getUserStatus()
   {
     try {
-      $this->sql = "SELECT * FROM role";
+      $this->sql = "SELECT * FROM user_status";
       $getConn = $this->conn->Connected();
       $result =  $getConn->query($this->sql);
       while ($row = $result->fetch_assoc()) {

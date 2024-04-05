@@ -20,6 +20,7 @@ define('ROOT', $_SERVER['DOCUMENT_ROOT']);
 define('PATH_CSS',  'assets/css/');
 define('PATH_JS',  'assets/js/');
 define('PATH_CONTROLLERS_JS',  'assets/js/controllers/');
+define('PATH_CLASS_JS',  'assets/js/class/');
 define('PATH_IMG_ICONS',  'assets/img/icons/');
 define('PATH_VIEWS',  '../app/Views/');
 define('PATH_CONTROLLERS', '../app/Controllers/');

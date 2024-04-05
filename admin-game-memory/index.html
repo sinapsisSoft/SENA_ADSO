@@ -1,0 +1,174 @@
+<!--
+* Author:DIEGO CASALLAS
+ * Date:28/03/2024
+ * Description:View app.
+ * 
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--fivicon-->
+    <link
+      type="image/x-icon"
+      href="./assets/img/logos/logo.png"
+      rel="icon">
+    <!--Bootstrap css-->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous">
+    <!--My style css-->
+    <link href="./assets/css/style.css" rel="stylesheet">
+    <!--My title side-->
+    <title>ADMIN MEMORY GAMES</title>
+  </head>
+  <body>
+    <!--Container preload-->
+    <div class="preload" id="preload">
+      <div class="spinner-grow text-primary position-absolute top-50 start-50" role="status">
+        <span class="visually-hidden">Cargando...</span>
+      </div>
+    </div>
+    <!--Container preload-->
+
+    <!--Container nav-->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#"><img src="./assets/img/logos/logo.png"
+            class="img" width="64px"></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false"
+          aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">User</a>
+            </li>
+          </ul>
+          <!--btn add-->
+          <div class="d-flex">
+            <button type="button" onclick="createUser()"
+              class="btn btn-success"><img
+                class="img img-fluid"
+                src="./assets/img/icons/plus-square-fill.svg"></button>
+          </div>
+          <form class="d-flex">
+            <input class="form-control me-2" type="search" placeholder="Search"
+              aria-label="Search">
+            <button class="btn btn-outline-success"
+              type="submit">Search</button>
+          </form>
+        </div>
+      </div>
+    </nav>
+    <!--End Container nav-->
+
+    <!--Container -->
+
+    <div class="container">
+      <!--Container table-->
+      <div class="table-responsive tableApp">
+        <table class="table table-dark table-striped table-hover">
+          <thead>
+            <tr class="text-center">
+              <th>#</th>
+              <th>NAME</th>
+              <th>NICKNAME</th>
+              <th>IMG</th>
+              <th>VALUE</th>
+              <th>ACTIONS</th>
+            </tr>
+          </thead>
+          <tbody id="tbody">
+
+          </tbody>
+          <tfoot>
+            <tr class="text-center">
+              <th>#</th>
+              <th>NAME</th>
+              <th>NICKNAME</th>
+              <th>IMG</th>
+              <th>VALUE</th>
+              <th>ACTIONS</th>
+            </tr>
+          </tfoot>
+
+        </table>
+      </div>
+      <!--End Container table-->
+    </div>
+    <!--End Container -->
+
+    <!--Container modal-->
+    <!-- Modal -->
+    <div class="modal fade" id="modalApp" tabindex="-1"
+      aria-labelledby="modalAppLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalAppLabel">USER</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"
+              aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <!-- Form -->
+            <form id="formUser">
+              <input type="hidden" class="form-control" id="id" value>
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="nombre"
+                  placeholder="Name" required>
+                <label for="name">NAME</label>
+              </div>
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="nickname"
+                  placeholder="Nickname">
+                <label for="nickname" required>NICKNAME</label>
+              </div>
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="img"
+                  placeholder="IMG" required>
+                <label for="img" required>IMG</label>
+              </div>
+              <div class="form-floating mb-3">
+                <input type="number" class="form-control" id="valor"
+                  placeholder="value" required>
+                <label for="value" required>VALUE</label>
+              </div>
+            </form>
+            <!-- End Form -->
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary"
+              data-bs-dismiss="modal">Close</button>
+            <button type="submit" id="btnSubmit" form="formUser"
+              class="btn btn-primary">Save
+              changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--Container modal-->
+
+    <!--Script bootstrap-->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"></script>
+    <!--Script RFC4122-->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/node-uuid/1.4.7/uuid.min.js"></script>
+    <!--Script my script-->
+    <script src="./assets/js/FirebaseGame.js"></script>
+    <!--Script my script-->
+    <script src="./assets/js/main.js"></script>
+  </body>
+</html>

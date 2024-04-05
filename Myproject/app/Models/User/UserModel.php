@@ -31,7 +31,7 @@ class UserModel
   public function spCreate(array $data)
   {
     try {
-    } catch (Exception $e) {
+    } catch (\Exception $e) {
     }
   }
   public function spUpdate(array $data)
@@ -50,7 +50,7 @@ class UserModel
    * Descriptions:This method shows all registered users
    * 
    */
-  public function spShow()
+  public function getUsers()
   {
     try {
       $this->conn =  $this->objConn->Connected();

@@ -12,19 +12,25 @@ namespace App\Controllers\User;
 
 use App\System\interface\IController;
 use App\Models\User\UserModel;
+use App\Models\Role\RoleModel;
+use App\Models\UserStatus\UserStatusModel;
 use App\Config\View;
 
 class UserController implements IController
 {
 
-  private $model;
+  private $userModel;
+  private $roleModel;
+  private $userStatusModel;
   private $primaryKey;
   private $data;
   private $view;
 
   public function __construct()
   {
-    $this->model = new UserModel();
+    $this->userModel = new UserModel();
+    $this->roleModel = new RoleModel();
+    $this->userStatusModel= new UserStatusModel();
     $this->primaryKey = "User_id";
     $this->data = [];
     $this->view = new View();
@@ -47,7 +53,9 @@ class UserController implements IController
   {
     try {
       $this->data['title'] = "USER";
-      $this->data['data'] = $this->model->spShow();
+      $this->data['users'] = $this->userModel->getUsers();
+      $this->data['roles'] = $this->roleModel->getRoles();
+      $this->data['userStatus'] = $this->userStatusModel->getUserStatus();
       $this->view->render('user/show', $this->data);
     } catch (\Exception $e) {
       $this->data['error'] = $e->getMessage();
@@ -59,12 +67,7 @@ class UserController implements IController
   {
     try {
       $id = 2;
-
-      $this->data['data'] = $this->model->spShowId($id);
-      //$this->data['css']=$this->view->reder('assets/css/css');
-      
-
-
+      $this->data['data'] = $this->userModel->spShowId($id);
     } catch (\Exception $e) {
       $this->data['error'] = $e->getMessage();
     }
@@ -73,5 +76,6 @@ class UserController implements IController
   }
   public function getDataModel(int $id)
   {
+
   }
 }
