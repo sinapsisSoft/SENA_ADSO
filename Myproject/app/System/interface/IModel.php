@@ -1,4 +1,5 @@
 <?php
+namespace App\System\interface;
 /**
  * Author:DIEGO CASALLAS
  * Date:27/02/2024
@@ -11,9 +12,8 @@ interface IModel
   //This methods 
   public function spCreate(array $data);
   public function spUpdate(array $data);
-  public function spEdit(int $id);
-  public function spDelete(int $id);
+  public function spDelete(array $data);
   public function spShow();
-  public function spShowId(int $id);
+  public function spShowId(array $data);
   public function spGetData(string $data);
 }

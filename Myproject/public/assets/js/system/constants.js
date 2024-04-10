@@ -1,0 +1,1 @@
+const BASE_URL="https://localhost/SENA/SENA_ADSO/Myproject/public/";

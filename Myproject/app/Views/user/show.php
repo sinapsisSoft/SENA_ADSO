@@ -102,7 +102,7 @@
                     <!-- Form -->
                     <form id="my-form">
 
-                        <input type="hidden" id="User_id">
+                        <input type="hidden" id="User_id" value="0">
                         <div class="form-floating mb-3">
                             <input type="email" minlength="6" maxlength="30" title="Validate the data entered" class="form-control" id="User_user" name="User_user" placeholder="Enter User" required>
                             <label for="User_user">User</label>
@@ -118,9 +118,9 @@
                             <button class="btn btn-secondary" type="button" id="btn-passwordRP"><img src="<?= PATH_IMG_ICONS ?>eye-slash-fill.svg" alt></button>
                         </div>
                         <div class="mb-3">
-                            <label for="user_role" class="form-label">Rol</label>
-                            <select class="form-select" aria-label="Default select example" name="Role_id" id="Role_id">
-                                <option selected>Open this select
+                            <label for="user_role" class="form-label">Role</label>
+                            <select class="form-select" aria-label="Default select example" name="Role_id" id="Role_id" require>
+                                <option value="0">Open this select
                                     menu</option>
                                 <?php
                                 foreach ($roles as $role) {
@@ -130,9 +130,9 @@
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="user_state" class="form-label">Estado</label>
-                            <select class="form-select" aria-label="Default select example" name="User_status_id" id="User_status_id">
-                                <option selected>Open this select
+                            <label for="user_state" class="form-label">Status</label>
+                            <select class="form-select" aria-label="Default select example" name="User_status_id" id="User_status_id" require>
+                                <option value="0" selected>Open this select
                                     menu</option>
                                 <?php
                                 foreach ($userStatus as $status) {
@@ -146,7 +146,7 @@
                     <!-- End Form -->
                 </div>
                 <div class="modal-footer">
-                    <div class="modal-footer">
+                    <div class="modal-footer w-100">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary" id="btnSubmit" form="my-form">Send</button>
                     </div>

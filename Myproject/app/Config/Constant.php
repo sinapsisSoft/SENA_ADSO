@@ -2,6 +2,7 @@
 <?php
 //VARIABLES CONSTANTES GENERALES
 
+
 define("BASE_URL",__DIR__);
 define("PASS","");
 define("USER","root");

@@ -17,8 +17,12 @@ const btnPassword = document.getElementById('btn-password');
 const myModal = new bootstrap.Modal(document.getElementById("modalApp"), {});
 const textConfirm = "Press a button to Delete!\nAccept or Cancel.";
 
-var primaryKey = "";
+var primaryKey = "User_id";
 var validate = true;
+var setJson = {};
+var postData;
+var type;
+var uri;
 
 
 /**Function hidden modal*/
@@ -32,33 +36,60 @@ function create() {
 
 /**Function show user*/
 function showId(id) {
-  showPreload();
-  primaryKey = id;
   objForm.cleanForm();
   objForm.disableForm();
   btnSubmit.disabled = true;
+  setJson[primaryKey] = id;
+  type = 'POST';
+  uri = 'user/showId';
+  const getResponse = sendData(setJson, type, uri);
+  getResponse.then(data => {
+    console.log(data['data'][0]);
+    objForm.sendDataForm(data['data'][0]);
+  })
+  getResponse.catch(error => console.error(error))
+  getResponse.finally(hidePreload());
   showModal();
+
 }
 
 /**Function edit user*/
 function edit(id) {
-  showPreload();
-  primaryKey = id;
   validate = false;
   objForm.cleanForm();
   objForm.enableForm();
   btnSubmit.disabled = false;
+  setJson[primaryKey] = id;
+  type = 'POST';
+  uri = 'user/showId';
+  sendData(setJson, type, uri)
+    .then(data => {
+      //console.log(data['data'][0]);
+      objForm.sendDataForm(data['data'][0]);
+    })
+    .catch(error => console.error(error))
+    .finally(hidePreload());
   showModal();
 }
 
 /**Function delete user*/
 function delete_(id) {
-  showPreload();
-  primaryKey = id;
-  hidePreload();
+
+  setJson[primaryKey] = id;
+  type = 'DELETE';
+  uri = 'user/delete';
+  if (confirm(textConfirm) == true) {
+    sendData(setJson, type, uri)
+      .then(data => {
+        console.log(data['data'][0]);
+        setLocations("user/");
+      })
+      .catch(error => console.error(error))
+      .finally(hidePreload());
+  } else {
+    
+  }
 }
-
-
 
 /**Function show modal*/
 function showModal() {
@@ -95,110 +126,53 @@ if (btnPasswordRP)
     objForm.viewText(idInputPasswordRP);
   });
 
-getForm.addEventListener('submit', (e) => {
+  
+getForm.addEventListener('submit', async (e) => {
   e.preventDefault();
 
-  getValidateForm();
+  if (objForm.setValidateForm()) {
+    postData = objForm.getJsonForm();
+    if (validate) {
+      type = 'POST';
+      uri = 'user/create';
+      sendData(postData, type, uri)
+        .then(data => {
+          console.log(data);
+          hideModal();
+          setLocations("user/");
+        })
+        .catch(error => console.error(error))
+        .finally(hidePreload());
+    } else {
+      type = 'PUT';
+      uri = 'user/edit';
+      sendData(postData, type, uri)
+        .then(data => {
+          console.log(data);
+          hideModal();
+          setLocations("user/");
+        })
+        .catch(error => console.error(error))
+        .finally(hidePreload());
+    }
+
+  }
 });
 
-function getValidateForm() {
-  let elements = getForm.querySelectorAll('input');
-
-
-
+/*Function async send Data General**/
+async function sendData(data, type, uri) {
+  showPreload();
+  return fetch(BASE_URL + uri, {
+    method: type,
+    headers: { "Content-type": "application/json;charset=utf-8" },
+    body: JSON.stringify(data),
+  }).then(response => response.json())
 }
 
-function validateForm(idForm) {
-  // Obtener el formulario
-  const objForm = document.getElementById(idForm);
-
-  // Obtener todos los inputs del formulario
-  const inputs = objForm.querySelectorAll('input');
-
-  // Variable para almacenar si el formulario es válido
-  let formValidate = true;
-
-  // Recorrer cada input y validarlo
-  for (const input of inputs) {
-    // Si el input no es válido, mostrar un mensaje de error y cambiar la variable
-    if (!validateInput(input)) {  
-      formValidate = false;
-      showMessageError(input);
-    }
-  }
-
-  // Si el formulario es válido, enviar el formulario
-  if (formValidate) {
-    objForm.submit();
-  }
-
-  // Función para validar un input
-  function validateInput(input) {
-    // Obtener el tipo de input
-    const type = input.type;
-
-    // Validar según el tipo de input
-    switch (type) {
-      case 'text':
-        return validateText(input);
-      case 'email':
-        return validateEmail(input);
-      case 'password':
-        return validatePassword(input);
-      case 'number':
-        return validateNumber(input);
-      default:
-        return true;
-    }
-  }
- 
-
-  // Funciones para validar cada tipo de input
-  function validateText(input) {
-    // Validar que no esté vacío
-    if (input.value === '') {
-      return false;
-    }
-    return true;
-  }
-
-  function validateEmail(input) {
-    // Validar que tenga un formato de email válido
-    const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return regex.test(input.value);
-  }
-
-  function validatePassword(input) {
-    // Validar que tenga una longitud mínima
-    if (input.value.length < 8) {
-      return false;
-    }
-    return true;
-  }
-
-  function validateNumber(input) {
-    // Validar que sea un número
-    if (isNaN(input.value)) {
-      return false;
-    }
-    return true;
-  }
-
-  // Función para mostrar un mensaje de error
-  function showMessageError(input) {
-    // Agregar una clase de error al input
-    input.classList.add('error');
-
-    // Mostrar un mensaje de error debajo del input
-    const messageError = document.createElement('span');
-    messageError.classList.add('mensaje-error');
-    messageError.textContent = 'Este campo es inválido';
-    input.parentNode.appendChild(messageError);
-  }
+function setLocations(uri) {
+  let newLocations = BASE_URL + uri;
+  window.location.assign(newLocations);
 }
-
-
-
 
 /*Function load view html**/
 window.addEventListener('load', (e) => {
