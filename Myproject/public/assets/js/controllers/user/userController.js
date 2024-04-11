@@ -36,19 +36,21 @@ function create() {
 
 /**Function show user*/
 function showId(id) {
+
   objForm.cleanForm();
   objForm.disableForm();
   btnSubmit.disabled = true;
   setJson[primaryKey] = id;
+
   type = 'POST';
   uri = 'user/showId';
-  const getResponse = sendData(setJson, type, uri);
-  getResponse.then(data => {
+  sendData(setJson, type, uri)
+  .then(data => {
     console.log(data['data'][0]);
     objForm.sendDataForm(data['data'][0]);
   })
-  getResponse.catch(error => console.error(error))
-  getResponse.finally(hidePreload());
+  .catch(error => console.error(error))
+  .finally(hidePreload());
   showModal();
 
 }
@@ -87,7 +89,7 @@ function delete_(id) {
       .catch(error => console.error(error))
       .finally(hidePreload());
   } else {
-    
+
   }
 }
 
@@ -126,7 +128,7 @@ if (btnPasswordRP)
     objForm.viewText(idInputPasswordRP);
   });
 
-  
+
 getForm.addEventListener('submit', async (e) => {
   e.preventDefault();
 

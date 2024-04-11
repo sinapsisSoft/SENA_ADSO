@@ -36,7 +36,7 @@ class Form {
   };
 
   /*Function from the send data at form**/
-  setDataForm(json) {
+  sendDataForm(json) {
     let elements = this.objForm.querySelectorAll("input,select");
     for (let i = 0; i < elements.length; i++) {
       document.getElementById(elements[i].id).value = json[elements[i].id];
