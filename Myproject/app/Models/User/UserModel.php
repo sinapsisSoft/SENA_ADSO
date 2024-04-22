@@ -193,4 +193,20 @@ class UserModel implements IModel
   public function spGetData(string $data)
   {
   }
+
+  public function spLogin(array $data)
+  {
+    try {
+      $this->conn =  $this->objConn->Connected();
+      $this->sql = 'CALL loginUser(' . $data[$this->model[1]] . ')';
+      $this->result = $this->conn->query($this->sql);
+      $row = $this->result->fetch_array();
+      $this->result->free_result();
+      $this->conn->Close();
+      $this->data = $row;
+    } catch (\Exception $e) {
+      $this->data = $e->getMessage();
+    }
+    return $this->data;
+  }
 }

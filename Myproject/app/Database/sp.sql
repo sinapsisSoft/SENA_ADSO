@@ -6,12 +6,12 @@ UPDATE user SET User_password=UserPassword WHERE User_id=userId;
 END$$
 DELIMITER ;
 
-DELIMITER $$
-DROP PROCEDURE IF EXISTS `loginUser`$$ 
-CREATE PROCEDURE `loginUser`(IN `user` VARCHAR(30))
-BEGIN
-SELECT User_password FROM user WHERE User_user=user AND User_status_id=1;
-END$$
+  DELIMITER $$
+  DROP PROCEDURE IF EXISTS `loginUser`$$ 
+  CREATE PROCEDURE `loginUser`(IN `user` VARCHAR(30))
+  BEGIN
+  SELECT User_password FROM user WHERE User_user=user AND User_status_id=1;
+  END$$
 DELIMITER ;
 
 DELIMITER $$

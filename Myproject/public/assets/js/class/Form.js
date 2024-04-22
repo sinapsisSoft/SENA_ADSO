@@ -3,7 +3,11 @@
  * Date:04/04/2024
  * Description:These are the class Form .
  * 
-*/
+/**
+ *
+ *
+ * @class Form
+ */
 class Form {
 
   constructor(idForm) {

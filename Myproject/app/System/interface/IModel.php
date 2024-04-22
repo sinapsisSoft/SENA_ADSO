@@ -16,4 +16,5 @@ interface IModel
   public function spShow();
   public function spShowId(array $data);
   public function spGetData(string $data);
+  public function spLogin(array $data);
 }

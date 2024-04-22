@@ -5,6 +5,14 @@ classes and methods in an MVC (Model-View-Controller) architecture. Each key in 
 a route, and the corresponding value is an array containing the controller class and method that
 should be executed when that route is accessed. */
 return [
+  '/login' => [
+    'controller' => App\Controllers\Login\LoginController::class,
+    'method' => 'show'
+  ],
+  '/login/login' => [
+    'controller' => App\Controllers\Login\LoginController::class,
+    'method' => 'login'
+  ],
   '/' => [
     'controller' => App\Controllers\Login\LoginController::class,
     'method' => 'show'

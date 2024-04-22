@@ -57,7 +57,7 @@ class UserController implements IController
       if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $this->data["data"] = $this->userModel->spCreate($this->getDataModel());
       } else {
-        $this->data["error"] = "NOT REQUEST_METHOD GET";
+        $this->data["error"] = "NOT REQUEST_METHOD GET,PUT,DELETE";
       }
     } catch (\Exception $e) {
       $this->data['error'] = $e->getMessage();
@@ -115,7 +115,8 @@ class UserController implements IController
       $this->data['users'] = $this->userModel->spShow();
       $this->data['roles'] = $this->roleModel->getRoles();
       $this->data['userStatus'] = $this->userStatusModel->getUserStatus();
-      $this->view->render('user/show', $this->data);
+      $this->view->render('user/user', $this->data);
+
     } catch (\Exception $e) {
       $this->data['error'] = $e->getMessage();
     }
