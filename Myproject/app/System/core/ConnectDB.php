@@ -3,7 +3,7 @@
 namespace App\System\core;
 
 /**
- * Author:MAIRA MEDINA
+ * Author:DIEGO CASALLAS
  * Date:15/02/2024
  * Update Date:
  * Descriptions: this is class connected
