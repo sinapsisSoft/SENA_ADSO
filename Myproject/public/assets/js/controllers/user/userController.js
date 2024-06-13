@@ -46,7 +46,7 @@ function showId(id) {
   uri = 'user/showId';
   sendData(setJson, type, uri)
   .then(data => {
-    console.log(data['data'][0]);
+    //console.log(data['data'][0]);
     objForm.sendDataForm(data['data'][0]);
   })
   .catch(error => console.error(error))

@@ -47,7 +47,7 @@ class Form {
     }
   };
 
-  /*Function chnage type input**/
+  /*Function change type input**/
   viewText(id) {
     let objInput = document.getElementById(id);
     let typeInput = "password";

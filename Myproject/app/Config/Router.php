@@ -23,6 +23,7 @@ class Router{
       if ($longUrl = strpos($uri, $this->folder)) {
       $newLongUrl = $longUrl + (strlen($this->folder));
       $arrayGetData = explode("/", substr($uri,  $newLongUrl));
+      
       $routes['controller']= $this->arrayRoutes[substr($uri,$newLongUrl)]['controller'];
       $routes['method']= $this->arrayRoutes[substr($uri,  $newLongUrl)]['method'];
       $routes['parametres']=(isset($arrayGetData[2])) ? ucfirst($arrayGetData[2]) : "";
