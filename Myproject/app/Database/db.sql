@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 18-04-2024 a las 02:51:27
+-- Tiempo de generación: 13-06-2024 a las 21:57:08
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.0.30
 
@@ -18,139 +18,76 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `memory_games`
+-- Base de datos: `apisena`
 --
-CREATE DATABASE IF NOT EXISTS `memory_games` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `memory_games`;
+CREATE DATABASE IF NOT EXISTS `apisena` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `apisena`;
 
--- --------------------------------------------------------
+DELIMITER $$
+--
+-- Procedimientos
+--
+DROP PROCEDURE IF EXISTS `changePassword`$$
+CREATE PROCEDURE `changePassword` (IN `userId` INT, `UserPassword` VARCHAR(256))   BEGIN
+UPDATE user SET User_password=UserPassword WHERE User_id=userId;
+END$$
 
---
--- Estructura de tabla para la tabla `module`
---
+DROP PROCEDURE IF EXISTS `loginUser`$$
+CREATE PROCEDURE `loginUser` (IN `user` VARCHAR(30))   BEGIN
+SELECT User_password FROM user WHERE User_user=user AND User_status_id=1;
+END$$
 
-DROP TABLE IF EXISTS `module`;
-CREATE TABLE IF NOT EXISTS `module` (
-  `Module_id` int(11) NOT NULL AUTO_INCREMENT,
-  `Module_name` varchar(20) NOT NULL,
-  `Module_route` varchar(30) NOT NULL,
-  `Module_icon` varchar(20) NOT NULL,
-  `Module_description` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`Module_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+DROP PROCEDURE IF EXISTS `sp_change_password`$$
+CREATE PROCEDURE `sp_change_password` (IN `IdUser` INT, `UserPassword` VARCHAR(256))   BEGIN
+UPDATE user SET User_password=UserPassword WHERE User_id=IdUser;
+END$$
 
---
--- Truncar tablas antes de insertar `module`
---
+DROP PROCEDURE IF EXISTS `sp_delete_user`$$
+CREATE PROCEDURE `sp_delete_user` (IN `IdUser` INT)   BEGIN
+DELETE FROM user WHERE User_id=IdUser;
+SELECT COUNT(*) FROM user WHERE User_id=IdUser; 
+END$$
 
-TRUNCATE TABLE `module`;
---
--- Volcado de datos para la tabla `module`
---
+DROP PROCEDURE IF EXISTS `sp_insert_user`$$
+CREATE PROCEDURE `sp_insert_user` (IN `UserUser` VARCHAR(30), IN `UserPassword` VARCHAR(256), IN `UserStatusId` INT, IN `RoleId` INT)   BEGIN
+INSERT INTO `user`(`User_id`, `User_user`, `User_password`, `User_status_id`, `Role_id`) VALUES (null,UserUser,UserPassword,UserStatusId,RoleId);
 
-INSERT INTO `module` (`Module_id`, `Module_name`, `Module_route`, `Module_icon`, `Module_description`) VALUES
-(1, 'Home', '/home', '/icons/home', 'home'),
-(2, 'User', '/user', '/icons/user', 'user'),
-(3, 'Role', '/role', '/icons/role', 'role'),
-(4, 'User Status', '/statusUser', '/icons/statusUser', 'statusUser'),
-(5, 'Module', '/module', '/icons/module', 'module');
+SELECT LAST_INSERT_ID();
+END$$
 
--- --------------------------------------------------------
+DROP PROCEDURE IF EXISTS `sp_login`$$
+CREATE PROCEDURE `sp_login` (IN `UserUser` VARCHAR(30))   BEGIN
+SELECT User_id,Role_id,User_password FROM user WHERE User_user=UserUser;
+END$$
 
---
--- Estructura de tabla para la tabla `module_role`
---
+DROP PROCEDURE IF EXISTS `sp_select_all_users`$$
+CREATE PROCEDURE `sp_select_all_users` ()   BEGIN
+SELECT US.User_id,US.User_user,US.User_password,US.User_status_id,UST.User_status_name, US.Role_id,ROL.Role_name FROM `user` US
+INNER JOIN role ROL ON US.Role_id=ROL.Role_id
+INNER JOIN user_status UST ON US.User_status_id=UST.User_status_id 
+WHERE US.User_status_id=1;
+END$$
 
-DROP TABLE IF EXISTS `module_role`;
-CREATE TABLE IF NOT EXISTS `module_role` (
-  `Module_role_id` int(11) NOT NULL AUTO_INCREMENT,
-  `Module_FK` int(11) NOT NULL,
-  `Role_FK` int(11) NOT NULL,
-  PRIMARY KEY (`Module_role_id`),
-  KEY `Module_FK` (`Module_FK`),
-  KEY `Role_FK` (`Role_FK`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+DROP PROCEDURE IF EXISTS `sp_select_id_user`$$
+CREATE PROCEDURE `sp_select_id_user` (IN `IdUser` INT)   BEGIN
+SELECT US.User_id,US.User_user,US.User_password,US.User_status_id,UST.User_status_name, US.Role_id,ROL.Role_name FROM `user` US
+INNER JOIN role ROL ON US.Role_id=ROL.Role_id
+INNER JOIN user_status UST ON US.User_status_id=UST.User_status_id 
+WHERE US.User_status_id=1 AND US.User_id=IdUser;
+END$$
 
---
--- Truncar tablas antes de insertar `module_role`
---
+DROP PROCEDURE IF EXISTS `sp_update_user`$$
+CREATE PROCEDURE `sp_update_user` (IN `IdUser` INT, IN `UserStatusId` INT, IN `RoleId` INT)   BEGIN
+UPDATE user SET User_status_id=UserStatusId,Role_id=RoleId WHERE User_id=IdUser;
+CALL`sp_select_all_users`();
+END$$
 
-TRUNCATE TABLE `module_role`;
---
--- Volcado de datos para la tabla `module_role`
---
+DROP PROCEDURE IF EXISTS `validateUser`$$
+CREATE PROCEDURE `validateUser` (IN `UserUser` VARCHAR(30))   BEGIN
+SELECT COUNT(*) FROM user WHERE User_user=UserUser AND User_status_id=1;
+END$$
 
-INSERT INTO `module_role` (`Module_role_id`, `Module_FK`, `Role_FK`) VALUES
-(1, 1, 1),
-(2, 2, 1),
-(3, 3, 1),
-(4, 4, 1),
-(5, 5, 1),
-(6, 1, 2);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `permitions`
---
-
-DROP TABLE IF EXISTS `permitions`;
-CREATE TABLE IF NOT EXISTS `permitions` (
-  `Permitions_id` int(11) NOT NULL AUTO_INCREMENT,
-  `Permitions_name` varchar(30) NOT NULL,
-  `Permitions_description` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`Permitions_id`),
-  UNIQUE KEY `Permitions_name` (`Permitions_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Truncar tablas antes de insertar `permitions`
---
-
-TRUNCATE TABLE `permitions`;
---
--- Volcado de datos para la tabla `permitions`
---
-
-INSERT INTO `permitions` (`Permitions_id`, `Permitions_name`, `Permitions_description`) VALUES
-(1, 'Create', 'This Create'),
-(2, 'Show', 'This Show'),
-(3, 'Edit', 'This Edit'),
-(4, 'Delete', 'This Delete');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `permitions_module_role`
---
-
-DROP TABLE IF EXISTS `permitions_module_role`;
-CREATE TABLE IF NOT EXISTS `permitions_module_role` (
-  `Permitions_module_role_id` int(11) NOT NULL AUTO_INCREMENT,
-  `Module_role_FK` int(11) NOT NULL,
-  `Permitions_FK` int(11) NOT NULL,
-  PRIMARY KEY (`Permitions_module_role_id`),
-  KEY `Module_role_FK` (`Module_role_FK`),
-  KEY `Permitions_FK` (`Permitions_FK`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Truncar tablas antes de insertar `permitions_module_role`
---
-
-TRUNCATE TABLE `permitions_module_role`;
---
--- Volcado de datos para la tabla `permitions_module_role`
---
-
-INSERT INTO `permitions_module_role` (`Permitions_module_role_id`, `Module_role_FK`, `Permitions_FK`) VALUES
-(1, 1, 1),
-(2, 1, 2),
-(3, 1, 3),
-(4, 1, 4),
-(5, 2, 1),
-(6, 3, 1),
-(7, 3, 2);
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -163,56 +100,46 @@ CREATE TABLE IF NOT EXISTS `role` (
   `Role_id` int(11) NOT NULL AUTO_INCREMENT,
   `Role_name` varchar(20) NOT NULL,
   `Role_description` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`Role_id`),
-  UNIQUE KEY `Role_name` (`Role_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  PRIMARY KEY (`Role_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Truncar tablas antes de insertar `role`
---
-
-TRUNCATE TABLE `role`;
 --
 -- Volcado de datos para la tabla `role`
 --
 
 INSERT INTO `role` (`Role_id`, `Role_name`, `Role_description`) VALUES
-(1, 'Administrator', 'This is Administrator'),
-(2, 'Client', 'This is Client'),
-(3, 'Player', 'This is Player');
+(1, 'Administrator', 'Administrator'),
+(2, 'Client', 'Client');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `users`
+-- Estructura de tabla para la tabla `user`
 --
 
-DROP TABLE IF EXISTS `users`;
-CREATE TABLE IF NOT EXISTS `users` (
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE IF NOT EXISTS `user` (
   `User_id` int(11) NOT NULL AUTO_INCREMENT,
   `User_user` varchar(30) NOT NULL,
   `User_password` varchar(256) NOT NULL,
-  `User_status_FK` int(11) NOT NULL,
-  `Role_FK` int(11) NOT NULL,
+  `User_status_id` int(11) NOT NULL,
+  `Role_id` int(11) NOT NULL,
   PRIMARY KEY (`User_id`),
   UNIQUE KEY `User_user` (`User_user`),
-  KEY `User_status_FK` (`User_status_FK`),
-  KEY `Role_FK` (`Role_FK`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  KEY `User_status_id` (`User_status_id`),
+  KEY `Role_id` (`Role_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Truncar tablas antes de insertar `users`
+-- Volcado de datos para la tabla `user`
 --
 
-TRUNCATE TABLE `users`;
---
--- Volcado de datos para la tabla `users`
---
-
-INSERT INTO `users` (`User_id`, `User_user`, `User_password`, `User_status_FK`, `Role_FK`) VALUES
-(1, 'diego@gmail.com', '$2y$10$ICFjMfjfwcQQBAqDdR2OtO.DOGWOWOzaB1F1Wob1173FPgH2FOhlK', 1, 1),
-(2, 'juan@gmail.com', '$2y$10$ICFjMfjfwcQQBAqDdR2OtO.DOGWOWOzaB1F1Wob1173FPgH2FOhlK', 1, 2),
-(3, 'camila@gmail.com', '$2y$10$ICFjMfjfwcQQBAqDdR2OtO.DOGWOWOzaB1F1Wob1173FPgH2FOhlK', 1, 3);
+INSERT INTO `user` (`User_id`, `User_user`, `User_password`, `User_status_id`, `Role_id`) VALUES
+(31, 'dieher@gmail.com', '$2y$10$Ormm1OPYtVh.rd2yhVswDuTBs6HhT5KZvFlWsAVve2r6gydcSDSnq', 1, 1),
+(36, 'admin@sinapsist.com.co', '$2y$10$DKbIm5z3FLz.QFCLS91Gyeh/AilisDsanzkhe0r2y6TFnJ0oENnvK', 2, 2),
+(38, 'diehercasvan@gmail.com', '$2y$10$VluFC6kyc.XfUXh/YD3q8.55RwtG0wZGG6GocA6uClbH3XNv.6aSq', 1, 1),
+(44, 'sena@sena.com.co', '$2y$10$y2PfBCRe9dI4HWLB.FMpz.bl14rP32nYu5LQM5XAsbg5zh1EKPUrK', 1, 1),
+(53, 'carlos@sena.edu.co', '$2y$10$xxVS9HUoBum0NrGT.iCLTOqgf6TyHmnx8x.swlrSWU7s/2/n7fV4O', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -225,324 +152,28 @@ CREATE TABLE IF NOT EXISTS `user_status` (
   `User_status_id` int(11) NOT NULL AUTO_INCREMENT,
   `User_status_name` varchar(20) NOT NULL,
   `User_status_description` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`User_status_id`),
-  UNIQUE KEY `User_status_name` (`User_status_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  PRIMARY KEY (`User_status_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Truncar tablas antes de insertar `user_status`
---
-
-TRUNCATE TABLE `user_status`;
 --
 -- Volcado de datos para la tabla `user_status`
 --
 
 INSERT INTO `user_status` (`User_status_id`, `User_status_name`, `User_status_description`) VALUES
-(1, 'Active', 'This is Active'),
-(2, 'Inactive', 'This is Inactive'),
-(3, 'Blocked', 'This is Blocked'),
-(4, 'Delete', 'This is Delete');
+(1, 'Active', 'Active'),
+(2, 'Cancel', 'Cancel'),
+(3, 'Block', 'Block');
 
 --
 -- Restricciones para tablas volcadas
 --
 
 --
--- Filtros para la tabla `module_role`
+-- Filtros para la tabla `user`
 --
-ALTER TABLE `module_role`
-  ADD CONSTRAINT `module_role_ibfk_1` FOREIGN KEY (`Module_FK`) REFERENCES `module` (`Module_id`),
-  ADD CONSTRAINT `module_role_ibfk_2` FOREIGN KEY (`Role_FK`) REFERENCES `role` (`Role_id`);
-
---
--- Filtros para la tabla `permitions_module_role`
---
-ALTER TABLE `permitions_module_role`
-  ADD CONSTRAINT `permitions_module_role_ibfk_1` FOREIGN KEY (`Module_role_FK`) REFERENCES `module_role` (`Module_role_id`),
-  ADD CONSTRAINT `permitions_module_role_ibfk_2` FOREIGN KEY (`Permitions_FK`) REFERENCES `permitions` (`Permitions_id`);
-
---
--- Filtros para la tabla `users`
---
-ALTER TABLE `users`
-  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`User_status_FK`) REFERENCES `user_status` (`User_status_id`),
-  ADD CONSTRAINT `users_ibfk_2` FOREIGN KEY (`Role_FK`) REFERENCES `role` (`Role_id`);
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
--- phpMyAdmin SQL Dump
--- version 5.2.1
--- https://www.phpmyadmin.net/
---
--- Servidor: 127.0.0.1
--- Tiempo de generación: 18-04-2024 a las 02:51:27
--- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.0.30
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
---
--- Base de datos: `memory_games`
---
-CREATE DATABASE IF NOT EXISTS `memory_games` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `memory_games`;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `module`
---
-
-DROP TABLE IF EXISTS `module`;
-CREATE TABLE IF NOT EXISTS `module` (
-  `Module_id` int(11) NOT NULL AUTO_INCREMENT,
-  `Module_name` varchar(20) NOT NULL,
-  `Module_route` varchar(30) NOT NULL,
-  `Module_icon` varchar(20) NOT NULL,
-  `Module_description` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`Module_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Truncar tablas antes de insertar `module`
---
-
-TRUNCATE TABLE `module`;
---
--- Volcado de datos para la tabla `module`
---
-
-INSERT INTO `module` (`Module_id`, `Module_name`, `Module_route`, `Module_icon`, `Module_description`) VALUES
-(1, 'Home', '/home', '/icons/home', 'home'),
-(2, 'User', '/user', '/icons/user', 'user'),
-(3, 'Role', '/role', '/icons/role', 'role'),
-(4, 'User Status', '/statusUser', '/icons/statusUser', 'statusUser'),
-(5, 'Module', '/module', '/icons/module', 'module');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `module_role`
---
-
-DROP TABLE IF EXISTS `module_role`;
-CREATE TABLE IF NOT EXISTS `module_role` (
-  `Module_role_id` int(11) NOT NULL AUTO_INCREMENT,
-  `Module_FK` int(11) NOT NULL,
-  `Role_FK` int(11) NOT NULL,
-  PRIMARY KEY (`Module_role_id`),
-  KEY `Module_FK` (`Module_FK`),
-  KEY `Role_FK` (`Role_FK`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Truncar tablas antes de insertar `module_role`
---
-
-TRUNCATE TABLE `module_role`;
---
--- Volcado de datos para la tabla `module_role`
---
-
-INSERT INTO `module_role` (`Module_role_id`, `Module_FK`, `Role_FK`) VALUES
-(1, 1, 1),
-(2, 2, 1),
-(3, 3, 1),
-(4, 4, 1),
-(5, 5, 1),
-(6, 1, 2);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `permitions`
---
-
-DROP TABLE IF EXISTS `permitions`;
-CREATE TABLE IF NOT EXISTS `permitions` (
-  `Permitions_id` int(11) NOT NULL AUTO_INCREMENT,
-  `Permitions_name` varchar(30) NOT NULL,
-  `Permitions_description` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`Permitions_id`),
-  UNIQUE KEY `Permitions_name` (`Permitions_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Truncar tablas antes de insertar `permitions`
---
-
-TRUNCATE TABLE `permitions`;
---
--- Volcado de datos para la tabla `permitions`
---
-
-INSERT INTO `permitions` (`Permitions_id`, `Permitions_name`, `Permitions_description`) VALUES
-(1, 'Create', 'This Create'),
-(2, 'Show', 'This Show'),
-(3, 'Edit', 'This Edit'),
-(4, 'Delete', 'This Delete');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `permitions_module_role`
---
-
-DROP TABLE IF EXISTS `permitions_module_role`;
-CREATE TABLE IF NOT EXISTS `permitions_module_role` (
-  `Permitions_module_role_id` int(11) NOT NULL AUTO_INCREMENT,
-  `Module_role_FK` int(11) NOT NULL,
-  `Permitions_FK` int(11) NOT NULL,
-  PRIMARY KEY (`Permitions_module_role_id`),
-  KEY `Module_role_FK` (`Module_role_FK`),
-  KEY `Permitions_FK` (`Permitions_FK`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Truncar tablas antes de insertar `permitions_module_role`
---
-
-TRUNCATE TABLE `permitions_module_role`;
---
--- Volcado de datos para la tabla `permitions_module_role`
---
-
-INSERT INTO `permitions_module_role` (`Permitions_module_role_id`, `Module_role_FK`, `Permitions_FK`) VALUES
-(1, 1, 1),
-(2, 1, 2),
-(3, 1, 3),
-(4, 1, 4),
-(5, 2, 1),
-(6, 3, 1),
-(7, 3, 2);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `role`
---
-
-DROP TABLE IF EXISTS `role`;
-CREATE TABLE IF NOT EXISTS `role` (
-  `Role_id` int(11) NOT NULL AUTO_INCREMENT,
-  `Role_name` varchar(20) NOT NULL,
-  `Role_description` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`Role_id`),
-  UNIQUE KEY `Role_name` (`Role_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Truncar tablas antes de insertar `role`
---
-
-TRUNCATE TABLE `role`;
---
--- Volcado de datos para la tabla `role`
---
-
-INSERT INTO `role` (`Role_id`, `Role_name`, `Role_description`) VALUES
-(1, 'Administrator', 'This is Administrator'),
-(2, 'Client', 'This is Client'),
-(3, 'Player', 'This is Player');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `users`
---
-
-DROP TABLE IF EXISTS `users`;
-CREATE TABLE IF NOT EXISTS `users` (
-  `User_id` int(11) NOT NULL AUTO_INCREMENT,
-  `User_user` varchar(30) NOT NULL,
-  `User_password` varchar(256) NOT NULL,
-  `User_status_FK` int(11) NOT NULL,
-  `Role_FK` int(11) NOT NULL,
-  PRIMARY KEY (`User_id`),
-  UNIQUE KEY `User_user` (`User_user`),
-  KEY `User_status_FK` (`User_status_FK`),
-  KEY `Role_FK` (`Role_FK`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Truncar tablas antes de insertar `users`
---
-
-TRUNCATE TABLE `users`;
---
--- Volcado de datos para la tabla `users`
---
-
-INSERT INTO `users` (`User_id`, `User_user`, `User_password`, `User_status_FK`, `Role_FK`) VALUES
-(1, 'diego@gmail.com', '$2y$10$ICFjMfjfwcQQBAqDdR2OtO.DOGWOWOzaB1F1Wob1173FPgH2FOhlK', 1, 1),
-(2, 'juan@gmail.com', '$2y$10$ICFjMfjfwcQQBAqDdR2OtO.DOGWOWOzaB1F1Wob1173FPgH2FOhlK', 1, 2),
-(3, 'camila@gmail.com', '$2y$10$ICFjMfjfwcQQBAqDdR2OtO.DOGWOWOzaB1F1Wob1173FPgH2FOhlK', 1, 3);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `user_status`
---
-
-DROP TABLE IF EXISTS `user_status`;
-CREATE TABLE IF NOT EXISTS `user_status` (
-  `User_status_id` int(11) NOT NULL AUTO_INCREMENT,
-  `User_status_name` varchar(20) NOT NULL,
-  `User_status_description` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`User_status_id`),
-  UNIQUE KEY `User_status_name` (`User_status_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Truncar tablas antes de insertar `user_status`
---
-
-TRUNCATE TABLE `user_status`;
---
--- Volcado de datos para la tabla `user_status`
---
-
-INSERT INTO `user_status` (`User_status_id`, `User_status_name`, `User_status_description`) VALUES
-(1, 'Active', 'This is Active'),
-(2, 'Inactive', 'This is Inactive'),
-(3, 'Blocked', 'This is Blocked'),
-(4, 'Delete', 'This is Delete');
-
---
--- Restricciones para tablas volcadas
---
-
---
--- Filtros para la tabla `module_role`
---
-ALTER TABLE `module_role`
-  ADD CONSTRAINT `module_role_ibfk_1` FOREIGN KEY (`Module_FK`) REFERENCES `module` (`Module_id`),
-  ADD CONSTRAINT `module_role_ibfk_2` FOREIGN KEY (`Role_FK`) REFERENCES `role` (`Role_id`);
-
---
--- Filtros para la tabla `permitions_module_role`
---
-ALTER TABLE `permitions_module_role`
-  ADD CONSTRAINT `permitions_module_role_ibfk_1` FOREIGN KEY (`Module_role_FK`) REFERENCES `module_role` (`Module_role_id`),
-  ADD CONSTRAINT `permitions_module_role_ibfk_2` FOREIGN KEY (`Permitions_FK`) REFERENCES `permitions` (`Permitions_id`);
-
---
--- Filtros para la tabla `users`
---
-ALTER TABLE `users`
-  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`User_status_FK`) REFERENCES `user_status` (`User_status_id`),
-  ADD CONSTRAINT `users_ibfk_2` FOREIGN KEY (`Role_FK`) REFERENCES `role` (`Role_id`);
+ALTER TABLE `user`
+  ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`User_status_id`) REFERENCES `user_status` (`User_status_id`),
+  ADD CONSTRAINT `user_ibfk_2` FOREIGN KEY (`Role_id`) REFERENCES `role` (`Role_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
