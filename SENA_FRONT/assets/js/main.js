@@ -1,10 +1,16 @@
 
+/*
+**Author:DIEGO CASALLAS
+**Date:11/10/2024
+**Description:This code contains a set of functions for validating form data entries
+*/
+
 let setIdForm = "my-form";
 let setIdBtn = "btnSubmit";
 const objForm = document.getElementById(setIdForm);
 var btnSendData = document.getElementById(setIdBtn);
 var result = new Object();
-var getPatterns;
+var getPatterns;  
 
 btnSendData.addEventListener('click', function (event) {
   event.preventDefault();
@@ -13,7 +19,6 @@ btnSendData.addEventListener('click', function (event) {
 });
 
 function validateForm() {
-
   for (let i = 0; i < objForm.children.length; i++) {
     let element = objForm[i];
 

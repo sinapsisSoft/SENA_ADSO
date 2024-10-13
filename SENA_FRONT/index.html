@@ -7,13 +7,18 @@
 </head>
 <body>
   <form id="my-form">
-    <input type="text" value="" id="" >
-    <input type="password" value="aB12345678*" id="" >
+    <input type="text" value="Diego Casallas" id="" >
+    <input type="password" value="Ab123456789*" id=""  >
     <input type="email" value="diegoh@gmail.com" id="" >
     <select>
-      <option value="0">SELECT</option>
+      <option value="" disabled readonly selected>SELECT</option>
       <option value="1">CC</option>
       <option value="2">TI</option>
+    </select>
+    <select>
+      <option value="" disabled readonly selected>GENDER</option>
+      <option value="1">Female</option>
+      <option value="2">Male</option>
     </select>
     <input type="checkbox" value="" > 
     <input type="radio" name="hobbies"> 
@@ -24,7 +29,12 @@
     <input type="radio" name="hobbies2">
     <button  id="btnSubmit" value="">Send data</button>
   </form>
-  <script src="assets/js/main.js"></script>
+  <script src="assets/js/Form.js"></script>
+  <script>
+    let idForm="my-form";
+    var objForm=new Form(idForm);
+    console.log(objForm.validate());
+  </script>
 
 </body>
 </html>
