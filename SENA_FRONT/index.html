@@ -33,7 +33,12 @@
   <script>
     let idForm="my-form";
     var objForm=new Form(idForm);
-    console.log(objForm.validate());
+ 
+    objForm.form.addEventListener('submit',(event)=>{
+      event.preventDefault();
+      console.log(objForm.validate());
+      alert();
+    })
   </script>
 
 </body>
