@@ -1,0 +1,9 @@
+{
+  "type": "sqlite",
+  "database": "./data/app.db",
+  "synchronize": true,
+  "logging":false,
+  "entities": [
+    "dist/entities/**/*.js"
+  ]
+}
