@@ -1,10 +1,8 @@
 # Disable directory browsing
 Options -Indexes
-
 # ----------------------------------------------------------------------
 # Rewrite engine
 # ----------------------------------------------------------------------
-
 # Turning on the rewrite engine is necessary for the following rules and features.
 # FollowSymLinks must be enabled for this to work.
 <IfModule mod_rewrite.c>
@@ -32,13 +30,11 @@ Options -Indexes
 	RewriteCond %{HTTP:Authorization} .
 	RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 </IfModule>
-
 <IfModule !mod_rewrite.c>
 	# If we don't have mod_rewrite installed, all 404's
 	# can be sent to index.php, and everything works as normal.
 	ErrorDocument 404 index.php
 </IfModule>
-
 # Disable server signature start
 ServerSignature Off
 # Disable server signature end

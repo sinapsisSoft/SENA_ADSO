@@ -2,17 +2,17 @@
 
 /**
  * Author:DIEGO CASALLAS
- * Date:13/11/2024
- * Descriptions: This is the user class controller data model
+ * Date:15/11/2024
+ * Descriptions: This is the class role
  */
 
 namespace App\Controllers;
 
-use App\Models\UserModel;
+use App\Models\UserStatusModel;
 
 use Exception;
 
-class UserController
+class UserStatusController
 {
   private $data;
   private $model;
@@ -24,8 +24,8 @@ class UserController
   public function __construct()
   {
     $this->data = [];
-    $this->model = new UserModel();
-    $this->idKey = "user_id";
+    $this->model = new UserStatusModel();
+   
   }
   /**
    * The index function initializes data and returns it as a JSON response with status and message.
@@ -164,11 +164,7 @@ class UserController
   private function getDataModel()
   {
     $data_request = json_decode(file_get_contents('php://input'), true);
-    $getModel['user_user'] = empty($data_request['user']) ? '' : $data_request['user'];
-    $getModel['user_password'] = empty($data_request['password']) ? '' : $data_request['password'];
-    $getModel['userStatus_fk'] = $data_request['status'];
-    $getModel['role_fk'] = $data_request['role'];
-
+    $getModel['userStatus_name'] = empty($data_request['name']) ? '' : $data_request['name'];
     return $getModel;
   }
 }

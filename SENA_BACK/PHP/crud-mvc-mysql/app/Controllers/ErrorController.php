@@ -1,9 +1,9 @@
 <?php
-namespace APP\Controllers;
+namespace App\Controllers;
 
   class ErrorController{
     public function index(){
-      echo("Error Index");
+      echo("Error Index 404");
     }
   }
 ?>
