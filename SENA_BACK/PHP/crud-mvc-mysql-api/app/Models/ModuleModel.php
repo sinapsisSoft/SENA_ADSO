@@ -3,7 +3,7 @@
 /**
  * Author:DIEGO CASALLAS
  * Date:08/11/2024
- * Descriptions: This is the class for the data model module functionality manager.
+ * Descriptions: This is the connection class for MySQL
  */
 
 namespace App\Models;

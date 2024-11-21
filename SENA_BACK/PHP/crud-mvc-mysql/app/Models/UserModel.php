@@ -3,7 +3,7 @@
 /**
  * Author:DIEGO CASALLAS
  * Date:08/11/2024
- * Descriptions: This is the connection class for MySQL
+ * Descriptions: This is the class for the data model user functionality manager.
  */
 
 namespace App\Models;
@@ -36,20 +36,23 @@ class UserModel
     $this->primaryKey = 'user_id';
   }
 
-  /**
-   * The function `findAll` retrieves all records from the `user` table using PDO in PHP and handles
-   * exceptions by returning an array with status and message if an error occurs.
-   * 
-   * @return The `findAll` function is returning data from the "user" table in the database. If the query
-   * is successful, it returns an array of user data fetched from the database. If there is an exception
-   * (error), it returns an empty array with a status code of 404 and an error message.
-   */
+
+/**
+ * The function findAll() retrieves all user data either through a direct SQL query or by calling a
+ * stored procedure and returns the results or an error message.
+ * 
+ * @return The `findAll` function is returning data fetched from the database table `user` or from a
+ * stored procedure `sp_user_all()`. The data is fetched using PDO and returned as an associative
+ * array. If an exception occurs during the execution, an empty array with a status code of 404 and an
+ * error message will be returned.
+ */
   public function findAll()
   {
     try {
       $this->conn = new ConnectDB();
       $this->pdo = $this->conn->connect();
       $this->sql = "SELECT * FROM user";
+      $this->sql = "CALL sp_user_all()";
       $result = $this->pdo->prepare($this->sql);
       $result->execute();
       $results = $result->fetchAll(PDO::FETCH_ASSOC);
@@ -62,26 +65,58 @@ class UserModel
     return $this->data;
   }
 
-  /**
-   * The function `findId` in PHP retrieves user data based on the provided ID from a database and
-   * handles exceptions.
-   * 
-   * @param int id The `findId` function you provided is a PHP method that takes an integer parameter
-   * `` representing the user ID to search for in the database. The function attempts to connect to a
-   * database, execute a SQL query to select a user with the specified ID, and return the result as an
-   * associative
-   * 
-   * @return The `findId` function returns an array containing the data fetched from the database based
-   * on the provided ``. The array includes the fetched data, status code, and a message. If an
-   * exception occurs during the database query, an empty data array, a status code of 404, and the
-   * exception message are returned.
-   */
-  public function findId(int $id):Array
+
+ /**
+  * The function `findId` retrieves a user's data from the database based on the provided ID.
+  * 
+  * @param int id The `findId` function you provided is a method that takes an integer `` as a
+  * parameter and attempts to retrieve a user record from the database based on that ID. It connects to
+  * the database, executes a SELECT query to fetch the user data, and returns the result as an
+  * associative array
+  * 
+  * @return array An array containing data related to the user with the specified ID is being returned.
+  * If the user is found, the array will contain the user's information fetched from the database. If
+  * an error occurs during the process, the array will have an empty 'data' key, a status of 404, and
+  * an error message explaining the issue.
+  */
+  public function findId(int $id): array
   {
     try {
       $this->conn = new ConnectDB();
       $this->pdo = $this->conn->connect();
       $this->sql = "SELECT * FROM user WHERE $this->primaryKey ={$id}";
+      $result = $this->pdo->prepare($this->sql);
+      $result->execute();
+      $results = $result->fetchAll(PDO::FETCH_ASSOC);
+      $this->data = $results;
+    } catch (Exception $e) {
+      $this->data['data'] = [];
+      $this->data['status'] = 404;
+      $this->data['message'] = $e->getMessage();
+    }
+    return $this->data;
+  }
+
+/**
+ * This PHP function searches for user data using a stored procedure and returns the results or an
+ * error message.
+ * 
+ * @param string data The `search` function you provided seems to be a method in a class that is
+ * responsible for searching user data using a stored procedure `sp_user_search`. It takes a string
+ * parameter `` which is used as input for the search query.
+ * 
+ * @return array The `search` function returns an array containing the search results fetched from the
+ * database. If an exception occurs during the search process, it will return an array with an empty
+ * 'data' key, a status of 404, and the error message in the 'message' key.
+ */
+  public function search(string $data): array
+  {
+    try {
+   
+      $this->conn = new ConnectDB();
+      $this->pdo = $this->conn->connect();
+      $this->sql = "CALL sp_user_search('".$data."');";
+
       $result = $this->pdo->prepare($this->sql);
       $result->execute();
       $results = $result->fetchAll(PDO::FETCH_ASSOC);
@@ -107,7 +142,7 @@ class UserModel
    * passed in the `` array passes validation, a successful insertion into the database is
    * performed, and the `data` key is an empty array, `status` is set to 200, and
    */
-  public function create(array $user):Array
+  public function create(array $user): array
   {
     try {
       if ($this->validateModel($user)) {
@@ -121,7 +156,7 @@ class UserModel
         $stmt->bindParam(3, $user[$this->modelData[2]]);
         $stmt->bindParam(4, $user[$this->modelData[3]]);
         $stmt->execute();
-        $last_id=$this->pdo->lastInsertId();
+        $last_id = $this->pdo->lastInsertId();
         $this->data['newId'] =  $last_id;
       } else {
         $this->data['data'] = [];
@@ -152,7 +187,7 @@ class UserModel
    * is validated successfully, it updates the user record in the database and sets `status` to 200 with
    * a message of 'OK'. If validation fails, it sets `status` to 404 with
    */
-  public function update(array $user, int $id):Array
+  public function update(array $user, int $id): array
   {
     try {
       if ($this->validateModel($user)) {
@@ -190,7 +225,7 @@ class UserModel
    * successful or 404 if there was an error, and the `message` key contains a message indicating the
    * status of the deletion operation.
    */
-  public function delete(int $id):Array
+  public function delete(int $id): array
   {
     try {
       $this->conn = new ConnectDB();
@@ -218,7 +253,7 @@ class UserModel
    * @return The function `validateModel` is returning a boolean value (`true` or `false`) based on the
    * validation logic inside the function.
    */
-  private function validateModel($array):Bool
+  private function validateModel($array): Bool
   {
     $validate = true;
     for ($i = 0; $i < count($array); $i++) {

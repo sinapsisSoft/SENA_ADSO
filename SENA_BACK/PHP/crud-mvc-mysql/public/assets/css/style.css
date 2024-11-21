@@ -1,0 +1,11 @@
+.btnFloating{
+  position: absolute;
+  top: 4em;
+  right: 10%;
+  width: 40px !important;
+  border-radius: 30px;
+  font-size: 17px;
+  font-weight: bold;
+  z-index: 100;
+  box-shadow: 0px 2px 3px gray;
+}

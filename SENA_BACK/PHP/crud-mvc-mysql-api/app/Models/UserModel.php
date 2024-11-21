@@ -3,7 +3,7 @@
 /**
  * Author:DIEGO CASALLAS
  * Date:08/11/2024
- * Descriptions: This is the class for the data model module functionality manager.
+ * Descriptions: This is the connection class for MySQL
  */
 
 namespace App\Models;
@@ -12,11 +12,11 @@ use App\Config\ConnectDB;
 use Exception;
 use PDO;
 
-class ModuleModel
+class UserModel
 {
-  /* These are private properties of the `userStatusModel` class in PHP. Here is a brief explanation of each
+  /* These are private properties of the `UserModel` class in PHP. Here is a brief explanation of each
  property: */
-  /* These are private properties of the `userStatusModel` class in PHP. Here is a brief explanation of each
+  /* These are private properties of the `UserModel` class in PHP. Here is a brief explanation of each
  property: */
   private $conn;
   private $data;
@@ -32,16 +32,16 @@ class ModuleModel
   public function __construct()
   {
     $this->data = [];
-    $this->modelData = ['module_name','module_route','module_description'];
-    $this->primaryKey = 'module_id';
+    $this->modelData = ['user_user', 'user_password', 'userStatus_fk', 'role_fk'];
+    $this->primaryKey = 'user_id';
   }
 
   /**
-   * The function `findAll` retrieves all records from the `role` table using PDO in PHP and handles
+   * The function `findAll` retrieves all records from the `user` table using PDO in PHP and handles
    * exceptions by returning an array with status and message if an error occurs.
    * 
-   * @return The `findAll` function is returning data from the "role" table in the database. If the query
-   * is successful, it returns an array of role data fetched from the database. If there is an exception
+   * @return The `findAll` function is returning data from the "user" table in the database. If the query
+   * is successful, it returns an array of user data fetched from the database. If there is an exception
    * (error), it returns an empty array with a status code of 404 and an error message.
    */
   public function findAll()
@@ -49,7 +49,7 @@ class ModuleModel
     try {
       $this->conn = new ConnectDB();
       $this->pdo = $this->conn->connect();
-      $this->sql = "SELECT * FROM module";
+      $this->sql = "SELECT * FROM user";
       $result = $this->pdo->prepare($this->sql);
       $result->execute();
       $results = $result->fetchAll(PDO::FETCH_ASSOC);
@@ -63,12 +63,12 @@ class ModuleModel
   }
 
   /**
-   * The function `findId` in PHP retrieves role data based on the provided ID from a database and
+   * The function `findId` in PHP retrieves user data based on the provided ID from a database and
    * handles exceptions.
    * 
    * @param int id The `findId` function you provided is a PHP method that takes an integer parameter
-   * `` representing the role ID to search for in the database. The function attempts to connect to a
-   * database, execute a SQL query to select a role with the specified ID, and return the result as an
+   * `` representing the user ID to search for in the database. The function attempts to connect to a
+   * database, execute a SQL query to select a user with the specified ID, and return the result as an
    * associative
    * 
    * @return The `findId` function returns an array containing the data fetched from the database based
@@ -81,7 +81,7 @@ class ModuleModel
     try {
       $this->conn = new ConnectDB();
       $this->pdo = $this->conn->connect();
-      $this->sql = "SELECT * FROM module WHERE $this->primaryKey ={$id}";
+      $this->sql = "SELECT * FROM user WHERE $this->primaryKey ={$id}";
       $result = $this->pdo->prepare($this->sql);
       $result->execute();
       $results = $result->fetchAll(PDO::FETCH_ASSOC);
@@ -95,29 +95,31 @@ class ModuleModel
   }
 
   /**
-   * The function creates a new role record in a database table with hashed password and returns a
+   * The function creates a new user record in a database table with hashed password and returns a
    * response based on validation and execution status.
    * 
-   * @param array role The `create` function you provided seems to be a method for creating a new role
-   * in a database. It takes an array `` as a parameter, which likely contains role data such as
-   * roleName, password, role status, and role.
+   * @param array user The `create` function you provided seems to be a method for creating a new user
+   * in a database. It takes an array `` as a parameter, which likely contains user data such as
+   * username, password, user status, and role.
    * 
    * @return The `create` function is returning an array with keys `data`, `status`, and `message`. The
    * specific values of these keys depend on the outcome of the function execution. If the model data
    * passed in the `` array passes validation, a successful insertion into the database is
    * performed, and the `data` key is an empty array, `status` is set to 200, and
    */
-  public function create(array $role):Array
+  public function create(array $user):Array
   {
     try {
-      if ($this->validateModel($role)) {
+      if ($this->validateModel($user)) {
         $this->conn = new ConnectDB();
         $this->pdo = $this->conn->connect();
-        $this->sql = "INSERT INTO module(module_name,module_route,module_description) VALUES (?,?,?)";
+        $this->sql = "INSERT INTO user(user_user, user_password,userStatus_fk,role_fk) VALUES (?,?,?,?)";
         $stmt = $this->pdo->prepare($this->sql);
-        $stmt->bindParam(1, $role[$this->modelData[0]]);
-        $stmt->bindParam(2, $role[$this->modelData[1]]);
-        $stmt->bindParam(3, $role[$this->modelData[2]]);
+        $passwordHast = password_hash($user[$this->modelData[1]], PASSWORD_DEFAULT);
+        $stmt->bindParam(1, $user[$this->modelData[0]]);
+        $stmt->bindParam(2, $passwordHast);
+        $stmt->bindParam(3, $user[$this->modelData[2]]);
+        $stmt->bindParam(4, $user[$this->modelData[3]]);
         $stmt->execute();
         $last_id=$this->pdo->lastInsertId();
         $this->data['newId'] =  $last_id;
@@ -135,33 +137,32 @@ class ModuleModel
   }
 
   /**
-   * This PHP function updates role data in a database table based on input array and role ID, handling
+   * This PHP function updates user data in a database table based on input array and user ID, handling
    * validation and error messages.
    * 
-   * @param array role The `update` function you provided seems to be updating role data in a database.
+   * @param array user The `update` function you provided seems to be updating user data in a database.
    * It takes an array `` and an integer `` as parameters. The `` array likely contains data
-   * related to the role that needs to be updated, such as `roleStatus_fk` and `
+   * related to the user that needs to be updated, such as `userStatus_fk` and `
    * @param int id The `id` parameter in the `update` function represents the unique identifier of the
-   * role record that you want to update in the database. This identifier is used to locate the specific
-   * role record that needs to be modified.
+   * user record that you want to update in the database. This identifier is used to locate the specific
+   * user record that needs to be modified.
    * 
    * @return The `update` function returns an array with keys `data`, `status`, and `message`. The
    * specific values of these keys depend on the logic within the function. If the model data passed in
-   * is validated successfully, it updates the role record in the database and sets `status` to 200 with
+   * is validated successfully, it updates the user record in the database and sets `status` to 200 with
    * a message of 'OK'. If validation fails, it sets `status` to 404 with
    */
-  public function update(array $role, int $id):Array
+  public function update(array $user, int $id):Array
   {
     try {
-      if ($this->validateModel($role)) {
+      if ($this->validateModel($user)) {
         $this->conn = new ConnectDB();
         $this->pdo = $this->conn->connect();
-        $this->sql = "UPDATE module SET module_name=?,module_route=?,module_description=? WHERE  $this->primaryKey=?";
+        $this->sql = "UPDATE user SET userStatus_fk=?,role_fk=? WHERE  $this->primaryKey=?";
         $stmt = $this->pdo->prepare($this->sql);
-        $stmt->bindParam(1, $role[$this->modelData[0]]);
-        $stmt->bindParam(2, $role[$this->modelData[1]]);
-        $stmt->bindParam(3, $role[$this->modelData[2]]);
-        $stmt->bindParam(4, $id);
+        $stmt->bindParam(1, $user[$this->modelData[2]]);
+        $stmt->bindParam(2, $user[$this->modelData[3]]);
+        $stmt->bindParam(3, $id);
         $stmt->execute();
         $this->data['updateId'] = $id;
       } else {
@@ -178,11 +179,11 @@ class ModuleModel
   }
 
   /**
-   * The function `delete` deletes a role record from the database based on the provided role ID.
+   * The function `delete` deletes a user record from the database based on the provided user ID.
    * 
-   * @param int id The `delete` function you provided is a PHP method that deletes a role from a
-   * database table based on the `role_id` provided as a parameter. The `id` parameter is the role ID
-   * of the role you want to delete from the `role` table in the database.
+   * @param int id The `delete` function you provided is a PHP method that deletes a user from a
+   * database table based on the `user_id` provided as a parameter. The `id` parameter is the user ID
+   * of the user you want to delete from the `user` table in the database.
    * 
    * @return The `delete` function returns an array with keys `data`, `status`, and `message`. The
    * `data` key contains an empty array, the `status` key contains either 200 if the deletion was
@@ -194,7 +195,7 @@ class ModuleModel
     try {
       $this->conn = new ConnectDB();
       $this->pdo = $this->conn->connect();
-      $this->sql = "DELETE FROM module WHERE  $this->primaryKey=?";
+      $this->sql = "DELETE FROM user WHERE  $this->primaryKey=?";
       $stmt = $this->pdo->prepare($this->sql);
       $stmt->bindParam(1, $id);
       $stmt->execute();
@@ -221,7 +222,7 @@ class ModuleModel
   {
     $validate = true;
     for ($i = 0; $i < count($array); $i++) {
-      if (!empty($role[$this->modelData[$i]])) {
+      if (!empty($user[$this->modelData[$i]])) {
         $validate = false;
         break;
       }

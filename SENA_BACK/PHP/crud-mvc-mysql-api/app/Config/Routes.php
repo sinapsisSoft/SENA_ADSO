@@ -1,21 +1,17 @@
 <?php
-
 /**
  * Author:DIEGO CASALLAS
- * Date:13/11/2024
- * Descriptions: This is the class for managing allowed routes.
+ * Date:08/11/2024
+ * Descriptions: This is the connection class for MySQL
  */
+namespace APP\Config;
 
-namespace App\Config;
-
-use App\Controllers\ErrorController;
-use App\Controllers\ModuleController;
-use App\Controllers\RoleController;
-use App\Controllers\RoleModuleController;
 use App\Controllers\UserController;
-use App\Controllers\UserStatusController;
+use App\Controllers\RoleController;
+use App\Controllers\ErrorController;
 
 use Exception;
+
 class Routes
 {
   private $url;
@@ -55,13 +51,19 @@ class Routes
         if (!empty($newUrl[2])) {
           $this->attributes =  $newUrl[2];
         }
+
         $resultRoute = $this->getRoutes($this->controller, $this->method);
+        
         if ($resultRoute["controller"] != "ErrorController") {
+
           if ($_SERVER['REQUEST_METHOD'] === $resultRoute['REQUEST']) {
+
             $class = "App\\Controllers\\" . $resultRoute['controller'];
             $method = $resultRoute['method'];
             $controller = new $class();
+            
             $controller->$method($this->attributes);
+
           } else {
             $controller = new ErrorController();
             $controller->index();
@@ -78,35 +80,32 @@ class Routes
       echo ("Error:" . $e);
     }
   }
-
- /**
-  * The function `getRoutes` retrieves routes based on the specified controller and method.
-  * 
-  * @param controller The `controller` parameter in the `getRoutes` function is used to specify which
-  * set of routes to retrieve. It determines which array of routes to look into based on the controller
-  * name provided.
-  * @param method The `getRoutes` function you provided seems to be a routing mechanism for different
-  * controllers and methods. The function takes two parameters: `` and ``. The
-  * `` parameter is used to determine which controller's routes to fetch, and the ``
-  * parameter is used to find a
-  * 
-  * @return The function `getRoutes` returns an array containing information about the route based on
-  * the provided controller and method. If the specified controller and method match any of the
-  * predefined routes, the function returns the corresponding route information. If no matching route
-  * is found, it returns the default error route information.
-  */
+  /**
+   * The function `getRoutes` retrieves the appropriate route based on the controller and method
+   * provided.
+   * 
+   * @param controller The `controller` parameter in the `getRoutes` function refers to the type of
+   * controller for which you want to retrieve routes. It is used to determine whether to fetch routes
+   * for the `UserController` or the `ErrorController`.
+   * @param method The `method` parameter in the `getRoutes` function represents the specific action or
+   * operation that needs to be performed on a particular route. It could be actions like create, show,
+   * showId, update, or delete in the case of user routes, and index in the case of error routes.
+   * 
+   * @return If the `` exists in the routes array and the `` matches a method in the
+   * corresponding routes, then the specific route array with the method details will be returned. If
+   * the `` does not exist in the routes array, then the first route from the errorRoutes
+   * array will be returned. If the method does not match any method in the specified controller's
+   * routes, then the first
+   */
   private function getRoutes($controller, $method)
   {
     $userRoutes = [
       ["method" => "create", "REQUEST" => "POST", "controller" => "UserController"],
       ["method" => "show", "REQUEST" => "GET", "controller" => "UserController"],
       ["method" => "showId", "REQUEST" => "GET", "controller" => "UserController"],
-      ["method" => "update", "REQUEST" => "POST", "controller" => "UserController"],
-      ["method" => "edit", "REQUEST" => "GET", "controller" => "UserController"],
-      ["method" => "delete", "REQUEST" => 'POST', "controller" => "UserController"],
+      ["method" => "update", "REQUEST" => "PUT", "controller" => "UserController"],
+      ["method" => "delete", "REQUEST" => 'DELETE', "controller" => "UserController"],
       ["method" => "index", "REQUEST" => "GET", "controller" => "UserController"],
-      ["method" => "viewCreate", "REQUEST" => 'GET', "controller" => "UserController"],
-      ["method" => "viewDelete", "REQUEST" => 'GET', "controller" => "UserController"],
     ];
     $roleRoutes = [
       ["method" => "create", "REQUEST" => "POST", "controller" => "RoleController"],
@@ -140,7 +139,7 @@ class Routes
       ["method" => "delete", "REQUEST" => 'DELETE', "controller" => "RoleModuleController"],
       ["method" => "index", "REQUEST" => "GET", "controller" => "RoleModuleController"],
     ];
-
+    
     $errorRoutes = [
       ["method" => "index", "REQUEST" => "GET", "controller" => "ErrorController"]
     ];
@@ -154,6 +153,7 @@ class Routes
     if (empty($this->routes[$controller])) {
       return $this->routes["error"][0];
     }
+
     $getRoute = $this->routes[$controller];
     for ($i = 0; $i < count($getRoute); $i++) {
       if ($getRoute[$i]["method"] == $method) {

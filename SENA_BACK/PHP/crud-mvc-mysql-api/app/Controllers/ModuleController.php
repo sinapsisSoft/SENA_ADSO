@@ -3,7 +3,7 @@
 /**
  * Author:DIEGO CASALLAS
  * Date:13/11/2024
- * Descriptions: This is the module class controller data model
+ * Descriptions: This is the user class controller data model
  */
 
 namespace App\Controllers;
@@ -25,7 +25,7 @@ class ModuleController
   {
     $this->data = [];
     $this->model = new ModuleModel();
-    $this->idKey = "module_id";
+    $this->idKey = "user_id";
   }
   /**
    * The index function initializes data and returns it as a JSON response with status and message.

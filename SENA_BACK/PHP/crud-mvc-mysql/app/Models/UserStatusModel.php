@@ -3,7 +3,7 @@
 /**
  * Author:DIEGO CASALLAS
  * Date:08/11/2024
- * Descriptions: This is the connection class for MySQL
+ * Descriptions: This is the class for the data model user state functionality manager.
  */
 
 namespace App\Models;
@@ -11,7 +11,6 @@ namespace App\Models;
 use App\Config\ConnectDB;
 use Exception;
 use PDO;
-
 class UserStatusModel
 {
   /* These are private properties of the `userStatusModel` class in PHP. Here is a brief explanation of each
@@ -24,7 +23,6 @@ class UserStatusModel
   private $pdo;
   private $modelData;
   private $primaryKey;
-
   /**
    * The constructor initializes variables for data storage and defines model data and primary key for a
    * PHP class.

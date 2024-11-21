@@ -3,7 +3,7 @@
 /**
  * Author:DIEGO CASALLAS
  * Date:08/11/2024
- * Descriptions: This is the class for the data model module functionality manager.
+ * Descriptions: This is the connection class for MySQL
  */
 
 namespace App\Models;
@@ -12,11 +12,11 @@ use App\Config\ConnectDB;
 use Exception;
 use PDO;
 
-class ModuleModel
+class RoleModel
 {
-  /* These are private properties of the `userStatusModel` class in PHP. Here is a brief explanation of each
+  /* These are private properties of the `roleModel` class in PHP. Here is a brief explanation of each
  property: */
-  /* These are private properties of the `userStatusModel` class in PHP. Here is a brief explanation of each
+  /* These are private properties of the `roleModel` class in PHP. Here is a brief explanation of each
  property: */
   private $conn;
   private $data;
@@ -32,8 +32,8 @@ class ModuleModel
   public function __construct()
   {
     $this->data = [];
-    $this->modelData = ['module_name','module_route','module_description'];
-    $this->primaryKey = 'module_id';
+    $this->modelData = ['role_name'];
+    $this->primaryKey = 'role_id';
   }
 
   /**
@@ -49,7 +49,7 @@ class ModuleModel
     try {
       $this->conn = new ConnectDB();
       $this->pdo = $this->conn->connect();
-      $this->sql = "SELECT * FROM module";
+      $this->sql = "SELECT * FROM role";
       $result = $this->pdo->prepare($this->sql);
       $result->execute();
       $results = $result->fetchAll(PDO::FETCH_ASSOC);
@@ -81,7 +81,7 @@ class ModuleModel
     try {
       $this->conn = new ConnectDB();
       $this->pdo = $this->conn->connect();
-      $this->sql = "SELECT * FROM module WHERE $this->primaryKey ={$id}";
+      $this->sql = "SELECT * FROM role WHERE $this->primaryKey ={$id}";
       $result = $this->pdo->prepare($this->sql);
       $result->execute();
       $results = $result->fetchAll(PDO::FETCH_ASSOC);
@@ -113,11 +113,9 @@ class ModuleModel
       if ($this->validateModel($role)) {
         $this->conn = new ConnectDB();
         $this->pdo = $this->conn->connect();
-        $this->sql = "INSERT INTO module(module_name,module_route,module_description) VALUES (?,?,?)";
+        $this->sql = "INSERT INTO role(role_name) VALUES (?)";
         $stmt = $this->pdo->prepare($this->sql);
         $stmt->bindParam(1, $role[$this->modelData[0]]);
-        $stmt->bindParam(2, $role[$this->modelData[1]]);
-        $stmt->bindParam(3, $role[$this->modelData[2]]);
         $stmt->execute();
         $last_id=$this->pdo->lastInsertId();
         $this->data['newId'] =  $last_id;
@@ -156,12 +154,10 @@ class ModuleModel
       if ($this->validateModel($role)) {
         $this->conn = new ConnectDB();
         $this->pdo = $this->conn->connect();
-        $this->sql = "UPDATE module SET module_name=?,module_route=?,module_description=? WHERE  $this->primaryKey=?";
+        $this->sql = "UPDATE role SET role_name=? WHERE  $this->primaryKey=?";
         $stmt = $this->pdo->prepare($this->sql);
         $stmt->bindParam(1, $role[$this->modelData[0]]);
-        $stmt->bindParam(2, $role[$this->modelData[1]]);
-        $stmt->bindParam(3, $role[$this->modelData[2]]);
-        $stmt->bindParam(4, $id);
+        $stmt->bindParam(2, $id);
         $stmt->execute();
         $this->data['updateId'] = $id;
       } else {
@@ -194,7 +190,7 @@ class ModuleModel
     try {
       $this->conn = new ConnectDB();
       $this->pdo = $this->conn->connect();
-      $this->sql = "DELETE FROM module WHERE  $this->primaryKey=?";
+      $this->sql = "DELETE FROM role WHERE  $this->primaryKey=?";
       $stmt = $this->pdo->prepare($this->sql);
       $stmt->bindParam(1, $id);
       $stmt->execute();
