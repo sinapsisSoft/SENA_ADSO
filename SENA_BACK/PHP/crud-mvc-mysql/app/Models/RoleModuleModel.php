@@ -204,6 +204,24 @@ class RoleModuleModel
     }
     return $this->data;
   }
+
+  public function roleModules(int $id):Array
+  {
+    try {
+      $this->conn = new ConnectDB();
+      $this->pdo = $this->conn->connect();
+      $this->sql = "CALL sp_role_module($id)";
+      $result = $this->pdo->prepare($this->sql);
+      $result->execute();
+      $results = $result->fetchAll(PDO::FETCH_ASSOC);
+      $this->data = $results;
+    } catch (Exception $e) {
+      $this->data['data'] = [];
+      $this->data['status'] = 404;
+      $this->data['message'] = $e->getMessage();
+    }
+    return $this->data;
+  }
   /**
    * The function `validateModel` checks if any values in the given array are empty based on
    * corresponding keys in the model data.

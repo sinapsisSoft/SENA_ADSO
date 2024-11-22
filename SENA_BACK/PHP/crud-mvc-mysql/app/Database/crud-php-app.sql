@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 22-11-2024 a las 00:48:59
+-- Tiempo de generación: 22-11-2024 a las 23:51:21
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.0.30
 
@@ -27,6 +27,14 @@ DELIMITER $$
 --
 -- Procedimientos
 --
+DROP PROCEDURE IF EXISTS `sp_role_module`$$
+CREATE PROCEDURE `sp_role_module` (IN `idRole` INT)   BEGIN
+SELECT ROL.role_name AS `role_fk`,MD.module_name AS `role_module`,MD.module_icon,MD.module_description, MD.module_route FROM role_module AS RM 
+INNER JOIN role AS ROL ON RM.role_fk=ROL.role_id
+INNER JOIN module AS MD ON RM.module_fk=MD.module_id
+WHERE ROL.role_id=idRole;
+END$$
+
 DROP PROCEDURE IF EXISTS `sp_user_all`$$
 CREATE PROCEDURE `sp_user_all` ()   BEGIN
 SELECT `user_id`,`user_user`,`user_password`, UST.userStatus_name AS `userStatus_fk`, ROL.role_name AS `role_fk` FROM `user` AS US  
@@ -55,6 +63,7 @@ CREATE TABLE IF NOT EXISTS `module` (
   `module_id` int(11) NOT NULL AUTO_INCREMENT,
   `module_name` varchar(20) NOT NULL,
   `module_route` varchar(20) NOT NULL,
+  `module_icon` varchar(40) NOT NULL,
   `module_description` varchar(200) NOT NULL,
   PRIMARY KEY (`module_id`),
   UNIQUE KEY `module_name` (`module_name`),
@@ -65,9 +74,9 @@ CREATE TABLE IF NOT EXISTS `module` (
 -- Volcado de datos para la tabla `module`
 --
 
-INSERT INTO `module` (`module_id`, `module_name`, `module_route`, `module_description`) VALUES
-(1, 'Home', 'home', 'This is module home'),
-(2, 'User', 'User', 'This is module user');
+INSERT INTO `module` (`module_id`, `module_name`, `module_route`, `module_icon`, `module_description`) VALUES
+(1, 'Home', 'home/dashboard', '<i class=\"bi bi-house-fill\"></i>', 'This is module home'),
+(2, 'User', 'user/index', '<i class=\"bi bi-person-badge-fill\"></i>', 'This is module user');
 
 -- --------------------------------------------------------
 
@@ -115,8 +124,8 @@ CREATE TABLE IF NOT EXISTS `role_module` (
 INSERT INTO `role_module` (`roleModule_id`, `role_fk`, `module_fk`) VALUES
 (1, 1, 1),
 (2, 1, 2),
-(3, 3, 1),
-(4, 3, 2);
+(3, 2, 1),
+(4, 3, 1);
 
 -- --------------------------------------------------------
 
@@ -126,11 +135,15 @@ INSERT INTO `role_module` (`roleModule_id`, `role_fk`, `module_fk`) VALUES
 
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE IF NOT EXISTS `user` (
-  `user_id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  `user_user` varchar(30) NOT NULL UNIQUE,
+  `user_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_user` varchar(30) NOT NULL,
   `user_password` varchar(256) NOT NULL,
   `userStatus_fk` int(11) NOT NULL,
-  `role_fk` int(11) NOT NULL
+  `role_fk` int(11) NOT NULL,
+  PRIMARY KEY (`user_id`),
+  UNIQUE KEY `user_user` (`user_user`),
+  KEY `user_role` (`role_fk`),
+  KEY `user_status` (`userStatus_fk`)
 ) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -139,7 +152,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 
 INSERT INTO `user` (`user_id`, `user_user`, `user_password`, `userStatus_fk`, `role_fk`) VALUES
 (1, 'user@email.com', '$2y$10$zNXemXVFPEbCd7yFTM.rMe3FO2sTze.cW/cOrGTps0dOi1YyFO7nW', 1, 1),
-(2, 'user1@email.com', '$2y$10$zNXemXVFPEbCd7yFTM.rMe3FO2sTze.cW/cOrGTps0dOi1YyFO7nW', 3, 1),
+(2, 'user1@email.com', '$2y$10$zNXemXVFPEbCd7yFTM.rMe3FO2sTze.cW/cOrGTps0dOi1YyFO7nW', 3, 2),
 (3, 'user2@email.com', '$2y$10$zNXemXVFPEbCd7yFTM.rMe3FO2sTze.cW/cOrGTps0dOi1YyFO7nW', 1, 3);
 
 -- --------------------------------------------------------

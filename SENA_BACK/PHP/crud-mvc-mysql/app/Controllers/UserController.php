@@ -265,7 +265,7 @@ class UserController
   private function getDataModel()
   {
     $data_request = json_decode(file_get_contents('php://input'), true);
-
+  
     if ($data_request != NULL) {
       $getModel['user_user'] = empty($data_request['user']) ? '' : $data_request['user'];
       $getModel['user_password'] = empty($data_request['password']) ? '' : $data_request['password'];
