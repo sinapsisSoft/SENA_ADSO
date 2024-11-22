@@ -98,8 +98,8 @@ CREATE TABLE IF NOT EXISTS `role` (
 
 INSERT INTO `role` (`role_id`, `role_name`) VALUES
 (1, 'Admin'),
-(3, 'Client'),
-(2, 'Employee');
+(2, 'Employee'),
+(3, 'Client');
 
 -- --------------------------------------------------------
 
@@ -175,8 +175,9 @@ CREATE TABLE IF NOT EXISTS `userstatus` (
 
 INSERT INTO `userstatus` (`userStatus_id`, `userStatus_name`) VALUES
 (1, 'Active'),
-(3, 'Blocked'),
-(2, 'Inactive');
+(2, 'Inactive'),
+(3, 'Blocked');
+
 
 --
 -- Restricciones para tablas volcadas
