@@ -114,8 +114,8 @@ class Routes
       ["method" => "edit", "REQUEST" => "GET", "controller" => "UserController"],
       ["method" => "delete", "REQUEST" => 'POST', "controller" => "UserController"],
       ["method" => "index", "REQUEST" => "GET", "controller" => "UserController", "filter" => "logIn"],
-      ["method" => "viewCreate", "REQUEST" => 'GET', "controller" => "UserController"],
-      ["method" => "viewDelete", "REQUEST" => 'GET', "controller" => "UserController"],
+      ["method" => "viewCreate", "REQUEST" => 'GET', "controller" => "UserController","filter" => "logIn"],
+      ["method" => "viewDelete", "REQUEST" => 'GET', "controller" => "UserController","filter" => "logIn"],
     ];
     $loginRoutes = [
       ["method" => "logIn", "REQUEST" => "POST", "controller" => "LoginController"],
@@ -136,8 +136,8 @@ class Routes
       ["method" => "edit", "REQUEST" => "GET", "controller" => "RoleController"],
       ["method" => "delete", "REQUEST" => 'POST', "controller" => "RoleController"],
       ["method" => "index", "REQUEST" => "GET", "controller" => "RoleController", "filter" => "logIn"],
-      ["method" => "viewCreate", "REQUEST" => 'GET', "controller" => "RoleController"],
-      ["method" => "viewDelete", "REQUEST" => 'GET', "controller" => "RoleController"],
+      ["method" => "viewCreate", "REQUEST" => 'GET', "controller" => "RoleController","filter" => "logIn"],
+      ["method" => "viewDelete", "REQUEST" => 'GET', "controller" => "RoleController","filter" => "logIn" ],
     ];
     $userStatusRoutes = [
       ["method" => "create", "REQUEST" => "POST", "controller" => "UserStatusController"],
