@@ -28,7 +28,7 @@
           <input type="password" style="text-overflow: ellipsis;" class="form-control form-control-sm" id="password" name="password" placeholder="Password" value="<?= $user[0]['user_password'] ?>" required disabled>
           <label for="password">Password</label>
         </div>
-        <select class="form-select form-select-sm mt-2" aria-label=".form-select-sm example" id="role" name="role" required disabled>
+        <select class="form-select form-select-sm mt-2" aria-label=".form-select-sm example" id="role" name="role" required >
           <option disabled value>Open this select role</option>
           <?php for ($i = 0; $i < count($roles); $i++): ?>
             <?php if ($roles[$i]['role_id'] == $user[0]['role_fk']): ?>
@@ -38,7 +38,7 @@
             <?php endif ?>
           <?php endfor ?>
         </select>
-        <select class="form-select form-select-sm mt-2" aria-label=".form-select-sm example" id="status" name="status" required disabled>
+        <select class="form-select form-select-sm mt-2" aria-label=".form-select-sm example" id="status" name="status" required >
           <option disabled value>Open this select user status</option>
           <?php for ($i = 0; $i < count($status); $i++): ?>
             <?php if ($status[$i]['userStatus_id'] == $user[0]['userStatus_fk']): ?>
@@ -48,13 +48,14 @@
             <?php endif ?>
           <?php endfor ?>
         </select>
-        <button type="submit" class="btn btn-danger mt-2 w-100" title="Delete">Delete</button>
+        <button type="submit" class="btn btn-primary mt-2 w-100" title="Update">Update</button>
       </form>
     </div>
 
 
   </div>
   <?php include_once FOLDER_VIEWS_ASSETS . 'footer/footer.php'; ?>
+  <?php include_once FOLDER_VIEWS_JS . 'js.php'; ?>
 </body>
 
 </html>

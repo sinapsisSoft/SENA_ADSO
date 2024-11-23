@@ -76,7 +76,8 @@ class RoleModel
    * exception occurs during the database query, an empty data array, a status code of 404, and the
    * exception message are returned.
    */
-  public function findId(int $id):Array
+
+  public function findId(int $id): array
   {
     try {
       $this->conn = new ConnectDB();

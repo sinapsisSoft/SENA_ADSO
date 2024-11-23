@@ -19,6 +19,7 @@
     define("FOLDER_VIEWS_ASSETS",$folder_views_assets);
     define("FOLDER_PUBLIC_ASSETS",$folder_public."/assets");
     define("URL_CONTROLLER_USER",$controller_url."/user/index");
+    define("URL_CONTROLLER_ROLE",$controller_url."/role/index");
     define("URL_CONTROLLER_LOGIN",$controller_url."/login/index");
     define("URL_CONTROLLER_HOME",$controller_url."/home/dashboard");
 

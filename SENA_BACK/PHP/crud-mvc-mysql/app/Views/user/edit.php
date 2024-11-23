@@ -55,6 +55,7 @@
 
   </div>
   <?php include_once FOLDER_VIEWS_ASSETS . 'footer/footer.php'; ?>
+  <?php include_once FOLDER_VIEWS_JS . 'js.php'; ?>
 </body>
 
 </html>

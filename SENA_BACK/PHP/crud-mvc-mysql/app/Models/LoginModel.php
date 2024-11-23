@@ -40,8 +40,9 @@ class LoginModel
       if ($this->validateModel($user)) {
         $this->conn = new ConnectDB();
         $this->pdo = $this->conn->connect();
-        $this->sql = "SELECT * FROM user WHERE $this->userKey=?";
+        $this->sql = "SELECT * FROM user WHERE userStatus_fk=1 AND $this->userKey=?";
         $stmt = $this->pdo->prepare($this->sql);
+
         $stmt->bindParam(1, $user[$this->modelData[0]]);
         $stmt->execute();
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);

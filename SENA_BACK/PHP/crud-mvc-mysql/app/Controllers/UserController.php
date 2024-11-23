@@ -8,6 +8,7 @@
 namespace App\Controllers;
 
 use App\Models\UserModel;
+use App\Models\RoleModuleModel;
 use App\Models\UserStatusModel;
 use App\Models\RoleModel;
 use App\Config\View;
@@ -19,8 +20,11 @@ class UserController
   private $data;
   private $model;
   private $roleModel;
+  private $roleModuleModel;
+  private $roleModules;
   private $statusModel;
   private $result;
+  private $userApp;
 
   /**
    * The constructor initializes data, model objects, and result variable for a user-related class in
@@ -29,10 +33,12 @@ class UserController
   public function __construct()
   {
     $this->data = [];
+    $this->userApp=[];
     $this->model = new UserModel();
     $this->statusModel = new UserStatusModel();
     $this->roleModel = new RoleModel();
     $this->result = "";
+    $this->getModulesRoles();
   }
 
  /**
@@ -46,6 +52,8 @@ class UserController
       $view = new View('user/index');
       $view->set('title', 'User Index');
       $view->set('users', $this->result);
+      $view->set('roleModules',  $this->roleModules);
+      $view->set('getUser',  $this->userApp);
       $view->render();
     } catch (Exception $e) {
       $this->data['data'] = [];
@@ -53,6 +61,12 @@ class UserController
       $this->data['message'] = "Error: " . $e->getMessage();
     }
      //echo json_encode($this->data);
+  }
+  public function getModulesRoles(){
+    $this->roleModuleModel=new RoleModuleModel();
+    $this->userApp= $_SESSION[SESSION_APP];
+    $userRole= $this->userApp[0]['role_fk'];
+    $this->roleModules=$this->roleModuleModel->roleModules($userRole);
   }
  /**
   * The function `showId` retrieves user data by ID and renders it in a view, handling exceptions if
@@ -71,6 +85,8 @@ class UserController
       $view->set('user', $this->result);
       $view->set('roles', $this->roleModel->findAll());
       $view->set('status', $this->statusModel->findAll());
+      $view->set('roleModules',  $this->roleModules);
+      $view->set('getUser',  $this->userApp);
       $view->render();
     } catch (Exception $e) {
       $this->data['data'] = [];
@@ -98,6 +114,8 @@ class UserController
       $view->set('user', $this->result);
       $view->set('roles', $this->roleModel->findAll());
       $view->set('status', $this->statusModel->findAll());
+      $view->set('roleModules',  $this->roleModules);
+      $view->set('getUser',  $this->userApp);
       $view->render();
     } catch (Exception $e) {
       $this->data['data'] = [];
@@ -158,6 +176,8 @@ class UserController
       $view->set('title', 'User Create');
       $view->set('roles', $this->roleModel->findAll());
       $view->set('status', $this->statusModel->findAll());
+      $view->set('roleModules',  $this->roleModules);
+      $view->set('getUser',  $this->userApp);
       $view->render();
     } catch (Exception $e) {
       $this->data['data'] = [];
@@ -246,6 +266,8 @@ class UserController
         $view->set('user', $this->result);
         $view->set('roles', $this->roleModel->findAll());
         $view->set('status', $this->statusModel->findAll());
+        $view->set('roleModules',  $this->roleModules);
+        $view->set('getUser',  $this->userApp);
         $view->render();
     } catch (Exception $e) {
       $this->data['data'] = [];
