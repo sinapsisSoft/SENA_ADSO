@@ -18,10 +18,12 @@ import { HousingLocation } from '../housing-location';
 </div>
     </form>
     <section class="results">
-      <app-housing-location
+      <div class="row">
+      <app-housing-location class="col-4 mx-auto"
         *ngFor="let housingLocation of housingLocationList"
         [housingLocation]="housingLocation"
       ></app-housing-location>
+      </div>
     </section>
 `,
   styleUrls: ['./home.component.css'],
