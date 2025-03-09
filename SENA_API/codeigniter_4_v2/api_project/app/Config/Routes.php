@@ -10,5 +10,5 @@ $routes->get('/', 'Home::index');
 $routes->group("apiV1",function($routes){
   $routes->post("addUserApi","RegisterUserApi::index");
   $routes->post("loginApi","LoginApi::index");
-  $routes->get("usersApi","UserApi::index");
+  $routes->get("usersApi","UserApi::index",['filter'=>'authFilter']);
 });
