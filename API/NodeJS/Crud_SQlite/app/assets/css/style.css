@@ -1,0 +1,14 @@
+.message-error {
+  color: red;
+}
+.preload {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(223, 227, 230, 0.73);
+  z-index: 2000;
+  cursor: progress;
+  display: none;
+}
