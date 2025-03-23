@@ -404,6 +404,7 @@ class Main {
       tds = `<tr><td>${obj[0][1]}</td>`;
       tds += `<td>${obj[1][1]}</td>`;
       tds += `<td>${obj[2][1]}</td>`;
+      
       if (actions) {
         tds += `<td class="text-center">
 <div class="btn-group" role="group" aria-label="Basic mixed styles example">

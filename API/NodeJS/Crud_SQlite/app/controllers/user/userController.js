@@ -51,9 +51,7 @@ function showId(id) {
  * user data.
  */
 function show() {
-  mainApp.disabledFormAll();
-  mainApp.resetForm();
-  btnEnabled(true);
+  
   getUsers();
 }
 /**
@@ -61,6 +59,7 @@ function show() {
  * modal.
  */
 function add() {
+  debugger
   mainApp.enableFormAll();
   mainApp.resetForm();
   insertUpdate = true;
@@ -235,6 +234,7 @@ object. It listens for the `submit` event on the form and executes a series of a
 is submitted. Here is a breakdown of what the code is doing: */
 mainApp.getForm().addEventListener('submit', async function (event) {
   event.preventDefault();
+  debugger
   if (mainApp.setValidateForm()) {
     //Show Preload 
     mainApp.showPreload();
@@ -246,8 +246,9 @@ mainApp.getForm().addEventListener('submit', async function (event) {
       resultFetch = getData(data, method, url);
       resultFetch.then(response => response.json())
         .then(data => {
-          //console.log(data);
+          console.log(data);
           //show Modal 
+          debugger
           mainApp.hiddenModal();
           //Reload View
           reloadPage();
