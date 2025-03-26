@@ -15,7 +15,7 @@ const classEdit = 'edit-input';
 const textConfirm = 'Press a button!\nEither OK or Cancel.';
 const btnSubmit = document.getElementById('btnSubmit');
 const mainApp = new Main(modalId, formId, classEdit, preloadId);
-
+const roleSelectId="role";
 /* These lines of code are declaring and initializing variables in a JavaScript file. Here is a
 breakdown of what each variable is used for: */
 var insertUpdate = true;
@@ -53,13 +53,14 @@ function showId(id) {
 function show() {
   
   getUsers();
+  getRoles();
 }
 /**
  * The function `newStatus` enables a form, resets it, sets a flag, disables a button, and shows a
  * modal.
  */
 function add() {
-  debugger
+
   mainApp.enableFormAll();
   mainApp.resetForm();
   insertUpdate = true;
@@ -165,6 +166,27 @@ async function getUsers() {
     })
     .finally();
 }
+async function getRoles() {
+  method = 'GET';
+  url = URL + URI_ROLE;
+  data = mainApp.getDataFormJson();
+  resultFetch = getData(data, method, url);
+  resultFetch.then(response => response.json())
+    .then(data => {
+      //console.log(data);
+      ///create table
+      
+      mainApp.createSelect(data,roleSelectId);
+      //hidden Preload 
+      mainApp.hiddenPreload();
+    })
+    .catch(err => {
+      //console.error(err);
+      //hidden Preload 
+      mainApp.hiddenPreload();
+    })
+    .finally();
+}
 
 /**
  * The function refreshTable() initializes a DataTable for a specified table element using jQuery.
@@ -234,7 +256,6 @@ object. It listens for the `submit` event on the form and executes a series of a
 is submitted. Here is a breakdown of what the code is doing: */
 mainApp.getForm().addEventListener('submit', async function (event) {
   event.preventDefault();
-  debugger
   if (mainApp.setValidateForm()) {
     //Show Preload 
     mainApp.showPreload();
@@ -248,7 +269,6 @@ mainApp.getForm().addEventListener('submit', async function (event) {
         .then(data => {
           console.log(data);
           //show Modal 
-          debugger
           mainApp.hiddenModal();
           //Reload View
           reloadPage();
@@ -262,7 +282,7 @@ mainApp.getForm().addEventListener('submit', async function (event) {
     } else {
       method = 'PUT';
       data = mainApp.getDataFormJson();
-      url = URL + URI_USER + data.id;
+      url = URL + URI_USER + data.User_id;
       resultFetch = getData(data, method, url);
       resultFetch.then(response => response.json())
         .then(data => {

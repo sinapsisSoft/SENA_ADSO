@@ -11,4 +11,5 @@
   z-index: 2000;
   cursor: progress;
   display: none;
+  opacity: 1;
 }

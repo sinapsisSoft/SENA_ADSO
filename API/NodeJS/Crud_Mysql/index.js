@@ -90,7 +90,7 @@ app.post("/api_v1/users", async (req, res) => {
     const { user, password, role } = req.body;
     const hashedPassword = await bcrypt.encryptPassword(password);
     db.run("INSERT INTO users (User_email,User_password,Role_fk) VALUES (?,?,?)", [user, hashedPassword, role], function (err) {
-        if (err) return res.status(500).json({ error: err.message });
+        if (err) return res.status(500).json({status:500, error: err.message });
         res.json({ id: this.lastID, user, hashedPassword, role });
     });
 });
@@ -111,7 +111,7 @@ matching the provided ID parameter. If there is an error during the database que
 500 status with an error message. If the query is successful, it will return a JSON response
 containing the user record retrieved from the database. */
 app.get("/api_v1/users/:id", (req, res) => {
-    db.get("SELECT * FROM users WHERE User_id = ?", [req.params.id], (err, row) => {
+    db.get("SELECT User_id,User_email AS user,User_password AS password,Role_fk AS role FROM users WHERE User_id = ?", [req.params.id], (err, row) => {
         if (err) return res.status(500).json({ error: err.message });
         res.json(row);
     });
@@ -144,15 +144,27 @@ expects a JSON object in the request body with properties named "user" and "pass
 app.post("/api_v1/login", (req, res) => {
     const { user, password } = req.body;
     db.get("SELECT * FROM users WHERE User_email = ?", [user], async (err, row) => {
-        if (err) return res.status(500).json({ error: "Query error" });
-        if (!row) return res.status(401).json({ error: "User not found" });
+        if (err) return res.status(500).json({ status:500,error: "Query error" });
+        if (!row) return res.status(401).json({ status:401,error: "User not found" });
         const isMatch = await bcrypt.comparePassword(password, row.User_password);
         if (!isMatch) {
-            return res.status(401).json({ message: 'Error password' });
+            return res.status(401).json({status:401, message: 'Error password' });
         }
-        res.status(200).json(row);
+        res.status(200).json({status:200,row});
     });
 
+});
+/* The code snippet `app.put("/api_v1/login", ...)` is setting up a PUT endpoint at "/api_v1/login" in
+the Node.js application using Express framework. When a PUT request is made to this endpoint, it
+expects a JSON object in the request body with a property named "email". */
+app.put("/api_v1/login", (req, res) => {
+    const { email } = req.body;
+    db.get("SELECT * FROM users WHERE User_email= ?", [email], function (err,row) {
+        if (err) return res.status(500).json({status:500, error: err.message });
+        if (!row) return res.status(401).json({ status:401,error: "User not found" });
+        //Send email to change password
+        res.status(200).json({status:200,email:row.User_email});
+    });
 });
 /****************END ROTES API LOGIN */
 
