@@ -13,3 +13,8 @@
   display: none;
   opacity: 1;
 }
+.dropdown-menu-nav{
+  position: absolute !important;
+  right: 10% !important;
+
+}

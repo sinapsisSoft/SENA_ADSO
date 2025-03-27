@@ -8,4 +8,5 @@ const URI_ROLE="/roles/";
 const URI_ROLE_MODULE="/roleModule/";
 const URI_USER="/users/";
 const URI_LOGIN="/login/";
+const URI_ROLE_USER="/usersRoles/";
 const URL='http://localhost:3000/api_v1';

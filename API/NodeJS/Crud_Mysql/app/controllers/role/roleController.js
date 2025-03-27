@@ -1,6 +1,6 @@
 /* Author:DIEGO CASALLAS
 * Date:20/03/2025
-* Descriptions:This is controller User 
+* Descriptions:This is controller Role 
 * **/
 
 /* The provided code snippet is declaring and initializing several constants and variables in a
@@ -14,8 +14,8 @@ const classEdit = 'edit-input';
 const textConfirm = 'Press a button!\nEither OK or Cancel.';
 const btnSubmit = document.getElementById('btnSubmit');
 const mainApp = new Main(modalId, formId, classEdit, preloadId);
-const roleSelectId="role";
-const myId="User_id";
+const myId = "Role_id";
+google.charts.load("current", {packages:["corechart"]});
 /* These lines of code are declaring and initializing variables in a JavaScript file. Here is a
 breakdown of what each variable is used for: */
 var insertUpdate = true;
@@ -51,7 +51,7 @@ function showId(id) {
  * The function "show" calls the "getUsers" and "getRoles" functions.
  */
 function show() {
-  getUsers();
+  getUserRoles();
   getRoles();
 }
 /**
@@ -90,7 +90,7 @@ function edit(id) {
 async function delete_(id) {
   if (confirm(textConfirm) == true) {
     method = 'DELETE';
-    url = URL + URI_USER + id;
+    url = URL + URI_ROLE + id;
     data = "";
     resultFetch = getData(data, method, url);
     resultFetch.then(response => response.json())
@@ -118,7 +118,7 @@ async function delete_(id) {
  */
 async function getDataId(id) {
   method = 'GET';
-  url = URL + URI_USER + id;
+  url = URL + URI_ROLE + id;
   data = "";
   resultFetch = getData(data, method, url);
   resultFetch.then(response => response.json())
@@ -140,12 +140,12 @@ async function getDataId(id) {
 }
 
 /**
- * The function `getUsers` makes an asynchronous request to fetch user data, creates a table with the
- * data, and then refreshes the table while handling errors and hiding a preload element.
+ * The function `getRoles` makes a GET request to a specified URL to fetch roles data, creates a select
+ * element based on the data, and then hides a preload element.
  */
-async function getUsers() {
+async function getRoles() {
   method = 'GET';
-  url = URL + URI_USER;
+  url = URL + URI_ROLE;
   data = mainApp.getDataFormJson();
   resultFetch = getData(data, method, url);
   resultFetch.then(response => response.json())
@@ -166,21 +166,38 @@ async function getUsers() {
 }
 
 /**
- * The function `getRoles` makes a GET request to a specified URL to fetch roles data, creates a select
- * element based on the data, and then hides a preload element.
+ * The function `getUserRoles` fetches user roles data, creates a pie chart to display the data, and
+ * hides a preload indicator once the chart is drawn.
  */
-async function getRoles() {
+async function getUserRoles() {
   method = 'GET';
-  url = URL + URI_ROLE;
+  url = URL + URI_ROLE_USER;
   data = mainApp.getDataFormJson();
   resultFetch = getData(data, method, url);
   resultFetch.then(response => response.json())
     .then(data => {
-      //console.log(data);
-      ///create select
-      mainApp.createSelect(data,roleSelectId);
+     
+      ///create table
+      let getData=data;
       //hidden Preload 
-      mainApp.hiddenPreload();
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {
+
+        let setData=[ ['Task', 'Hours per Day']];
+        for(let i=0;i<getData.length;i++){
+          let getValues=Object.values(getData[i]);
+          setData.push([getValues[0],getValues[1]]);
+        }
+        var data = google.visualization.arrayToDataTable(setData);
+        var options = {
+          title: 'Application Roles vs Users',
+          is3D: true,
+        };
+      
+        var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
+        chart.draw(data, options);
+        mainApp.hiddenPreload();
+      }
     })
     .catch(err => {
       //console.error(err);
@@ -189,6 +206,7 @@ async function getRoles() {
     })
     .finally();
 }
+
 
 /**
  * The function refreshTable() initializes a DataTable for a specified table element using jQuery.
@@ -263,7 +281,7 @@ mainApp.getForm().addEventListener('submit', async function (event) {
     mainApp.showPreload();
     if (insertUpdate) {
       method = 'POST';
-      url = URL + URI_USER;
+      url = URL + URI_ROLE;
       data = mainApp.getDataFormJson();
       //console.log(data);
       resultFetch = getData(data, method, url);
@@ -284,7 +302,7 @@ mainApp.getForm().addEventListener('submit', async function (event) {
     } else {
       method = 'PUT';
       data = mainApp.getDataFormJson();
-      url = URL + URI_USER + data[myId];
+      url = URL + URI_ROLE + data[myId];
       resultFetch = getData(data, method, url);
       resultFetch.then(response => response.json())
         .then(data => {
@@ -317,3 +335,5 @@ function reloadPage() {
     location.reload();
   }, 500);
 }
+
+

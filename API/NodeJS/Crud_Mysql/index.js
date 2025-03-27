@@ -18,7 +18,7 @@ app.use(cors());
 app.use(express.json());
 
 
-/****************ROTES API ROLES */
+/****************ROUTES API ROLES */
 /* This code snippet is setting up a POST endpoint at "/api_v1/roles" in the Node.js application using
 Express framework. When a POST request is made to this endpoint, it expects a JSON object in the
 request body with a property named "name". */
@@ -49,7 +49,7 @@ Express framework. When a GET request is made to this endpoint with a specific r
 queries the database to select a specific record from the "role" table based on the Role_id matching
 the provided ID parameter. */
 app.get("/api_v1/roles/:id", (req, res) => {
-    db.get("SELECT * FROM role WHERE Role_id = ?", [req.params.id], (err, row) => {
+    db.get("SELECT Role_id, Role_name AS name FROM role WHERE Role_id = ?", [req.params.id], (err, row) => {
         if (err) return res.status(500).json({ error: err.message });
         res.json(row);
     });
@@ -60,8 +60,8 @@ app.get("/api_v1/roles/:id", (req, res) => {
 using Express framework. When a PUT request is made to this endpoint with a specific role ID
 parameter, it expects a JSON object in the request body with a property named "user". */
 app.put("/api_v1/roles/:id", (req, res) => {
-    const { user } = req.body;
-    db.run("UPDATE role SET Role_name = ? WHERE Role_id = ?", [user, req.params.id], function (err) {
+    const { name } = req.body;
+    db.run("UPDATE role SET Role_name = ? WHERE Role_id = ?", [name, req.params.id], function (err) {
         if (err) return res.status(500).json({ error: err.message });
         res.json({ updated: this.changes });
     });
@@ -79,9 +79,9 @@ app.delete("/api_v1/roles/:id", (req, res) => {
     });
 });
 
-/****************END ROTES API ROLES */
+/****************END ROUTES API ROLES */
 
-/****************ROTES API USERS */
+/****************ROUTES API USERS */
 /* The code snippet `app.post("/api_v1/users", (req, res) => { ... }` is setting up a POST endpoint at
 "/api_v1/users" in the Node.js application using Express framework. When a POST request is made to
 this endpoint, it expects a JSON object in the request body with properties named "user",
@@ -99,7 +99,8 @@ app.post("/api_v1/users", async (req, res) => {
 /* The code snippet `app.get("/api_v1/users", (req, res) => { ... }` is setting up a GET endpoint at
 "/api_v1/users" in the Node.js application using Express framework. */
 app.get("/api_v1/users", (req, res) => {
-    db.all("SELECT * FROM users", [], (err, rows) => {
+    db.all("SELECT User_id,User_email AS user,User_password AS password,RL.Role_name AS role " 
+        +"FROM users AS US INNER JOIN role AS RL ON US.Role_fk=RL.Role_id", [], (err, rows) => {
         if (err) return res.status(500).json({ error: err.message });
         res.json(rows);
     });
@@ -111,7 +112,8 @@ matching the provided ID parameter. If there is an error during the database que
 500 status with an error message. If the query is successful, it will return a JSON response
 containing the user record retrieved from the database. */
 app.get("/api_v1/users/:id", (req, res) => {
-    db.get("SELECT User_id,User_email AS user,User_password AS password,Role_fk AS role FROM users WHERE User_id = ?", [req.params.id], (err, row) => {
+    db.get("SELECT User_id,User_email AS user,User_password AS password,Role_fk AS role "
+        +"FROM users WHERE User_id = ?", [req.params.id], (err, row) => {
         if (err) return res.status(500).json({ error: err.message });
         res.json(row);
     });
@@ -136,8 +138,20 @@ app.delete("/api_v1/users/:id", (req, res) => {
         res.json({ deleted: this.changes });
     });
 });
-/****************END ROTES API USERS */
-/****************ROTES API LOGIN */
+/* The code snippet `app.get("/api_v1/usersRoles", ...)` is setting up a GET endpoint at
+"/api_v1/usersRoles" in the Node.js application using Express framework. When a GET request is made
+to this endpoint, it executes a SQL query that joins the "users" and "role" tables based on the Role
+foreign key relationship. It then groups the results by Role and counts the number of occurrences
+for each role. Finally, it returns a JSON response containing the role names and their corresponding
+counts. */
+app.get("/api_v1/usersRoles",(req, res) => {
+    db.all("SELECT RL.Role_name AS role, COUNT(*) AS count FROM users AS US INNER JOIN role AS RL ON US.Role_fk=RL.Role_id GROUP BY US.Role_fk", [], (err, rows) => {
+        if (err) return res.status(500).json({ error: err.message });
+        res.json(rows);
+    });
+});
+/****************END ROUTES API USERS */
+/****************ROUTES API LOGIN */
 /* The code snippet `app.post("/api_v1/login", ...)` is setting up a POST endpoint at "/api_v1/login"
 in the Node.js application using Express framework. When a POST request is made to this endpoint, it
 expects a JSON object in the request body with properties named "user" and "password". */
@@ -166,7 +180,7 @@ app.put("/api_v1/login", (req, res) => {
         res.status(200).json({status:200,email:row.User_email});
     });
 });
-/****************END ROTES API LOGIN */
+/****************END ROUTES API LOGIN */
 
 
 app.listen(port, () => {
