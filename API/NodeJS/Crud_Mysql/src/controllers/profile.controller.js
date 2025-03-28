@@ -1,4 +1,4 @@
-import { connect } from '../../db/connect.js';
+import { connect } from '../config/db/connect.js'
 
 export const showProfile = async (req, res) => {
   try {
