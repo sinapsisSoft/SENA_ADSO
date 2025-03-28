@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS `profile` (
   `Profile_name` varchar(20) NOT NULL,
   `Profile_last_name` varchar(20) NOT NULL,
   `Profile_document` varchar(11) NOT NULL,
-  `Profile_email` varchar(30) NOT NULL,
+  `Profile_email` varchar(30) NOT NULL UNIQUE,
   `Profile_phone` varchar(11) NOT NULL,
   `Profile_photo` varchar(100) NOT NULL,
   `Profile_address` varchar(30) NOT NULL,

@@ -4,17 +4,16 @@
 *Description:	Index file for the API - NODEJS
 **/
 import express from 'express';
-import { connect } from '../db/connect.js';
 import  profileRoutes  from './routes/profile.routes.js';
 
-const app=express();
-const PORT=3000;
+const app = express();
+const PORT = process.env.PORT || 3000; // Allow dynamic port configuration
 
-app.get('/api_v1/ping',async (req,res)=>{
-  const result=await connect.query('SHOW TABLES');
-  res.json(result[0]);
-});
+// Middleware to handle JSON
+app.use(express.json());
 
-app.use(profileRoutes);
+// Prefix for all profile routes, facilitating scalability
+app.use('/api_v1', profileRoutes);
 
-app.listen(PORT,()=>console.log("Server running... on port "+PORT));
+// Start the server
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

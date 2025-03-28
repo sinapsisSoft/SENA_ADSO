@@ -4,13 +4,18 @@
 *Description:	Index file for the API - NODEJS
 **/
 import {Router} from 'express';
+import {showProfile,showProfileId,addProfile,updateProfile, deleteProfile} from '../controllers/profile.controller.js';
 
 const router=Router();
-const apiName='/api_v1/profile';
+const apiName='/profile';
 
-router.get(apiName,(req,res)=>res.send("GET profile API"));//GET
-router.get(apiName+'/:id',(req,res)=>res.send("GET profile API FOR ID "+req.params.id));//GET ID
-router.post(apiName,(req,res)=>res.send("POST profile API "));//POST 
-router.put(apiName+'/:id',(req,res)=>res.send("PUT profile API FOR ID "+req.params.id));//PUT ID
-router.delete(apiName+'/:id',(req,res)=>res.send("DELETE profile API FOR ID "+req.params.id));//DELETE ID
+router.route(apiName)
+  .get(showProfile)  // Get all profile
+  .post(addProfile); // Add profile
+
+router.route(`${apiName}/:id`)
+  .get(showProfileId)  // Get profile by Id
+  .put(updateProfile)  // Update profile by Id
+  .delete(deleteProfile); // Delete profile by Id
+
 export default router;
