@@ -1,5 +1,7 @@
 import { connect } from '../config/db/connect.js';
 import {encryptPassword} from '../library/appBcrypt.js';
+
+
 export const showUser = async (req, res) => {
   try {
     let sqlQuery = "SELECT * FROM user";
