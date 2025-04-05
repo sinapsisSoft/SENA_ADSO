@@ -181,7 +181,15 @@ app.put("/api_v1/login", (req, res) => {
     });
 });
 /****************END ROUTES API LOGIN */
-
+/****************ROUTES API HOME */
+app.get("/api_v1/home", (req, res) => {
+    db.all("SELECT User_id,User_email AS user,User_password AS password,RL.Role_name AS role " 
+        +"FROM users AS US INNER JOIN role AS RL ON US.Role_fk=RL.Role_id", [], (err, rows) => {
+        if (err) return res.status(500).json({ error: err.message });
+        res.json(rows);
+    });
+});
+/****************END ROUTES API HOME */
 
 app.listen(port, () => {
     console.log(`Server running http://localhost:${port}`);

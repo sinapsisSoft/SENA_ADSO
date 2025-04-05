@@ -463,6 +463,29 @@ class Main {
     options = "";
   }
 
+  createCard(data, id) {
+    const objContainerCard = document.getElementById(id);
+    objContainerCard.innerHTML = "";
+    let card = "";
+
+    for (let i = 0; i < Object.keys(data).length; i++) {
+      let obj = Object.entries(data[i]);
+
+      card += `<div  style="margin: 0.28em !important;" class="card col-3 mx-auto">
+      <img src="https://t3.ftcdn.net/jpg/06/50/85/90/360_F_650859089_x8aWFsiOw5vpE1h936uAMu7UmXmxPcw2.jpg" class="img img-fluid card-img-top " alt="...">
+      <div class="card-body">
+        <h5 class="card-title">${obj[1][1]}</h5>
+        <p class="card-text">${obj[2][1]}.</p>
+        <p class="card-text">${obj[3][1]}</p>
+        <a href="#" onclick="alert(${obj[0][1]})" class="btn btn-primary">Go somewhere</a>
+      </div>
+    </div>`;
+     
+    }
+    objContainerCard.innerHTML = card;
+    card = "";
+  }
+
 }
 
 
