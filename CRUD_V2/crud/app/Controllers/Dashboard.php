@@ -42,4 +42,6 @@ class Dashboard extends Controller
     return view('dashboard/dashboard_view', $this->data);
   }
 
+ 
+
 }
