@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 06-06-2024 a las 02:19:12
+-- Tiempo de generación: 06-04-2025 a las 21:24:33
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.0.30
 
@@ -20,14 +20,11 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `codeigniter-crud`
 --
-CREATE DATABASE IF NOT EXISTS `codeigniter-crud` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `codeigniter-crud`;
 
 DELIMITER $$
 --
 -- Procedimientos
 --
-DROP PROCEDURE IF EXISTS `sp_permissions_module_id`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_permissions_module_id` (IN `roleModulesId` INT)   BEGIN
 SELECT  CONCAT('permission_',PM.Permissions_fk) AS "permission", 1 AS 'Status',RM.Modules_fk AS Modules_id FROM permissions_modules AS PM
 INNER JOIN permissions P ON PM.Permissions_fk=P.Permissions_id
@@ -35,14 +32,12 @@ INNER JOIN role_modules RM ON PM.RoleModules_fk=RM.RoleModules_id
 WHERE PM.RoleModules_fk=roleModulesId;
 END$$
 
-DROP PROCEDURE IF EXISTS `sp_role_modules`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_role_modules` ()   BEGIN
 SELECT RM.RoleModules_id,RM.Modules_fk,M.Modules_name,RM.Roles_fk,R.Roles_name,RM.update_at  FROM role_modules as RM
 INNER JOIN modules M ON RM.Modules_fk=M.Modules_id
 INNER JOIN roles R ON RM.Roles_fk=R.Roles_id;
 END$$
 
-DROP PROCEDURE IF EXISTS `sp_role_modules_id`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_role_modules_id` (IN `roleId` INT)   BEGIN
 SELECT RM.Modules_fk, MO.Modules_name,MO.Modules_route,MO.Modules_icon,MO.Modules_submodule,MO.Modules_parent_module, MO.Modules_description
 FROM role_modules as RM
@@ -50,14 +45,12 @@ INNER JOIN modules MO ON RM.Modules_fk=MO.Modules_id
 WHERE RM.Roles_fk=roleId;
 END$$
 
-DROP PROCEDURE IF EXISTS `sp_role_module_id`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_role_module_id` (IN `roleId` INT)   BEGIN
 SELECT  CONCAT('module_',RM.Modules_fk) AS "modules", 1 AS Status, RM.Roles_fk AS Roles_id FROM role_modules as RM
 INNER JOIN modules M ON RM.Modules_fk=M.Modules_id
 WHERE RM.Roles_fk=roleId;
 END$$
 
-DROP PROCEDURE IF EXISTS `sp_users`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_users` ()   BEGIN
 SELECT US.User_id,US.User_user,US.User_password,US.update_at,RL.Roles_name, US.Roles_fk,UST.User_status_name, US.User_status_fk FROM users AS US 
 INNER JOIN roles RL ON US.Roles_fk=RL.Roles_id
@@ -70,10 +63,79 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `api_users`
+--
+
+CREATE TABLE IF NOT EXISTS `api_users` (
+  `Api_user_id` int(11) NOT NULL AUTO_INCREMENT,
+  `Api_user` varchar(60) NOT NULL,
+  `Api_password` varchar(255) NOT NULL,
+  `Api_role` enum('Admin','Read-only') NOT NULL,
+  `Api_status` enum('Active','Inactive') NOT NULL,
+  `Created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `Updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`Api_user_id`),
+  UNIQUE KEY `Api_user` (`Api_user`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Truncar tablas antes de insertar `api_users`
+--
+
+TRUNCATE TABLE `api_users`;
+--
+-- Volcado de datos para la tabla `api_users`
+--
+
+INSERT INTO `api_users` (`Api_user_id`, `Api_user`, `Api_password`, `Api_role`, `Api_status`, `Created_at`, `Updated_at`) VALUES
+(1, 'user@email.com', '$2b$10$A.RezjA04B1GcvfGDnnve.elhd56BPN.44qUtvgyVG5Jy8IkwxoFi', 'Admin', 'Active', '2025-03-30 20:22:51', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `company_modules`
+--
+
+CREATE TABLE IF NOT EXISTS `company_modules` (
+  `CompanyModules_id` int(11) NOT NULL AUTO_INCREMENT,
+  `Company_fk` int(11) NOT NULL,
+  `Modules_fk` int(11) NOT NULL,
+  `CompanyModulesStatus_fk` int(11) NOT NULL,
+  `CompanyModulesStart_date` date NOT NULL,
+  `CompanyModulesEnd_date` date NOT NULL,
+  PRIMARY KEY (`CompanyModules_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Truncar tablas antes de insertar `company_modules`
+--
+
+TRUNCATE TABLE `company_modules`;
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `company_modules_status`
+--
+
+CREATE TABLE IF NOT EXISTS `company_modules_status` (
+  `CompanyModules_id` int(11) NOT NULL AUTO_INCREMENT,
+  `CompanyModules_name` varchar(20) NOT NULL,
+  `CompanyModules_description` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`CompanyModules_id`),
+  UNIQUE KEY `Company_modules_name` (`CompanyModules_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Truncar tablas antes de insertar `company_modules_status`
+--
+
+TRUNCATE TABLE `company_modules_status`;
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `migrations`
 --
 
-DROP TABLE IF EXISTS `migrations`;
 CREATE TABLE IF NOT EXISTS `migrations` (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `version` varchar(255) NOT NULL,
@@ -85,6 +147,11 @@ CREATE TABLE IF NOT EXISTS `migrations` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
+--
+-- Truncar tablas antes de insertar `migrations`
+--
+
+TRUNCATE TABLE `migrations`;
 --
 -- Volcado de datos para la tabla `migrations`
 --
@@ -105,7 +172,6 @@ INSERT INTO `migrations` (`id`, `version`, `class`, `group`, `namespace`, `time`
 -- Estructura de tabla para la tabla `modules`
 --
 
-DROP TABLE IF EXISTS `modules`;
 CREATE TABLE IF NOT EXISTS `modules` (
   `Modules_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `Modules_name` varchar(30) NOT NULL,
@@ -120,6 +186,11 @@ CREATE TABLE IF NOT EXISTS `modules` (
   UNIQUE KEY `Modules_name` (`Modules_name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
+--
+-- Truncar tablas antes de insertar `modules`
+--
+
+TRUNCATE TABLE `modules`;
 --
 -- Volcado de datos para la tabla `modules`
 --
@@ -139,7 +210,6 @@ INSERT INTO `modules` (`Modules_id`, `Modules_name`, `Modules_description`, `Mod
 -- Estructura de tabla para la tabla `permissions`
 --
 
-DROP TABLE IF EXISTS `permissions`;
 CREATE TABLE IF NOT EXISTS `permissions` (
   `Permissions_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `Permissions_name` varchar(30) NOT NULL,
@@ -151,6 +221,11 @@ CREATE TABLE IF NOT EXISTS `permissions` (
   UNIQUE KEY `Permissions_name` (`Permissions_name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
+--
+-- Truncar tablas antes de insertar `permissions`
+--
+
+TRUNCATE TABLE `permissions`;
 --
 -- Volcado de datos para la tabla `permissions`
 --
@@ -167,7 +242,6 @@ INSERT INTO `permissions` (`Permissions_id`, `Permissions_name`, `Permissions_de
 -- Estructura de tabla para la tabla `permissions_modules`
 --
 
-DROP TABLE IF EXISTS `permissions_modules`;
 CREATE TABLE IF NOT EXISTS `permissions_modules` (
   `PermissionsModules_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `RoleModules_fk` int(11) UNSIGNED DEFAULT NULL,
@@ -179,6 +253,11 @@ CREATE TABLE IF NOT EXISTS `permissions_modules` (
   KEY `fk_permissions_modules_permissions` (`Permissions_fk`)
 ) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
+--
+-- Truncar tablas antes de insertar `permissions_modules`
+--
+
+TRUNCATE TABLE `permissions_modules`;
 --
 -- Volcado de datos para la tabla `permissions_modules`
 --
@@ -201,7 +280,6 @@ INSERT INTO `permissions_modules` (`PermissionsModules_id`, `RoleModules_fk`, `P
 -- Estructura de tabla para la tabla `profiles`
 --
 
-DROP TABLE IF EXISTS `profiles`;
 CREATE TABLE IF NOT EXISTS `profiles` (
   `Profile_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `Profile_email` varchar(255) NOT NULL,
@@ -216,6 +294,11 @@ CREATE TABLE IF NOT EXISTS `profiles` (
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
+-- Truncar tablas antes de insertar `profiles`
+--
+
+TRUNCATE TABLE `profiles`;
+--
 -- Volcado de datos para la tabla `profiles`
 --
 
@@ -229,7 +312,6 @@ INSERT INTO `profiles` (`Profile_id`, `Profile_email`, `Profile_name`, `Profile_
 -- Estructura de tabla para la tabla `roles`
 --
 
-DROP TABLE IF EXISTS `roles`;
 CREATE TABLE IF NOT EXISTS `roles` (
   `Roles_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `Roles_name` varchar(30) NOT NULL,
@@ -240,6 +322,11 @@ CREATE TABLE IF NOT EXISTS `roles` (
   UNIQUE KEY `Roles_name` (`Roles_name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
+--
+-- Truncar tablas antes de insertar `roles`
+--
+
+TRUNCATE TABLE `roles`;
 --
 -- Volcado de datos para la tabla `roles`
 --
@@ -254,7 +341,6 @@ INSERT INTO `roles` (`Roles_id`, `Roles_name`, `Roles_description`, `create_at`,
 -- Estructura de tabla para la tabla `role_modules`
 --
 
-DROP TABLE IF EXISTS `role_modules`;
 CREATE TABLE IF NOT EXISTS `role_modules` (
   `RoleModules_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `Modules_fk` int(11) UNSIGNED DEFAULT NULL,
@@ -267,6 +353,11 @@ CREATE TABLE IF NOT EXISTS `role_modules` (
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
+-- Truncar tablas antes de insertar `role_modules`
+--
+
+TRUNCATE TABLE `role_modules`;
+--
 -- Volcado de datos para la tabla `role_modules`
 --
 
@@ -275,13 +366,11 @@ INSERT INTO `role_modules` (`RoleModules_id`, `Modules_fk`, `Roles_fk`, `create_
 (2, 2, 1, '2024-05-16 18:16:45', NULL),
 (3, 3, 1, '2024-05-16 18:16:57', NULL),
 (4, 1, 2, '2024-05-16 18:17:06', NULL),
-(5, 3, 2, '2024-05-17 16:10:31', NULL),
 (6, 4, 1, '2024-05-25 17:14:07', NULL),
 (7, 5, 1, '2024-05-25 19:04:12', NULL),
 (8, 6, 1, '2024-05-27 15:47:26', NULL),
 (9, 7, 1, '2024-05-27 20:14:50', NULL),
 (10, 2, 2, '2024-05-28 00:38:57', NULL),
-(11, 4, 2, '2024-05-28 00:39:26', NULL),
 (12, 6, 2, '2024-05-28 00:39:54', NULL);
 
 -- --------------------------------------------------------
@@ -290,7 +379,6 @@ INSERT INTO `role_modules` (`RoleModules_id`, `Modules_fk`, `Roles_fk`, `create_
 -- Estructura de tabla para la tabla `users`
 --
 
-DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `User_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `User_user` varchar(255) NOT NULL,
@@ -306,12 +394,17 @@ CREATE TABLE IF NOT EXISTS `users` (
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
+-- Truncar tablas antes de insertar `users`
+--
+
+TRUNCATE TABLE `users`;
+--
 -- Volcado de datos para la tabla `users`
 --
 
 INSERT INTO `users` (`User_id`, `User_user`, `User_password`, `Roles_fk`, `User_status_fk`, `create_at`, `update_at`) VALUES
 (4, 'd.casallas@sinapsist.com.co', '$2y$10$/F0Kxg/eZKVYX/Uq7GD6xO1IOfWYcYHgy10XrO7.GI7qkLB9yNFM2', 1, 1, '2024-05-18 10:07:53', '0000-00-00 00:00:00'),
-(5, 'info@sinapsist.com.co', '$2y$10$/F0Kxg/eZKVYX/Uq7GD6xO1IOfWYcYHgy10XrO7.GI7qkLB9yNFM2', 2, 1, '2024-05-23 17:06:37', '0000-00-00 00:00:00');
+(5, 'info@sinapsist.com.co', '$2y$10$/F0Kxg/eZKVYX/Uq7GD6xO1IOfWYcYHgy10XrO7.GI7qkLB9yNFM2', 1, 1, '2024-05-23 17:06:37', '2025-04-07 00:02:44');
 
 -- --------------------------------------------------------
 
@@ -319,7 +412,6 @@ INSERT INTO `users` (`User_id`, `User_user`, `User_password`, `Roles_fk`, `User_
 -- Estructura de tabla para la tabla `user_status`
 --
 
-DROP TABLE IF EXISTS `user_status`;
 CREATE TABLE IF NOT EXISTS `user_status` (
   `User_status_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `User_status_name` varchar(30) NOT NULL,
@@ -330,6 +422,11 @@ CREATE TABLE IF NOT EXISTS `user_status` (
   UNIQUE KEY `User_status_name` (`User_status_name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
+--
+-- Truncar tablas antes de insertar `user_status`
+--
+
+TRUNCATE TABLE `user_status`;
 --
 -- Volcado de datos para la tabla `user_status`
 --
