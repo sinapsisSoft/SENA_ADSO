@@ -53,6 +53,7 @@ class User extends Controller
     return view('user/users_view', $this->data);
   }
 
+  
   //This method consists of creating, obtains the data from the POST method, return Json
   public function create()
   {
