@@ -1,0 +1,39 @@
+.btn-actions {
+  font-size: 0.7em !important;
+  width: 60px;
+  font-weight: bold;
+  margin: 4px;
+}
+
+input[type="search"] {
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  margin: 3px;
+}
+.message-error {
+  color: red;
+}
+.preload {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(223, 227, 230, 0.73);
+  z-index: 2000;
+  cursor: progress;
+  display: none;
+}
+
+.menu-slide li a{
+  text-decoration: none;
+  cursor: pointer;
+  width: 100%;
+  display: inline-block;
+}
