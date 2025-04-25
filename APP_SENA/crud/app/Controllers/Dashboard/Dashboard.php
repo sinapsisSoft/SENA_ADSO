@@ -6,11 +6,11 @@
  * Descriptions:This is controller class for managing dashboard
  * **/
 //Is file namespace   
-namespace App\Controllers;
+namespace App\Controllers\Dashboard;
 //These are the class that will be used in this controller
-use App\Models\DashboardModel;
-use App\Models\RoleModulesModel;
-use App\Models\ProfileModel;
+use App\Models\Dashboard\DashboardModel;
+use App\Models\Role\RoleModulesModel;
+use App\Models\Profile\ProfileModel;
 use CodeIgniter\Controller;
 use CodeIgniter\HTTP\Message;
 use CodeIgniter\HTTP\ResponseInterface;

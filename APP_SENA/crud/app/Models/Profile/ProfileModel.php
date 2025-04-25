@@ -1,23 +1,24 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Profile;
 
 use CodeIgniter\Model;
 
-class UserStatusModel extends Model
+class ProfileModel extends Model
 {
-    protected $table            = 'user_status';
-    protected $primaryKey       = 'User_status_id';
+    protected $table            = 'profiles';
+    protected $primaryKey       = 'Profile_id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['User_status_id','User_status_name','User_status_description','update_at'];
+    protected $allowedFields    = ['Profile_email','Profile_name','Profile_photo','User_id_fk','update_at'];
 
     protected bool $allowEmptyInserts = false;
 
-    
+    // Dates
     protected $createdField  = 'create_at';
     protected $updatedField  = 'update_at';
+
 
 }

@@ -6,16 +6,18 @@
  * Descriptions:This is controller class for managing login
  * **/
 //Is file namespace   
-namespace App\Controllers;
+namespace App\Controllers\Login;
 //These are the class that will be used in this controller
-use App\Models\LoginModel;
-use CodeIgniter\Controller;
+
+use App\Controllers\BaseController;
+use App\Models\Login\LoginModel;
 use CodeIgniter\HTTP\Message;
 use CodeIgniter\HTTP\ResponseInterface;
 use Exception;
+use Faker\Provider\Base;
 
 //This is the user class
-class Login extends Controller
+class Login extends BaseController
 {
   //Variable declarations. 
   private $loginModel;

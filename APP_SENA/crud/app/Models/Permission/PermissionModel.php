@@ -1,23 +1,22 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Permission;
 
 use CodeIgniter\Model;
-use Exception;
-class RoleModel extends Model
+
+class PermissionModel extends Model
 {
-    protected $table            = 'roles';
-    protected $primaryKey       = 'Roles_id';
+    protected $table            = 'permissions';
+    protected $primaryKey       = 'Permissions_id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['Roles_name','Roles_description','update_at'];
+    protected $allowedFields    = ['Permissions_name','Permissions_description','Permissions_icon','update_at'];
 
     protected bool $allowEmptyInserts = false;
 
     // Dates
     protected $createdField  = 'create_at';
     protected $updatedField  = 'update_at';
-
 }

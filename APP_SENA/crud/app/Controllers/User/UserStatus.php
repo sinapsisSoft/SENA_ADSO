@@ -1,24 +1,27 @@
 <?php
+
 /**
  * Author:DIEGO CASALLAS
- * Date:15/05/2024
- * Descriptions:This is controller class for managing permissions
+ * Date:08/04/2024
+ * Descriptions:This is controller class for managing user state
  * **/
+
 //Is file namespace   
-namespace App\Controllers;
+namespace App\Controllers\User;
+
 //These are the class that will be used in this controller
-use App\Models\PermissionModel;
-use App\Models\ProfileModel;
-use App\Models\RoleModulesModel;
+use App\Models\User\UserStatusModel;
+use App\Models\Profile\ProfileModel;
+use App\Models\Role\RoleModulesModel;
 use CodeIgniter\Controller;
 use CodeIgniter\HTTP\ResponseInterface;
 
-//This is the permission model class
-class Permission extends Controller
+//This is the users state class
+class UserStatus extends Controller
 {
   //Variable declarations. 
   private $primaryKey;
-  private $PermissionModel;
+  private $StatusModel;
   private $roleModuleModel;
   private $profileModel;
   private $data;
@@ -26,21 +29,21 @@ class Permission extends Controller
   //This method is the constructor
   public function __construct()
   {
-    $this->primaryKey = "Permissions_id";
-    $this->PermissionModel = new PermissionModel();
+    $this->primaryKey = "User_status_id";
     $this->profileModel = new ProfileModel();
     $this->roleModuleModel = new RoleModulesModel();
+    $this->StatusModel = new UserStatusModel();
     $this->data = [];
-    $this->model = "permissions";
+    $this->model = "userStatus";
   }
   //This method is the index, Started the view, set parameters for send the data in the view of the html render  
   public function index()
   {
-    $this->data['title'] = "PERMISSIONS";
-    $this->data[$this->model] = $this->PermissionModel->orderBy($this->primaryKey, 'ASC')->findAll();
+    $this->data['title'] = "USER STATUS";
+    $this->data[$this->model] = $this->StatusModel->orderBy($this->primaryKey, 'ASC')->findAll();
     $this->data['profile'] =  $this->profileModel->where('User_id_fk', (int)$this->getSessionIdUser()['User_id'])->first();
     $this->data['userModules'] =  $this->roleModuleModel->sp_role_modules_id((int)$this->getSessionIdUser()['Roles_fk']);
-    return view('permission/permission_view', $this->data);
+    return view('userStatus/status_view', $this->data);
   }
 
   //This method consists of creating, obtains the data from the POST method, return Json
@@ -49,7 +52,7 @@ class Permission extends Controller
     if ($this->request->isAJAX()) {
       $dataModel = $this->getDataModel();
       //Query Insert Codeigniter
-      if ($this->PermissionModel->insert($dataModel)) {
+      if ($this->StatusModel->insert($dataModel)) {
         $data['message'] = 'success';
         $data['response'] = ResponseInterface::HTTP_OK;
         $data['data'] = $dataModel;
@@ -67,12 +70,12 @@ class Permission extends Controller
     //Change array to Json
     echo json_encode($dataModel);
   }
-  //This method consists of single User permission , obtains id the data from the GET method, return Json
-  public function singlePermission($id = null)
+  //This method consists of single User Status , obtains id the data from the GET method, return Json
+  public function singleUserStatus($id = null)
   {    //Validate is ajax
     if ($this->request->isAJAX()) {
-      //Select user permission model 
-      if ($data[$this->model] = $this->PermissionModel->where($this->primaryKey, $id)->first()) {
+      //Select user status model 
+      if ($data[$this->model] = $this->StatusModel->where($this->primaryKey, $id)->first()) {
         $data['message'] = 'success';
         $data['response'] = ResponseInterface::HTTP_OK;
         $data['csrf'] = csrf_hash();
@@ -89,7 +92,7 @@ class Permission extends Controller
     //Change array to Json
     echo json_encode($data);
   }
-  //This method consists of update permission, obtains id the data from the POST method, return Json
+  //This method consists of update status, obtains id the data from the POST method, return Json
   public function update()
   {
     //Validate is ajax
@@ -97,13 +100,12 @@ class Permission extends Controller
       $today = date("Y-m-d H:i:s");
       $id = $this->request->getVar($this->primaryKey);
       $dataModel = [
-        'Permissions_name' => $this->request->getVar('Permissions_name'),
-        'Permissions_description' => $this->request->getVar('Permissions_description'),
-        'Permissions_icon' => $this->request->getVar('Permissions_icon'),
+        'User_status_name' => $this->request->getVar('User_status_name'),
+        'User_status_description' => $this->request->getVar('User_status_description'),
         'update_at' => $today
       ];
       //Update data model 
-      if ($this->PermissionModel->update($id, $dataModel)) {
+      if ($this->StatusModel->update($id, $dataModel)) {
         $data['message'] = 'success';
         $data['response'] = ResponseInterface::HTTP_OK;
         $data['data'] = $dataModel;
@@ -121,12 +123,12 @@ class Permission extends Controller
     //Change array to Json
     echo json_encode($dataModel);
   }
-  //This method consists of delete permission, obtains id the data from the GET method, return Json
+  //This method consists of delete status, obtains id the data from the GET method, return Json
   public function delete($id = null)
   {
     try {
       //Delete data model 
-      if ($this->PermissionModel->where($this->primaryKey, $id)->delete($id)) {
+      if ($this->StatusModel->where($this->primaryKey, $id)->delete($id)) {
         $data['message'] = 'success';
         $data['response'] = ResponseInterface::HTTP_OK;
         $data['data'] = "OK";
@@ -148,13 +150,11 @@ class Permission extends Controller
   public function getDataModel()
   {
     $data = [
-      'Permissions_id' => $this->request->getVar('Permissions_id'),
-      'Permissions_name' => $this->request->getVar('Permissions_name'),
-      'Permissions_description' => $this->request->getVar('Permissions_description'),
-      'Permissions_icon' => $this->request->getVar('Permissions_icon'),
-      'update_at' => $this->request->getVar('update_at'),
+      'User_status_id' => $this->request->getVar('User_status_id'),
+      'User_status_name' => $this->request->getVar('User_status_name'),
+      'User_status_description' => $this->request->getVar('User_status_description'),
+      'update_at' => $this->request->getVar('update_at')
     ];
     return $data;
   }
-  
 }

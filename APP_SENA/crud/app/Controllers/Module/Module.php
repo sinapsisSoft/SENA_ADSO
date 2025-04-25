@@ -5,13 +5,13 @@
  * Descriptions:This is controller class for managing modules
  * **/
 //Is file namespace   
-namespace App\Controllers;
+namespace App\Controllers\Module;
 //These are the class that will be used in this controller
-use App\Models\ModuleModel;
+use App\Models\Module\ModuleModel;
 use CodeIgniter\Controller;
 use CodeIgniter\HTTP\ResponseInterface;
-use App\Models\RoleModulesModel;
-use App\Models\ProfileModel;
+use App\Models\Role\RoleModulesModel;
+use App\Models\Profile\ProfileModel;
 
 //This is the users state class
 class Module extends Controller

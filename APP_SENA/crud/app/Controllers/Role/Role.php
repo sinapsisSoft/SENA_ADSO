@@ -1,55 +1,46 @@
 <?php
 /**
  * Author:DIEGO CASALLAS
- * Date:22/05/2024
- * Descriptions:This is controller class for managing profile
+ * Date:16/05/2024
+ * Descriptions:This is controller class for managing role
  * **/
 //Is file namespace   
-namespace App\Controllers;
+namespace App\Controllers\Role;
 //These are the class that will be used in this controller
-use App\Models\ProfileModel;
+use App\Models\Role\RoleModel;
+use App\Models\Profile\ProfileModel;
+use App\Models\Role\RoleModulesModel;
 use CodeIgniter\Controller;
 use CodeIgniter\HTTP\ResponseInterface;
 
 //This is the roles class
-class Profile extends Controller
+class Role extends Controller
 {
   //Variable declarations. 
   private $primaryKey;
+  private $roleModel;
   private $profileModel;
+  private $roleModuleModel;
   private $data;
   private $model;
   //This method is the constructor
   public function __construct()
   {
-    $this->primaryKey = "Profile_id";
+    $this->primaryKey = "Roles_id";
+    $this->roleModuleModel = new RoleModulesModel();
+    $this->roleModel = new RoleModel();
     $this->profileModel = new ProfileModel();
     $this->data = [];
-    $this->model = "profiles";
+    $this->model = "roles";
   }
   //This method is the index, Started the view, set parameters for send the data in the view of the html render  
-  public function index($id=null)
+  public function index()
   {
-    $this->data['title'] = "PROFILE";
-    if ($this->request->isAJAX()) {
-      //Select user status model 
-      if ($data[$this->model] = $this->profileModel->where('User_id_fk', $id)->first()) {
-        $data['message'] = 'success';
-        $data['response'] = ResponseInterface::HTTP_OK;
-        $data['csrf'] = csrf_hash();
-      } else {
-        $data['message'] = 'Error create user';
-        $data['response'] = ResponseInterface::HTTP_NO_CONTENT;
-        $data['data'] = '';
-      }
-    } else {
-      $data['message'] = 'Error Ajax';
-      $data['response'] = ResponseInterface::HTTP_CONFLICT;
-      $data['data'] = '';
-    }
-    //Change array to Json
-    echo json_encode($data);
-    return view('profile/profile_view', $this->data);
+    $this->data['title'] = "ROLES";
+    $this->data[$this->model] = $this->roleModel->orderBy($this->primaryKey, 'ASC')->findAll();
+    $this->data['profile'] =  $this->profileModel->where('User_id_fk', (int)$this->getSessionIdUser()['User_id'])->first();
+    $this->data['userModules'] =  $this->roleModuleModel->sp_role_modules_id((int)$this->getSessionIdUser()['Roles_fk']);
+    return view('role/roles_view', $this->data);
   }
 
   //This method consists of creating, obtains the data from the POST method, return Json
@@ -58,7 +49,7 @@ class Profile extends Controller
     if ($this->request->isAJAX()) {
       $dataModel = $this->getDataModel();
       //Query Insert Codeigniter
-      if ($this->profileModel->insert($dataModel)) {
+      if ($this->roleModel->insert($dataModel)) {
         $data['message'] = 'success';
         $data['response'] = ResponseInterface::HTTP_OK;
         $data['data'] = $dataModel;
@@ -76,7 +67,28 @@ class Profile extends Controller
     //Change array to Json
     echo json_encode($dataModel);
   }
-
+  //This method consists of single User Status , obtains id the data from the GET method, return Json
+  public function singleRole($id = null)
+  {    //Validate is ajax
+    if ($this->request->isAJAX()) {
+      //Select user status model 
+      if ($data[$this->model] = $this->roleModel->where($this->primaryKey, $id)->first()) {
+        $data['message'] = 'success';
+        $data['response'] = ResponseInterface::HTTP_OK;
+        $data['csrf'] = csrf_hash();
+      } else {
+        $data['message'] = 'Error create user';
+        $data['response'] = ResponseInterface::HTTP_NO_CONTENT;
+        $data['data'] = '';
+      }
+    } else {
+      $data['message'] = 'Error Ajax';
+      $data['response'] = ResponseInterface::HTTP_CONFLICT;
+      $data['data'] = '';
+    }
+    //Change array to Json
+    echo json_encode($data);
+  }
   //This method consists of update status, obtains id the data from the POST method, return Json
   public function update()
   {
@@ -85,14 +97,12 @@ class Profile extends Controller
       $today = date("Y-m-d H:i:s");
       $id = $this->request->getVar($this->primaryKey);
       $dataModel = [
-        'Profile_email' => $this->request->getVar('Profile_email'),
-        'Profile_name' => $this->request->getVar('Profile_name'),
-        'Profile_photo' => $this->request->getVar('Profile_photo'),
-        'User_id_fk' => $this->request->getVar('User_id_fk'),
+        'Roles_name' => $this->request->getVar('Roles_name'),
+        'Roles_description' => $this->request->getVar('Roles_description'),
         'update_at' => $today
       ];
       //Update data model 
-      if ($this->profileModel->update($id, $dataModel)) {
+      if ($this->roleModel->update($id, $dataModel)) {
         $data['message'] = 'success';
         $data['response'] = ResponseInterface::HTTP_OK;
         $data['data'] = $dataModel;
@@ -115,7 +125,7 @@ class Profile extends Controller
   {
     try {
       //Delete data model 
-      if ($this->profileModel->where($this->primaryKey, $id)->delete($id)) {
+      if ($this->roleModel->where($this->primaryKey, $id)->delete($id)) {
         $data['message'] = 'success';
         $data['response'] = ResponseInterface::HTTP_OK;
         $data['data'] = "OK";
@@ -137,11 +147,9 @@ class Profile extends Controller
   public function getDataModel()
   {
     $data = [
-      'Profile_id' => $this->request->getVar('Profile_id'),
-      'Profile_email' => $this->request->getVar('Profile_email'),
-      'Profile_name' => $this->request->getVar('Profile_name'),
-      'Profile_photo' => $this->request->getVar('Profile_photo'),
-      'User_id_fk' => $this->request->getVar('User_id_fk'),
+      'Roles_id' => $this->request->getVar('Roles_id'),
+      'Roles_name' => $this->request->getVar('Roles_name'),
+      'Roles_description' => $this->request->getVar('Roles_description'),
       'update_at' => $this->request->getVar('update_at'),
     ];
     return $data;
