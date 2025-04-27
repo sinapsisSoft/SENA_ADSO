@@ -100,7 +100,7 @@ class Permission extends Controller
         'Permissions_name' => $this->request->getVar('Permissions_name'),
         'Permissions_description' => $this->request->getVar('Permissions_description'),
         'Permissions_icon' => $this->request->getVar('Permissions_icon'),
-        'update_at' => $today
+        'updated_at' => $today
       ];
       //Update data model 
       if ($this->PermissionModel->update($id, $dataModel)) {
@@ -152,7 +152,7 @@ class Permission extends Controller
       'Permissions_name' => $this->request->getVar('Permissions_name'),
       'Permissions_description' => $this->request->getVar('Permissions_description'),
       'Permissions_icon' => $this->request->getVar('Permissions_icon'),
-      'update_at' => $this->request->getVar('update_at'),
+      'updated_at' => $this->request->getVar('updated_at'),
     ];
     return $data;
   }

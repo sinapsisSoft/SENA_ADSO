@@ -13,13 +13,13 @@ class RoleModulesModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['Modules_fk', 'Roles_fk', 'update_at'];
+    protected $allowedFields    = ['Modules_fk', 'Roles_fk', 'updated_at'];
 
     protected bool $allowEmptyInserts = false;
 
     // Dates
-    protected $createdField  = 'create_at';
-    protected $updatedField  = 'update_at';
+    protected $createdField  = 'created_at';
+    protected $updatedField  = 'updated_at';
 
     public function sp_role_modules()
     {

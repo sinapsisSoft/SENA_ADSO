@@ -89,7 +89,7 @@ class Profile extends Controller
         'Profile_name' => $this->request->getVar('Profile_name'),
         'Profile_photo' => $this->request->getVar('Profile_photo'),
         'User_id_fk' => $this->request->getVar('User_id_fk'),
-        'update_at' => $today
+        'updated_at' => $today
       ];
       //Update data model 
       if ($this->profileModel->update($id, $dataModel)) {
@@ -142,7 +142,7 @@ class Profile extends Controller
       'Profile_name' => $this->request->getVar('Profile_name'),
       'Profile_photo' => $this->request->getVar('Profile_photo'),
       'User_id_fk' => $this->request->getVar('User_id_fk'),
-      'update_at' => $this->request->getVar('update_at'),
+      'updated_at' => $this->request->getVar('updated_at'),
     ];
     return $data;
   }

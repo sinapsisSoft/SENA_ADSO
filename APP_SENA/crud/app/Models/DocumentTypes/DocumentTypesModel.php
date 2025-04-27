@@ -1,22 +1,23 @@
 <?php
 
-namespace App\Models\Permission;
+namespace App\Models\DocumentTypes;
 
 use CodeIgniter\Model;
 
-class PermissionModel extends Model
+class DocumentTypesModel extends Model
 {
-    protected $table            = 'permissions';
-    protected $primaryKey       = 'Permissions_id';
+    protected $table            = 'document_types';
+    protected $primaryKey       = 'Document_type_id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['Permissions_name','Permissions_description','Permissions_icon','updated_at'];
+    protected $allowedFields    = ['Document_type_id','Document_type_code','Document_type_name','Document_type_description','updated_at'];
 
     protected bool $allowEmptyInserts = false;
 
-    // Dates
+    
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
+
 }

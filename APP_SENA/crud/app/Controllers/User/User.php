@@ -111,7 +111,7 @@ class User extends Controller
         'User_user' => $this->request->getVar('User_user'),
         'Roles_fk' => $this->request->getVar('Roles_fk'),
         'User_status_fk' => $this->request->getVar('User_status_fk'),
-        'update_at' => $today
+        'updated_at' => $today
       ];
       //Update data model 
       if ($this->userModel->update($id, $dataModel)) {
@@ -164,7 +164,7 @@ class User extends Controller
       'User_password' => password_hash($this->request->getVar('User_password'),PASSWORD_DEFAULT),
       'Roles_fk' => $this->request->getVar('Roles_fk'),
       'User_status_fk' => $this->request->getVar('User_status_fk'),
-      'update_at' => $this->request->getVar('update_at'),
+      'updated_at' => $this->request->getVar('updated_at'),
     ];
     return $data;
   }

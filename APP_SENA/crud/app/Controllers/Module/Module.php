@@ -104,7 +104,7 @@ class Module extends Controller
         'Modules_icon' => $this->request->getVar('Modules_icon'),
         'Modules_submodule' => $this->request->getVar('Modules_submodule'),
         'Modules_parent_module' => $this->request->getVar('Modules_parent_module'),
-        'update_at' => $today
+        'updated_at' => $today
       ];
       //Update data model 
       if ($this->ModuleModel->update($id, $dataModel)) {
@@ -159,7 +159,7 @@ class Module extends Controller
       'Modules_icon' => $this->request->getVar('Modules_icon'),
       'Modules_submodule' => $this->request->getVar('Modules_submodule'),
       'Modules_parent_module' => $this->request->getVar('Modules_parent_module'),
-      'update_at' => $this->request->getVar('update_at'),
+      'updated_at' => $this->request->getVar('updated_at'),
     ];
     return $data;
   }

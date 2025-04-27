@@ -12,17 +12,28 @@ class UserModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['User_user','User_password','Roles_fk','User_status_fk','update_at'];
+    protected $allowedFields    = ['User_user','User_password','Roles_fk','User_status_fk','updated_at'];
 
     protected bool $allowEmptyInserts = false;
 
-    protected $updatedField  = 'update_at';
-    protected $deletedField  = 'create_at';
+    protected $updatedField  = 'updated_at';
+    protected $deletedField  = 'created_at';
 
     public function sp_users()
     {
         try {
             $sql    = "CALL sp_users();";
+            $query  = $this->db->query($sql);
+            $result = $query->getResultArray();
+        } catch (Exception $e) {
+            $result = null;
+        }
+        return $result;
+    }
+    public function sp_users_students_instructors()
+    {
+        try {
+            $sql    = "CALL sp_users_students_instructors();";
             $query  = $this->db->query($sql);
             $result = $query->getResultArray();
         } catch (Exception $e) {

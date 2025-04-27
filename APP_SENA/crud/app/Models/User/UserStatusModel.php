@@ -12,12 +12,12 @@ class UserStatusModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['User_status_id','User_status_name','User_status_description','update_at'];
+    protected $allowedFields    = ['User_status_id','User_status_name','User_status_description','updated_at'];
 
     protected bool $allowEmptyInserts = false;
 
     
-    protected $createdField  = 'create_at';
-    protected $updatedField  = 'update_at';
+    protected $createdField  = 'created_at';
+    protected $updatedField  = 'updated_at';
 
 }

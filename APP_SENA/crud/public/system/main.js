@@ -304,7 +304,7 @@ class Main {
    * whitespace, and has a length of at least 4 characters. Otherwise, it returns `false`.
    */
   validateText(input) {
-    if (input.value === '' || input.value.trim === '' || input.value.length < 4) {
+    if (input.value === '' || input.value.trim === '' || input.value.length < 2) {
       return false;
     }
     return true;

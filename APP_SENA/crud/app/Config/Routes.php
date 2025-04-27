@@ -28,6 +28,16 @@ $routes->group("userStatus",['namespace' => 'App\Controllers\User','filter' => '
   $routes->post("update", "UserStatus::update");
 });
 
+//GROUP ROUTES DOCUMENTS TYPE
+$routes->group("documentTypes",['namespace' => 'App\Controllers\DocumentTypes','filter' => 'AuthCheck'],function($routes){
+  $routes->get("/", "DocumentTypes::index");
+  $routes->get("show", "DocumentTypes::index");
+  $routes->get("edit/(:num)", "DocumentTypes::singleDocumentTypes/$1");
+  $routes->get("delete/(:num)", "DocumentTypes::delete/$1");
+  $routes->post("add", "DocumentTypes::create");
+  $routes->post("update", "DocumentTypes::update");
+});
+
 //GROUP ROUTES MODULES
 $routes->group("module",['namespace' => 'App\Controllers\Module','filter' => 'AuthCheck'],function($routes){
   $routes->get("/", "Module::index");
@@ -81,6 +91,16 @@ $routes->group("user",['namespace' => 'App\Controllers\User','filter' => 'AuthCh
   $routes->post("update", "User::update");
 });
 
+//GROUP ROUTES STUDENT
+$routes->group("student",['namespace' => 'App\Controllers\Student','filter' => 'AuthCheck'],function($routes){
+  $routes->get("/", "Student::index");
+  $routes->get("show", "Student::index");
+  $routes->get("edit/(:num)", "Student::singleStudent/$1");
+  $routes->get("delete/(:num)", "Student::delete/$1");
+  $routes->post("add", "Student::create");
+  $routes->post("update", "Student::update");
+});
+
 //GROUP ROUTES
 $routes->group("profile",['filter' => 'AuthCheck'], function ($routes) {
   $routes->get("show/(:num)", "Profile::index/$1");
@@ -99,13 +119,10 @@ $routes->group("login",['namespace' => 'App\Controllers\Login'], function ($rout
   $routes->post("forgerPassword", "Login::forgerPassword");
 });
 
-
 //GROUP ROUTES DASHBOARD
 $routes->group("dashboard",['namespace' => 'App\Controllers\Dashboard'],function ($routes) {
   $routes->get("/", "Dashboard::index",['filter' => 'AuthCheck']);
 
 });
-
-
 
 $routes->get('/', 'Login::index', ['namespace' => 'App\Controllers\Login','filter' => 'AlreadyLoggedIn']);

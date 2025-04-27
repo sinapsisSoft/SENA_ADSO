@@ -16,7 +16,7 @@ class LoginModel extends Model
 
     protected bool $allowEmptyInserts = false;
 
-    protected $updatedField  = 'update_at';
-    protected $deletedField  = 'create_at';
+    protected $updatedField  = 'updated_at';
+    protected $deletedField  = 'created_at';
 
 }

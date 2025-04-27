@@ -153,7 +153,7 @@ class RoleModule extends Controller
       $dataModel = [
         'Modules_fk' => $this->request->getVar('Modules_fk'),
         'Roles_fk' => $this->request->getVar('Roles_fk'),
-        'update_at' => $today
+        'updated_at' => $today
       ];
       //Update data model 
       if ($this->roleModuleModel->update($id, $dataModel)) {
@@ -204,7 +204,7 @@ class RoleModule extends Controller
       'RoleModules_id' => $this->request->getVar('RoleModules_id'),
       'Modules_fk' => $this->request->getVar('Modules_fk'),
       'Roles_fk' => $this->request->getVar('Roles_fk'),
-      'update_at' => $this->request->getVar('update_at'),
+      'updated_at' => $this->request->getVar('updated_at'),
     ];
     return $data;
   }

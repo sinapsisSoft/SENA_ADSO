@@ -12,12 +12,12 @@ class RoleModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['Roles_name','Roles_description','update_at'];
+    protected $allowedFields    = ['Roles_name','Roles_description','updated_at'];
 
     protected bool $allowEmptyInserts = false;
 
     // Dates
-    protected $createdField  = 'create_at';
-    protected $updatedField  = 'update_at';
+    protected $createdField  = 'created_at';
+    protected $updatedField  = 'updated_at';
 
 }
