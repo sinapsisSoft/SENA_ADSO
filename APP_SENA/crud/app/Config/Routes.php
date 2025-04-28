@@ -37,6 +37,15 @@ $routes->group("documentTypes",['namespace' => 'App\Controllers\DocumentTypes','
   $routes->post("add", "DocumentTypes::create");
   $routes->post("update", "DocumentTypes::update");
 });
+//GROUP ROUTES DOCUMENTS TYPE
+$routes->group("specialty",['namespace' => 'App\Controllers\Specialty','filter' => 'AuthCheck'],function($routes){
+  $routes->get("/", "Specialty::index");
+  $routes->get("show", "Specialty::index");
+  $routes->get("edit/(:num)", "Specialty::singleSpecialty/$1");
+  $routes->get("delete/(:num)", "Specialty::delete/$1");
+  $routes->post("add", "Specialty::create");
+  $routes->post("update", "Specialty::update");
+});
 
 //GROUP ROUTES MODULES
 $routes->group("module",['namespace' => 'App\Controllers\Module','filter' => 'AuthCheck'],function($routes){
