@@ -18,7 +18,6 @@ const tableId = 'table-index';
 const preloadId = 'preloadId';
 const classEdit = 'edit-input';
 const textConfirm = 'Press a button!\nEither OK or Cancel.';
-const btnSubmit = document.getElementById('btnSubmit');
 const mainApp = new Main(modalId, formId, classEdit, preloadId);
 
 /* These lines of code are declaring and initializing variables in a JavaScript file. Here is a
@@ -132,7 +131,21 @@ async function getDataId(id) {
  * `type` is `false`, the button will be enabled.
  */
 function btnEnabled(type) {
-  btnSubmit.disabled = type;
+ // let btnSubmit = document.getElementById("btnSubmit");
+  console.log(btnSubmit.disabled );
+  debugger
+  console.log(type );
+  btnSubmit.disabled=true;
+  if(type){
+    btnSubmit.classList.add('btn-primary');    
+    btnSubmit.classList.remove('btn-secondary');   
+  }else{
+    btnSubmit.classList.add('btn-secondary');  
+    btnSubmit.classList.remove('btn-primary'); 
+  }
+  btnSubmit.disabled = false;
+
+
 }
 
 /**
