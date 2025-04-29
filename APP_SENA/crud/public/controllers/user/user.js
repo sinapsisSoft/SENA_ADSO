@@ -18,6 +18,7 @@ const tableId = 'table-index';
 const preloadId = 'preloadId';
 const classEdit = 'edit-input';
 const textConfirm = 'Press a button!\nEither OK or Cancel.';
+const btnActionsForm = 'btn_actions_form';
 const mainApp = new Main(modalId, formId, classEdit, preloadId);
 
 /* These lines of code are declaring and initializing variables in a JavaScript file. Here is a
@@ -36,7 +37,7 @@ var resultFetch = null;
 function show(id) {
   mainApp.disabledFormAll();
   mainApp.resetForm();
-  btnEnabled(true);
+  mainApp.btnEnabledDisabled(true,btnActionsForm);
   getDataId(id);
 }
 
@@ -48,7 +49,7 @@ function add() {
   mainApp.enableFormAll();
   mainApp.resetForm();
   insertUpdate = true;
-  btnEnabled(false);
+  mainApp.btnEnabledDisabled(false,btnActionsForm);
   mainApp.showModal();
 }
 
@@ -62,7 +63,7 @@ function edit(id) {
   mainApp.disabledFormEdit();
   mainApp.resetForm();
   insertUpdate = false;
-  btnEnabled(false);
+  mainApp.btnEnabledDisabled(false,btnActionsForm);
   getDataId(id);
 }
 
@@ -124,29 +125,6 @@ async function getDataId(id) {
     .finally();
 }
 
-/**
- * The function `btnEnabled` is used to enable or disable a button based on the `type` parameter.
- * @param type - The `type` parameter in the `btnEnabled` function is used to determine whether the
- * button should be enabled or disabled. If `type` is `true`, the button will be disabled, and if
- * `type` is `false`, the button will be enabled.
- */
-function btnEnabled(type) {
- // let btnSubmit = document.getElementById("btnSubmit");
-  console.log(btnSubmit.disabled );
-  debugger
-  console.log(type );
-  btnSubmit.disabled=true;
-  if(type){
-    btnSubmit.classList.add('btn-primary');    
-    btnSubmit.classList.remove('btn-secondary');   
-  }else{
-    btnSubmit.classList.add('btn-secondary');  
-    btnSubmit.classList.remove('btn-primary'); 
-  }
-  btnSubmit.disabled = false;
-
-
-}
 
 /**
  * The function `getData` is an asynchronous function that sends a request to a specified URL using the

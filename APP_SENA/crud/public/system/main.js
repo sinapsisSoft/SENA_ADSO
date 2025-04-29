@@ -386,4 +386,19 @@ class Main {
     }
   }
 
+  btnEnabledDisabled(type, elementId) {
+    let btnObj = document.getElementById(elementId);
+    btnObj.classList.remove('btn-primary', 'btn-secondary');
+    if (!type) {
+      btnObj.disabled = true;
+      btnObj.classList.add('btn-primary');
+    }
+    else {
+      btnObj.disabled = false;
+      btnObj.classList.add('btn-secondary');
+    }
+    btnObj.disabled = type;
+    btnObj.textContent = type ? 'Block' : 'Send';
+  }
+
 }

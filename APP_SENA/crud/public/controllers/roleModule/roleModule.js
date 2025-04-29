@@ -21,7 +21,7 @@ const tablePermissionsId = 'table-permissions';
 const preloadId = 'preloadId';
 const classEdit = 'edit-input';
 const textConfirm = 'Press a button!\nEither OK or Cancel.';
-const btnSubmit = document.getElementById('btnSubmit');
+const btnActionsForm = 'btnSubmit';
 const mainApp = new Main(modalId, formId, classEdit, preloadId);
 
 
@@ -42,7 +42,7 @@ function add() {
   mainApp.resetForm();
   mainApp.enableFormAll();
   insertUpdate = true;
-  btnEnabled(false);
+  mainApp.btnEnabledDisabled(false,btnActionsForm);
   mainApp.showModal();
 }
 
@@ -61,7 +61,7 @@ function editModules(id, idRoleModule) {
   mainApp.resetForm();
   mainApp.disabledFormEdit();
   insertUpdate = false;
-  btnEnabled(false);
+  mainApp.btnEnabledDisabled(false,btnActionsForm);
   getDataModuleId(id, idRoleModule);
 }
 
