@@ -2,7 +2,7 @@
 
 /**
  * Author:DIEGO CASALLAS
- * Date:22/05/2024
+ * Date:27/04/2025
  * Descriptions:This is controller class for managing login
  * **/
 //Is file namespace   
@@ -58,7 +58,7 @@ class Login extends BaseController
         $this->data['message'] = 'Login successful';
         $this->data['response'] = ResponseInterface::HTTP_OK;
         $this->data['data'] = $user;
-        $session->set(LOGGED_USER,$user);
+        $session->set(LOGGED_USER, $user);
       }
     } else {
       $this->data['message'] = 'Error Ajax';
@@ -86,7 +86,7 @@ class Login extends BaseController
     echo json_encode($this->data);
   }
 
-  //This method consists of single User  , obtains id the data from the GET method, return Json
+  //This method consists of single User , obtains id the data from the GET method, return Json
   public function forgerPassword()
   {
     try {

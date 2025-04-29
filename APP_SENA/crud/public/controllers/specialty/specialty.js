@@ -1,3 +1,9 @@
+"use strict";
+
+window.onload = function () {
+  console.log("Specialty loaded");
+  // Initialize the specialty
+}
 /* Author:DIEGO CASALLAS
 * Date:09/04/2024
 * Descriptions:This is controller specialty  

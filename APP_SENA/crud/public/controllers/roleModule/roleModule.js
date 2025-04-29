@@ -1,3 +1,9 @@
+"use strict";
+
+window.onload = function () {
+  console.log("Role - module loaded");
+  // Initialize the role - module
+}
 /* Author:DIEGO CASALLAS
 * Date:17/05/2024
 * Descriptions:This is controller role - module - permission 

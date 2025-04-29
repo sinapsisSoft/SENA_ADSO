@@ -3,49 +3,63 @@
 /**
  * Author:DIEGO CASALLAS
  * Date:27/04/2025
- * Descriptions:This is controller class for managing Specialty state
+ * Descriptions:This is controller class for managing user
  * **/
-
 //Is file namespace   
-namespace App\Controllers\Specialty;
-
+namespace App\Controllers\Instructor;
 //These are the class that will be used in this controller
-
+use App\Models\Instructor\InstructorModel;
+use App\Models\DocumentTypes\DocumentTypesModel;
 use App\Models\Specialty\SpecialtyModel;
-use App\Models\Profile\ProfileModel;
+use App\Models\User\UserModel;
+use App\Models\User\UserStatusModel;
 use App\Models\Role\RoleModulesModel;
+use App\Models\Profile\ProfileModel;
 use CodeIgniter\Controller;
 use CodeIgniter\HTTP\ResponseInterface;
 
-//This is the Specialties state class
-class Specialty extends Controller
+//This is the Instructor class
+class Instructor extends Controller
 {
   //Variable declarations. 
   private $primaryKey;
-  private $roleModuleModel;
+  private $instructorModel;
+  private $userModel;
+  private $userStatusModel;
+  private $documentTypesModel;
   private $profileModel;
   private $specialtyModel;
+  private $roleModuleModel;
   private $data;
   private $model;
   //This method is the constructor
   public function __construct()
   {
-    $this->primaryKey = "Specialty_id";
-    $this->profileModel = new ProfileModel();
+    $this->primaryKey = "Instructor_id";
+    $this->instructorModel = new InstructorModel();
+    $this->userModel = new UserModel();
+    $this->userStatusModel = new UserStatusModel();
+    $this->documentTypesModel = new DocumentTypesModel();
     $this->roleModuleModel = new RoleModulesModel();
-    $this->specialtyModel=new SpecialtyModel();
+    $this->profileModel = new ProfileModel();
+    $this->specialtyModel = new SpecialtyModel();
     $this->data = [];
-    $this->model = "specialty";
+    $this->model = "instructors";
   }
   //This method is the index, Started the view, set parameters for send the data in the view of the html render  
   public function index()
   {
-    $this->data['title'] = "SPECIALTY";
-    $this->data[$this->model] = $this->specialtyModel->orderBy($this->primaryKey, 'ASC')->findAll();
+    $this->data['title'] = "INSTRUCTORS";
+    $this->data[$this->model] = $this->instructorModel->sp_instructors();
+    $this->data['users'] = $this->userModel->sp_users_students_instructors();
+    $this->data['userStatus'] = $this->userStatusModel->orderBy('User_status_id', 'ASC')->findAll();
+    $this->data['documentType'] = $this->documentTypesModel->orderBy('Document_type_id', 'ASC')->findAll();
+    $this->data['specialties'] = $this->specialtyModel->orderBy('Specialty_id', 'ASC')->findAll();
     $this->data['profile'] =  $this->profileModel->where('User_id_fk', (int)$this->getSessionIdUser()['User_id'])->first();
     $this->data['userModules'] =  $this->roleModuleModel->sp_role_modules_id((int)$this->getSessionIdUser()['Roles_fk']);
-    return view('specialty/specialty_view', $this->data);
+    return view('instructor/instructors_view', $this->data);
   }
+
 
   //This method consists of creating, obtains the data from the POST method, return Json
   public function create()
@@ -53,13 +67,13 @@ class Specialty extends Controller
     if ($this->request->isAJAX()) {
       $dataModel = $this->getDataModel();
       //Query Insert 
-      if ($this->specialtyModel->insert($dataModel)) {
+      if ($this->instructorModel->insert($dataModel)) {
         $data['message'] = 'success';
         $data['response'] = ResponseInterface::HTTP_OK;
         $data['data'] = $dataModel;
         $data['csrf'] = csrf_hash();
       } else {
-        $data['message'] = 'Error create user';
+        $data['message'] = 'Error create instructor';
         $data['response'] = ResponseInterface::HTTP_NO_CONTENT;
         $data['data'] = '';
       }
@@ -71,17 +85,17 @@ class Specialty extends Controller
     //Change array to Json
     echo json_encode($dataModel);
   }
-  //This method consists of single User Status , obtains id the data from the GET method, return Json
-  public function singleSpecialty($id = null)
+  //This method consists of single Students , obtains id the data from the GET method, return Json
+  public function singleInstructor($id = null)
   {    //Validate is ajax
     if ($this->request->isAJAX()) {
-      //Select user status model 
-      if ($data[$this->model] = $this->specialtyModel->where($this->primaryKey, $id)->first()) {
+      //Select student  model 
+      if ($data[$this->model] = $this->instructorModel->where($this->primaryKey, $id)->first()) {
         $data['message'] = 'success';
         $data['response'] = ResponseInterface::HTTP_OK;
         $data['csrf'] = csrf_hash();
       } else {
-        $data['message'] = 'Error create user';
+        $data['message'] = 'Error instructor';
         $data['response'] = ResponseInterface::HTTP_NO_CONTENT;
         $data['data'] = '';
       }
@@ -93,7 +107,7 @@ class Specialty extends Controller
     //Change array to Json
     echo json_encode($data);
   }
-  //This method consists of update status, obtains id the data from the POST method, return Json
+  //This method consists of update , obtains id the data from the POST method, return Json
   public function update()
   {
     //Validate is ajax
@@ -101,15 +115,15 @@ class Specialty extends Controller
       $today = date("Y-m-d H:i:s");
       $id = $this->request->getVar($this->primaryKey);
       $dataModel = $this->getDataModel();
-      $dataModel['updated_at']=$today;
+      $dataModel['updated_at']  = $today;
       //Update data model 
-      if ($this->specialtyModel->update($id, $dataModel)) {
+      if ($this->instructorModel->update($id, $dataModel)) {
         $data['message'] = 'success';
         $data['response'] = ResponseInterface::HTTP_OK;
         $data['data'] = $dataModel;
         $data['csrf'] = csrf_hash();
       } else {
-        $data['message'] = 'Error create user';
+        $data['message'] = 'Error update instructor';
         $data['response'] = ResponseInterface::HTTP_NO_CONTENT;
         $data['data'] = '';
       }
@@ -121,12 +135,12 @@ class Specialty extends Controller
     //Change array to Json
     echo json_encode($dataModel);
   }
-  //This method consists of delete status, obtains id the data from the GET method, return Json
+  //This method consists of delete Instructor, obtains id the data from the GET method, return Json
   public function delete($id = null)
   {
     try {
       //Delete data model 
-      if ($this->specialtyModel->where($this->primaryKey, $id)->delete($id)) {
+      if ($this->instructorModel->where($this->primaryKey, $id)->delete($id)) {
         $data['message'] = 'success';
         $data['response'] = ResponseInterface::HTTP_OK;
         $data['data'] = "OK";
@@ -148,13 +162,21 @@ class Specialty extends Controller
   public function getDataModel()
   {
     $data = [
-      'Specialty_id' => $this->request->getVar('Specialty_id'),
-      'Specialty_code' => $this->request->getVar('Specialty_code'),
-      'Specialty_name' => $this->request->getVar('Specialty_name'),
-      'Specialty_name' => $this->request->getVar('Specialty_name'),
-      'updated_at' => $this->request->getVar('updated_at')
+      'Instructor_id' => $this->request->getVar('Instructor_id'),
+      'Instructor_document' => $this->request->getVar('Instructor_document'),
+      'Instructor_first_name' => $this->request->getVar('Instructor_first_name'),
+      'Instructor_last_name' => $this->request->getVar('Instructor_last_name'),
+      'Instructor_phone' => $this->request->getVar('Instructor_phone'),
+      'Instructor_email' => $this->request->getVar('Instructor_email'),
+      'Instructor_address' => $this->request->getVar('Instructor_address'),
+      'Instructor_birth_date' => $this->request->getVar('Instructor_birth_date'),
+      'Instructor_gender' => $this->request->getVar('Instructor_gender'),
+      'User_fk' => $this->request->getVar('User_fk'),
+      'Document_type_fk' => $this->request->getVar('Document_type_fk'),
+      'Specialty_fk' => $this->request->getVar('Specialty_fk'),
+      'User_status_fk' => $this->request->getVar('User_status_fk'),
+      'updated_at' => $this->request->getVar('updated_at'),
     ];
-    ['','','','Specialty_description','updated_at'];
     return $data;
   }
 }

@@ -1,6 +1,12 @@
+"use strict";
+
+window.onload = function () {
+  console.log("Students loaded");
+  // Initialize the Students
+}
 /* Author:DIEGO CASALLAS
 * Date:17/05/2024
-* Descriptions:This is controller User 
+* Descriptions:This is controller Students 
 * **/
 
 /* These lines of code are declaring constants and initializing variables in a JavaScript file. Here is

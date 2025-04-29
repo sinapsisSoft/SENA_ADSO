@@ -18,7 +18,14 @@ class UserModel extends Model
 
     protected $updatedField  = 'updated_at';
     protected $deletedField  = 'created_at';
-
+/**
+ * Author:  Diego Casallas
+ * Date:   01/10/2025   
+ * Description:  Model for user table
+ * file:  RoleModulesModel.php
+*/
+    // Queries custom
+    // Get all users 
     public function sp_users()
     {
         try {
@@ -30,6 +37,7 @@ class UserModel extends Model
         }
         return $result;
     }
+    // Get all users by id
     public function sp_users_students_instructors()
     {
         try {

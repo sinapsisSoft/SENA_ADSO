@@ -106,12 +106,8 @@ class Student extends Controller
     if ($this->request->isAJAX()) {
       $today = date("Y-m-d H:i:s");
       $id = $this->request->getVar($this->primaryKey);
-      $dataModel = [
-        'User_user' => $this->request->getVar('User_user'),
-        'Roles_fk' => $this->request->getVar('Roles_fk'),
-        'User_status_fk' => $this->request->getVar('User_status_fk'),
-        'updated_at' => $today
-      ];
+      $dataModel = $this->getDataModel();
+      $dataModel['updated_at']=$today;
       //Update data model 
       if ($this->studentModel->update($id, $dataModel)) {
         $data['message'] = 'success';
@@ -119,7 +115,7 @@ class Student extends Controller
         $data['data'] = $dataModel;
         $data['csrf'] = csrf_hash();
       } else {
-        $data['message'] = 'Error update user';
+        $data['message'] = 'Error update student';
         $data['response'] = ResponseInterface::HTTP_NO_CONTENT;
         $data['data'] = '';
       }

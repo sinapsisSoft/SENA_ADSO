@@ -96,11 +96,8 @@ class Role extends Controller
     if ($this->request->isAJAX()) {
       $today = date("Y-m-d H:i:s");
       $id = $this->request->getVar($this->primaryKey);
-      $dataModel = [
-        'Roles_name' => $this->request->getVar('Roles_name'),
-        'Roles_description' => $this->request->getVar('Roles_description'),
-        'updated_at' => $today
-      ];
+      $dataModel = $this->getDataModel();
+      $dataModel['updated_at']= $today;
       //Update data model 
       if ($this->roleModel->update($id, $dataModel)) {
         $data['message'] = 'success';

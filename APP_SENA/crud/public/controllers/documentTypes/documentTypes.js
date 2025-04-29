@@ -1,5 +1,10 @@
+"use strict";
+window.onload = function () {
+  console.log("Document Types loaded");
+  // Initialize the document types
+}
 /* Author:DIEGO CASALLAS
-* Date:09/04/2024
+* Date:27/03/2025
 * Descriptions:This is controller Document Types
 * **/
 

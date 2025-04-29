@@ -1,3 +1,9 @@
+"use strict";
+
+window.onload = function () {
+  console.log("User Status loaded");
+  // Initialize the User Status
+}
 /* Author:DIEGO CASALLAS
 * Date:09/04/2024
 * Descriptions:This is controller user status 

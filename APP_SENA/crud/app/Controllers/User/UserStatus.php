@@ -2,7 +2,7 @@
 
 /**
  * Author:DIEGO CASALLAS
- * Date:08/04/2024
+ * Date:27/04/2025
  * Descriptions:This is controller class for managing user state
  * **/
 
@@ -99,11 +99,8 @@ class UserStatus extends Controller
     if ($this->request->isAJAX()) {
       $today = date("Y-m-d H:i:s");
       $id = $this->request->getVar($this->primaryKey);
-      $dataModel = [
-        'User_status_name' => $this->request->getVar('User_status_name'),
-        'User_status_description' => $this->request->getVar('User_status_description'),
-        'updated_at' => $today
-      ];
+      $dataModel = $this->getDataModel();
+      $dataModel['updated_at']=$today;
       //Update data model 
       if ($this->statusModel->update($id, $dataModel)) {
         $data['message'] = 'success';

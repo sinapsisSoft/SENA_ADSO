@@ -1,7 +1,7 @@
 <?php
 /**
  * Author:DIEGO CASALLAS
- * Date:15/05/2024
+ * Date:27/04/2025
  * Descriptions:This is controller class for managing permissions
  * **/
 //Is file namespace   
@@ -96,12 +96,8 @@ class Permission extends Controller
     if ($this->request->isAJAX()) {
       $today = date("Y-m-d H:i:s");
       $id = $this->request->getVar($this->primaryKey);
-      $dataModel = [
-        'Permissions_name' => $this->request->getVar('Permissions_name'),
-        'Permissions_description' => $this->request->getVar('Permissions_description'),
-        'Permissions_icon' => $this->request->getVar('Permissions_icon'),
-        'updated_at' => $today
-      ];
+      $dataModel = $this->getDataModel();
+      $dataModel['updated_at'] = $today;
       //Update data model 
       if ($this->PermissionModel->update($id, $dataModel)) {
         $data['message'] = 'success';

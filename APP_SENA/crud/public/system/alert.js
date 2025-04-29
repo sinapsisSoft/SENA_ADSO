@@ -1,3 +1,9 @@
+"use strict";
+
+window.onload = function () {
+  console.log("alerts loaded");
+  // Initialize the alerts
+}
 /**
  * Author:DIEGO CASALLAS
  * Date:23/05/2024

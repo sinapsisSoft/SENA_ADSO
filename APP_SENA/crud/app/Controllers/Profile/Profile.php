@@ -84,13 +84,8 @@ class Profile extends Controller
     if ($this->request->isAJAX()) {
       $today = date("Y-m-d H:i:s");
       $id = $this->request->getVar($this->primaryKey);
-      $dataModel = [
-        'Profile_email' => $this->request->getVar('Profile_email'),
-        'Profile_name' => $this->request->getVar('Profile_name'),
-        'Profile_photo' => $this->request->getVar('Profile_photo'),
-        'User_id_fk' => $this->request->getVar('User_id_fk'),
-        'updated_at' => $today
-      ];
+      $dataModel = $this->getDataModel();
+      $dataModel['updated_at']= $today;
       //Update data model 
       if ($this->profileModel->update($id, $dataModel)) {
         $data['message'] = 'success';

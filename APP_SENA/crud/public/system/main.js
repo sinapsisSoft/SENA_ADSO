@@ -1,3 +1,9 @@
+"use strict";
+
+window.onload = function () {
+  console.log("Class main loaded");
+  // Initialize the Main
+}
 /**
  * Author:DIEGO CASALLAS
  * Date:08/04/2024

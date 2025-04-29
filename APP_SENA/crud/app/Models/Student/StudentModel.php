@@ -18,7 +18,14 @@ class StudentModel extends Model
 
     protected $updatedField  = 'updated_at';
     protected $deletedField  = 'created_at';
-
+/**
+ * Author:  Diego Casallas
+ * Date:   01/10/2025   
+ * Description:  Model for students table
+ * file:  RoleModulesModel.php
+*/
+    // Queries custom
+    // Get all students 
     public function sp_students()
     {
         try {

@@ -1,3 +1,9 @@
+"use strict";
+
+window.onload = function () {
+  console.log("User loaded");
+  // Initialize the User
+}
 /* Author:DIEGO CASALLAS
 * Date:17/05/2024
 * Descriptions:This is controller User 

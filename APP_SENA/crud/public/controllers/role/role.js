@@ -1,6 +1,12 @@
+"use strict";
+
+window.onload = function () {
+  console.log("Role loaded");
+  // Initialize the role
+}
 /* Author:DIEGO CASALLAS
 * Date:15/04/2024
-* Descriptions:This is controller module 
+* Descriptions:This is controller role 
 * **/
 
 /* These lines of code are declaring constants and initializing variables in a JavaScript file. Here is

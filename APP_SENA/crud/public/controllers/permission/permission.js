@@ -1,3 +1,9 @@
+"use strict";
+
+window.onload = function () {
+  console.log("Permissions loaded");
+  // Initialize the permissions
+}
 /* Author:DIEGO CASALLAS
 * Date:15/04/2024
 * Descriptions:This is controller permissions 

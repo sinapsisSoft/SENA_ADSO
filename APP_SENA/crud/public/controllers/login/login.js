@@ -1,5 +1,10 @@
+"use strict";
+window.onload = function () {
+  console.log("Login loaded");
+  // Initialize the login
+}
 /* Author:DIEGO CASALLAS
-* Date:22/05/2024
+* Date:22/04/2025
 * Descriptions:This is controller Login
 * **/
 

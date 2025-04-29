@@ -13,7 +13,8 @@ use CodeIgniter\HTTP\ResponseInterface;
 use App\Models\Role\RoleModulesModel;
 use App\Models\Profile\ProfileModel;
 
-//This is the users state class
+//This is the class Module for managing modules
+//This class is responsible for handling the CRUD operations for modules.
 class Module extends Controller
 {
   //Variable declarations. 
@@ -49,7 +50,7 @@ class Module extends Controller
   {
     if ($this->request->isAJAX()) {
       $dataModel = $this->getDataModel();
-      //Query Insert Codeigniter
+      //Query Insert 
       if ($this->ModuleModel->insert($dataModel)) {
         $data['message'] = 'success';
         $data['response'] = ResponseInterface::HTTP_OK;
@@ -97,15 +98,8 @@ class Module extends Controller
     if ($this->request->isAJAX()) {
       $today = date("Y-m-d H:i:s");
       $id = $this->request->getVar($this->primaryKey);
-      $dataModel = [
-        'Modules_name' => $this->request->getVar('Modules_name'),
-        'Modules_description' => $this->request->getVar('Modules_description'),
-        'Modules_route' => $this->request->getVar('Modules_route'),
-        'Modules_icon' => $this->request->getVar('Modules_icon'),
-        'Modules_submodule' => $this->request->getVar('Modules_submodule'),
-        'Modules_parent_module' => $this->request->getVar('Modules_parent_module'),
-        'updated_at' => $today
-      ];
+      $dataModel = $this->getDataModel();
+      $dataModel['updated_at'] = $today;
       //Update data model 
       if ($this->ModuleModel->update($id, $dataModel)) {
         $data['message'] = 'success';

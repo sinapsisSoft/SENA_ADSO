@@ -1,7 +1,7 @@
 <?php
 /**
  * Author:DIEGO CASALLAS
- * Date:17/05/2024
+ * Date:27/04/2025
  * Descriptions:This is controller class for managing user
  * **/
 //Is file namespace   
@@ -107,12 +107,8 @@ class User extends Controller
     if ($this->request->isAJAX()) {
       $today = date("Y-m-d H:i:s");
       $id = $this->request->getVar($this->primaryKey);
-      $dataModel = [
-        'User_user' => $this->request->getVar('User_user'),
-        'Roles_fk' => $this->request->getVar('Roles_fk'),
-        'User_status_fk' => $this->request->getVar('User_status_fk'),
-        'updated_at' => $today
-      ];
+      $dataModel = $this->getDataModel();
+      $dataModel['updated_at']=$today;
       //Update data model 
       if ($this->userModel->update($id, $dataModel)) {
         $data['message'] = 'success';

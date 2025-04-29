@@ -109,6 +109,15 @@ $routes->group("student",['namespace' => 'App\Controllers\Student','filter' => '
   $routes->post("add", "Student::create");
   $routes->post("update", "Student::update");
 });
+//GROUP ROUTES STUDENT
+$routes->group("instructor",['namespace' => 'App\Controllers\Instructor','filter' => 'AuthCheck'],function($routes){
+  $routes->get("/", "Instructor::index");
+  $routes->get("show", "Instructor::index");
+  $routes->get("edit/(:num)", "Instructor::singleInstructor/$1");
+  $routes->get("delete/(:num)", "Instructor::delete/$1");
+  $routes->post("add", "Instructor::create");
+  $routes->post("update", "Instructor::update");
+});
 
 //GROUP ROUTES
 $routes->group("profile",['filter' => 'AuthCheck'], function ($routes) {
