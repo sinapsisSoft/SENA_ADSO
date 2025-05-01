@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 28-04-2025 a las 04:10:51
+-- Tiempo de generación: 29-04-2025 a las 21:03:29
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.0.30
 
@@ -20,13 +20,33 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `codeigniter-crud`
 --
-CREATE DATABASE IF NOT EXISTS `codeigniter-crud` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `codeigniter-crud`;
 
 DELIMITER $$
 --
 -- Procedimientos
 --
+DROP PROCEDURE IF EXISTS `sp_instructors`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_instructors` ()   BEGIN
+SELECT 
+IT.Instructor_id,
+IT.Instructor_document, 
+IT.Instructor_first_name, 
+IT.Instructor_last_name, 
+IT.Instructor_phone, 
+IT.Instructor_email,
+IT.Instructor_address,
+IT.Instructor_birth_date,
+IT.Instructor_gender,
+US.User_user AS User_fk,
+DT.Document_type_code AS Document_type_fk,
+UST.User_status_id AS User_status_fk
+FROM  instructors AS IT 
+INNER JOIN users AS US ON IT.User_fk=US.User_id
+INNER JOIN user_status AS UST ON IT.User_status_fk=UST.User_status_id
+INNER JOIN document_types AS DT ON IT.Document_type_fk=DT.Document_type_id
+INNER JOIN specialty AS SP ON IT.Specialty_fk=SP.Specialty_id;
+END$$
+
 DROP PROCEDURE IF EXISTS `sp_permissions_module_id`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_permissions_module_id` (IN `roleModulesId` INT)   BEGIN
 SELECT  CONCAT('permission_',PM.Permissions_fk) AS "permission", 1 AS 'Status',RM.Modules_fk AS Modules_id FROM permissions_modules AS PM
@@ -113,11 +133,6 @@ CREATE TABLE IF NOT EXISTS `api_users` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Truncar tablas antes de insertar `api_users`
---
-
-TRUNCATE TABLE `api_users`;
---
 -- Volcado de datos para la tabla `api_users`
 --
 
@@ -141,11 +156,6 @@ CREATE TABLE IF NOT EXISTS `company_modules` (
   PRIMARY KEY (`CompanyModules_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Truncar tablas antes de insertar `company_modules`
---
-
-TRUNCATE TABLE `company_modules`;
 -- --------------------------------------------------------
 
 --
@@ -161,11 +171,35 @@ CREATE TABLE IF NOT EXISTS `company_modules_status` (
   UNIQUE KEY `Company_modules_name` (`CompanyModules_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+
 --
--- Truncar tablas antes de insertar `company_modules_status`
+-- Estructura de tabla para la tabla `courses`
 --
 
-TRUNCATE TABLE `company_modules_status`;
+DROP TABLE IF EXISTS `courses`;
+CREATE TABLE IF NOT EXISTS `courses` (
+  `Course_id` int(11) NOT NULL AUTO_INCREMENT,
+  `Course_code` varchar(50) NOT NULL,
+  `Course_program_name` varchar(100) NOT NULL,
+  `Course_description` text NOT NULL,
+  `Course_start_date` date NOT NULL,
+  `Course_end_date` date NOT NULL,
+  `Course_status` enum('active','inactive','completed') DEFAULT 'active',
+  `created_at` datetime DEFAULT current_timestamp(),
+  `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`Course_id`),
+  UNIQUE KEY `Course_code` (`Course_code`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `courses`
+--
+
+INSERT INTO `courses` (`Course_id`, `Course_code`, `Course_program_name`, `Course_description`, `Course_start_date`, `Course_end_date`, `Course_status`, `created_at`, `updated_at`) VALUES
+(1, '001', 'ADSO - Análisis y Desarrollo de Software', 'ADSO - Análisis y Desarrollo de Software', '2025-04-29', '2025-07-31', 'active', '2025-04-29 13:58:50', '0000-00-00 00:00:00'),
+(2, '002', 'ADSI - Análisis y Desarrollo de Sistemas de Información', 'ADSI - Análisis y Desarrollo de Sistemas de Información', '2025-04-29', '2025-07-30', 'active', '2025-04-29 14:01:18', '2025-04-29 19:02:04');
+
 -- --------------------------------------------------------
 
 --
@@ -184,11 +218,6 @@ CREATE TABLE IF NOT EXISTS `document_types` (
   UNIQUE KEY `Document_type_code` (`Document_type_code`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Truncar tablas antes de insertar `document_types`
---
-
-TRUNCATE TABLE `document_types`;
 --
 -- Volcado de datos para la tabla `document_types`
 --
@@ -210,7 +239,7 @@ INSERT INTO `document_types` (`Document_type_id`, `Document_type_code`, `Documen
 
 DROP TABLE IF EXISTS `instructors`;
 CREATE TABLE IF NOT EXISTS `instructors` (
-  `Instructor_id` int(11) NOT NULL,
+  `Instructor_id` int(11) NOT NULL AUTO_INCREMENT,
   `Instructor_document` varchar(20) NOT NULL,
   `Instructor_first_name` varchar(100) NOT NULL,
   `Instructor_last_name` varchar(100) NOT NULL,
@@ -222,18 +251,23 @@ CREATE TABLE IF NOT EXISTS `instructors` (
   `User_fk` int(11) UNSIGNED NOT NULL,
   `Document_type_fk` int(11) NOT NULL,
   `Specialty_fk` int(11) NOT NULL,
+  `User_status_fk` int(11) UNSIGNED NOT NULL,
   `created_at` datetime DEFAULT current_timestamp(),
   `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`Instructor_id`),
   KEY `instructors_Specialty` (`Specialty_fk`),
   KEY `instructors_User` (`User_fk`),
-  KEY `instructors_Document_Type` (`Document_type_fk`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  KEY `instructors_Document_Type` (`Document_type_fk`),
+  KEY `instructors_User_status` (`User_status_fk`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Truncar tablas antes de insertar `instructors`
+-- Volcado de datos para la tabla `instructors`
 --
 
-TRUNCATE TABLE `instructors`;
+INSERT INTO `instructors` (`Instructor_id`, `Instructor_document`, `Instructor_first_name`, `Instructor_last_name`, `Instructor_phone`, `Instructor_email`, `Instructor_address`, `Instructor_birth_date`, `Instructor_gender`, `User_fk`, `Document_type_fk`, `Specialty_fk`, `User_status_fk`, `created_at`, `updated_at`) VALUES
+(1, '1031124402', 'Giselle', 'Guerrero', '3057207038', 'pequitaslhot@gmail.com', 'Calle falsa del amor 123', '1986-02-02', 'female', 4, 1, 1, 1, '2025-04-28 15:50:30', '2025-04-29 12:35:07');
+
 -- --------------------------------------------------------
 
 --
@@ -252,11 +286,6 @@ CREATE TABLE IF NOT EXISTS `migrations` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
---
--- Truncar tablas antes de insertar `migrations`
---
-
-TRUNCATE TABLE `migrations`;
 --
 -- Volcado de datos para la tabla `migrations`
 --
@@ -290,13 +319,8 @@ CREATE TABLE IF NOT EXISTS `modules` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`Modules_id`),
   UNIQUE KEY `Modules_name` (`Modules_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
---
--- Truncar tablas antes de insertar `modules`
---
-
-TRUNCATE TABLE `modules`;
 --
 -- Volcado de datos para la tabla `modules`
 --
@@ -305,13 +329,15 @@ INSERT INTO `modules` (`Modules_id`, `Modules_name`, `Modules_description`, `Mod
 (1, 'Dashboard', 'This is dashboard', 'dashboard', 'bi-speedometer', 0, 'NULL', '2024-05-16 18:13:05', '0000-00-00 00:00:00'),
 (2, 'User', 'This is user', 'user', 'bi-person-circle', 0, 'NULL', '2024-05-16 18:13:23', '0000-00-00 00:00:00'),
 (3, 'Module', 'This is module', 'module', 'bi-box-fill', 0, 'NULL', '2024-05-16 18:13:53', '2024-05-28 01:07:47'),
-(4, 'User Status', 'This is module the User Status', 'userStatus', 'bi-people-fill', 1, '2', '2024-05-25 17:13:17', NULL),
+(4, 'User Status', 'This is module the User Status', 'userStatus', 'bi-people-fill', 1, '2', '2024-05-25 17:13:17', '2025-04-29 20:25:57'),
 (5, 'Role', 'This is module the Role', 'role', 'bi-person-lock', 1, '2', '2024-05-25 19:03:41', NULL),
 (6, 'Role Modules', 'This is Role Modules', 'roleModule', 'bi-boxes', 1, '3', '2024-05-27 15:46:42', NULL),
 (7, 'Permissions', 'This is permissions', 'permission', 'bi-shield-lock-fill', 0, NULL, '2024-05-27 20:14:30', NULL),
 (8, 'Document Type', 'This is module Document types ', 'documentTypes', 'bi-file-earmark-person', 1, '9', '2025-04-27 17:26:44', NULL),
 (9, 'Tool', 'This is module Tool', 'tool', 'bi-gear-wide-connected', 0, NULL, '2025-04-27 17:30:37', NULL),
-(10, 'Student', 'This is student', 'student', 'bi-person-badge-fill', 0, NULL, '2025-04-27 23:57:03', NULL);
+(10, 'Student', 'This is student', 'student', 'bi-person-badge-fill', 0, NULL, '2025-04-27 23:57:03', NULL),
+(11, 'Instructor', 'This is the module for instructor administrations', 'instructor', 'bi-person-raised-hand', 0, NULL, '2025-04-28 10:09:20', NULL),
+(12, 'Specialty', 'This is the module for specialty administrations ', 'specialty', 'bi-cpu-fill', 1, '11', '2025-04-28 10:15:32', NULL);
 
 -- --------------------------------------------------------
 
@@ -332,16 +358,11 @@ CREATE TABLE IF NOT EXISTS `permissions` (
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Truncar tablas antes de insertar `permissions`
---
-
-TRUNCATE TABLE `permissions`;
---
 -- Volcado de datos para la tabla `permissions`
 --
 
 INSERT INTO `permissions` (`Permissions_id`, `Permissions_name`, `Permissions_description`, `Permissions_icon`, `created_at`, `updated_at`) VALUES
-(1, 'CREATE', 'This is create', 'bi-plus-circle-fill', '2024-05-16 18:14:29', '0000-00-00 00:00:00'),
+(1, 'CREATE', 'This is create', 'bi-plus-circle-fill', '2024-05-16 18:14:29', '2025-04-29 20:28:55'),
 (2, 'SHOW', 'This is show', 'bi-eye-fill', '2024-05-16 18:15:19', '0000-00-00 00:00:00'),
 (3, 'EDIT', 'This is Edit', 'bi-pencil-square', '2024-05-16 18:15:53', '0000-00-00 00:00:00'),
 (4, 'DELETE', 'This is Delete', 'bi-trash3-fill', '2024-05-28 00:31:01', '0000-00-00 00:00:00');
@@ -364,11 +385,6 @@ CREATE TABLE IF NOT EXISTS `permissions_modules` (
   KEY `fk_permissions_modules_permissions` (`Permissions_fk`)
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
---
--- Truncar tablas antes de insertar `permissions_modules`
---
-
-TRUNCATE TABLE `permissions_modules`;
 --
 -- Volcado de datos para la tabla `permissions_modules`
 --
@@ -407,11 +423,6 @@ CREATE TABLE IF NOT EXISTS `profiles` (
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Truncar tablas antes de insertar `profiles`
---
-
-TRUNCATE TABLE `profiles`;
---
 -- Volcado de datos para la tabla `profiles`
 --
 
@@ -437,11 +448,6 @@ CREATE TABLE IF NOT EXISTS `roles` (
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Truncar tablas antes de insertar `roles`
---
-
-TRUNCATE TABLE `roles`;
---
 -- Volcado de datos para la tabla `roles`
 --
 
@@ -465,13 +471,8 @@ CREATE TABLE IF NOT EXISTS `role_modules` (
   PRIMARY KEY (`RoleModules_id`),
   KEY `fk_module` (`Modules_fk`),
   KEY `fk_roles` (`Roles_fk`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
---
--- Truncar tablas antes de insertar `role_modules`
---
-
-TRUNCATE TABLE `role_modules`;
 --
 -- Volcado de datos para la tabla `role_modules`
 --
@@ -491,16 +492,18 @@ INSERT INTO `role_modules` (`RoleModules_id`, `Modules_fk`, `Roles_fk`, `created
 (14, 3, 2, '2025-04-25 14:01:04', NULL),
 (15, 8, 1, '2025-04-27 17:27:25', NULL),
 (16, 9, 1, '2025-04-27 17:31:42', NULL),
-(17, 10, 1, '2025-04-27 23:57:18', NULL);
+(17, 10, 1, '2025-04-27 23:57:18', NULL),
+(18, 12, 1, '2025-04-28 10:19:13', NULL),
+(19, 11, 1, '2025-04-28 10:19:35', NULL);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `specialties`
+-- Estructura de tabla para la tabla `specialty`
 --
 
-DROP TABLE IF EXISTS `specialties`;
-CREATE TABLE IF NOT EXISTS `specialties` (
+DROP TABLE IF EXISTS `specialty`;
+CREATE TABLE IF NOT EXISTS `specialty` (
   `Specialty_id` int(11) NOT NULL AUTO_INCREMENT,
   `Specialty_code` varchar(20) NOT NULL,
   `Specialty_name` varchar(100) NOT NULL,
@@ -509,13 +512,15 @@ CREATE TABLE IF NOT EXISTS `specialties` (
   `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`Specialty_id`),
   UNIQUE KEY `Specialty_code` (`Specialty_code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Truncar tablas antes de insertar `specialties`
+-- Volcado de datos para la tabla `specialty`
 --
 
-TRUNCATE TABLE `specialties`;
+INSERT INTO `specialty` (`Specialty_id`, `Specialty_code`, `Specialty_name`, `Specialty_description`, `created_at`, `updated_at`) VALUES
+(1, '001', 'Desarrollo de Software', NULL, '2025-04-28 05:01:30', '0000-00-00 00:00:00');
+
 -- --------------------------------------------------------
 
 --
@@ -542,13 +547,8 @@ CREATE TABLE IF NOT EXISTS `students` (
   UNIQUE KEY `User_fk` (`User_fk`),
   UNIQUE KEY `Student_email` (`Student_email`),
   KEY `students_document_type` (`Document_type_fk`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Truncar tablas antes de insertar `students`
---
-
-TRUNCATE TABLE `students`;
 --
 -- Volcado de datos para la tabla `students`
 --
@@ -579,11 +579,6 @@ CREATE TABLE IF NOT EXISTS `users` (
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Truncar tablas antes de insertar `users`
---
-
-TRUNCATE TABLE `users`;
---
 -- Volcado de datos para la tabla `users`
 --
 
@@ -610,11 +605,6 @@ CREATE TABLE IF NOT EXISTS `user_status` (
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Truncar tablas antes de insertar `user_status`
---
-
-TRUNCATE TABLE `user_status`;
---
 -- Volcado de datos para la tabla `user_status`
 --
 
@@ -633,8 +623,9 @@ INSERT INTO `user_status` (`User_status_id`, `User_status_name`, `User_status_de
 --
 ALTER TABLE `instructors`
   ADD CONSTRAINT `instructors_Document_Type` FOREIGN KEY (`Document_type_fk`) REFERENCES `document_types` (`Document_type_id`),
-  ADD CONSTRAINT `instructors_Specialty` FOREIGN KEY (`Specialty_fk`) REFERENCES `specialties` (`Specialty_id`),
-  ADD CONSTRAINT `instructors_User` FOREIGN KEY (`User_fk`) REFERENCES `users` (`User_id`);
+  ADD CONSTRAINT `instructors_Specialty` FOREIGN KEY (`Specialty_fk`) REFERENCES `specialty` (`Specialty_id`),
+  ADD CONSTRAINT `instructors_User` FOREIGN KEY (`User_fk`) REFERENCES `users` (`User_id`),
+  ADD CONSTRAINT `instructors_User_status` FOREIGN KEY (`User_status_fk`) REFERENCES `user_status` (`User_status_id`);
 
 --
 -- Filtros para la tabla `permissions_modules`

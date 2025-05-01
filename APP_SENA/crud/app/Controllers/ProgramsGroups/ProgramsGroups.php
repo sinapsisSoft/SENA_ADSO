@@ -1,28 +1,24 @@
 <?php
 /**
  * Author:DIEGO CASALLAS
- * Date:17/05/2024
- * Descriptions:This is controller class for managing user
+ * Date:29/05/2024
+ * Descriptions:This is controller class for managing Programs Groups
  * **/
 //Is file namespace   
-namespace App\Controllers\Student;
+namespace App\Controllers\ProgramsGroups;
 //These are the class that will be used in this controller
-use App\Models\Student\StudentModel;
-use App\Models\DocumentTypes\DocumentTypesModel;
-use App\Models\User\UserModel;
+use App\Models\ProgramsGroups\ProgramsGroupsModel;
 use App\Models\Role\RoleModulesModel;
 use App\Models\Profile\ProfileModel;
 use CodeIgniter\Controller;
 use CodeIgniter\HTTP\ResponseInterface;
 
 //This is the user class
-class Student extends Controller
+class ProgramsGroups extends Controller
 {
   //Variable declarations. 
   private $primaryKey;
-  private $studentModel;
-  private $userModel;
-  private $documentTypesModel;
+  private $programsGroupsModel;
   private $profileModel;
   private $roleModuleModel;
   private $data;
@@ -30,25 +26,21 @@ class Student extends Controller
   //This method is the constructor
   public function __construct()
   { 
-    $this->primaryKey = "Student_id";
-    $this->studentModel = new StudentModel();
-    $this->userModel = new UserModel();
-    $this->documentTypesModel = new DocumentTypesModel();
+    $this->primaryKey = "Program_group_id";
+    $this->programsGroupsModel = new ProgramsGroupsModel();
     $this->roleModuleModel = new RoleModulesModel();
     $this->profileModel = new ProfileModel();
     $this->data = [];
-    $this->model = "students";
+    $this->model = "programGroups";
   }
   //This method is the index, Started the view, set parameters for send the data in the view of the html render  
   public function index()
   {
-    $this->data['title'] = "STUDENTS";
-    $this->data[$this->model] = $this->studentModel->sp_students();
-    $this->data['documentType'] = $this->documentTypesModel->orderBy('Document_type_id', 'ASC')->findAll();
-    $this->data['users'] = $this->userModel->sp_users_students_instructors();
+    $this->data['title'] = "PROGRAMS GROUPS";
+    $this->data[$this->model] = $this->programsGroupsModel->orderBy($this->primaryKey, 'ASC')->findAll();
     $this->data['profile'] =  $this->profileModel->where('User_id_fk', (int)$this->getSessionIdUser()['User_id'])->first();
     $this->data['userModules'] =  $this->roleModuleModel->sp_role_modules_id((int)$this->getSessionIdUser()['Roles_fk']);
-    return view('student/students_view', $this->data);
+    return view('programsGroups/programsGroups_view', $this->data);
   }
 
   
@@ -58,13 +50,13 @@ class Student extends Controller
     if ($this->request->isAJAX()) {
       $dataModel = $this->getDataModel();
       //Query Insert 
-      if ($this->studentModel->insert($dataModel)) {
+      if ($this->programsGroupsModel->insert($dataModel)) {
         $data['message'] = 'success';
         $data['response'] = ResponseInterface::HTTP_OK;
         $data['data'] = $dataModel;
         $data['csrf'] = csrf_hash();
       } else {
-        $data['message'] = 'Error create student';
+        $data['message'] = 'Error create program group';
         $data['response'] = ResponseInterface::HTTP_NO_CONTENT;
         $data['data'] = '';
       }
@@ -77,17 +69,16 @@ class Student extends Controller
     echo json_encode($dataModel);
   }
   //This method consists of single Students  , obtains id the data from the GET method, return Json
-  public function singleStudent($id = null)
+  public function singleProgramsGroups($id = null)
   {    //Validate is ajax
     if ($this->request->isAJAX()) {
       //Select student  model 
- 
-      if ($data[$this->model] = $this->studentModel->sp_students_id($id)) {
+      if ($data[$this->model] = $this->programsGroupsModel->where($this->primaryKey, $id)->first()) {
         $data['message'] = 'success';
         $data['response'] = ResponseInterface::HTTP_OK;
         $data['csrf'] = csrf_hash();
       } else {
-        $data['message'] = 'Error students';
+        $data['message'] = 'Error Program Group';
         $data['response'] = ResponseInterface::HTTP_NO_CONTENT;
         $data['data'] = '';
       }
@@ -109,13 +100,13 @@ class Student extends Controller
       $dataModel = $this->getDataModel();
       $dataModel['updated_at']=$today;
       //Update data model 
-      if ($this->studentModel->update($id, $dataModel)) {
+      if ($this->programsGroupsModel->update($id, $dataModel)) {
         $data['message'] = 'success';
         $data['response'] = ResponseInterface::HTTP_OK;
         $data['data'] = $dataModel;
         $data['csrf'] = csrf_hash();
       } else {
-        $data['message'] = 'Error update student';
+        $data['message'] = 'Error update Program group';
         $data['response'] = ResponseInterface::HTTP_NO_CONTENT;
         $data['data'] = '';
       }
@@ -132,7 +123,7 @@ class Student extends Controller
   {
     try {
       //Delete data model 
-      if ($this->studentModel->where($this->primaryKey, $id)->delete($id)) {
+      if ($this->programsGroupsModel->where($this->primaryKey, $id)->delete($id)) {
         $data['message'] = 'success';
         $data['response'] = ResponseInterface::HTTP_OK;
         $data['data'] = "OK";
@@ -155,17 +146,11 @@ class Student extends Controller
   {
     
     $data = [
-      'Student_id' => $this->request->getVar('Student_id'),
-      'Student_document' => $this->request->getVar('Student_document'),
-      'Student_first_name' => $this->request->getVar('Student_first_name'),
-      'Student_last_name' => $this->request->getVar('Student_last_name'),
-      'Student_phone' => $this->request->getVar('Student_phone'),
-      'Student_email' => $this->request->getVar('Student_email'),
-      'Student_address' => $this->request->getVar('Student_address'),
-      'Student_birth_date' => $this->request->getVar('Student_birth_date'),
-      'Student_gender' => $this->request->getVar('Student_gender'),
-      'User_fk' => $this->request->getVar('User_fk'),
-      'Document_type_fk' => $this->request->getVar('Document_type_fk'),
+      'Program_group_id' => $this->request->getVar('Program_group_id'),
+      'Program_group_code' => $this->request->getVar('Program_group_code'),
+      'Program_group_start_date' => $this->request->getVar('Program_group_start_date'),
+      'Program_group_end_date' => $this->request->getVar('Program_group_end_date'),
+      'Program_group_status' => $this->request->getVar('Program_group_status'),
       'updated_at' => $this->request->getVar('updated_at'),
     ];
     return $data;

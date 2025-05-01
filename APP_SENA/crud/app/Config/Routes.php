@@ -119,6 +119,26 @@ $routes->group("instructor",['namespace' => 'App\Controllers\Instructor','filter
   $routes->post("update", "Instructor::update");
 });
 
+//GROUP ROUTES PROGRAMS
+$routes->group("programs",['namespace' => 'App\Controllers\Programs','filter' => 'AuthCheck'],function($routes){
+  $routes->get("/", "Programs::index");
+  $routes->get("show", "Programs::index");
+  $routes->get("edit/(:num)", "Programs::singlePrograms/$1");
+  $routes->get("delete/(:num)", "Programs::delete/$1");
+  $routes->post("add", "Programs::create");
+  $routes->post("update", "Programs::update");
+});
+//GROUP ROUTES PROGRAMS GROUPS
+$routes->group("programsGroups",['namespace' => 'App\Controllers\ProgramsGroups','filter' => 'AuthCheck'],function($routes){
+  $routes->get("/", "ProgramsGroups::index");
+  $routes->get("show", "ProgramsGroups::index");
+  $routes->get("edit/(:num)", "ProgramsGroups::singleProgramsGroups/$1");
+  $routes->get("delete/(:num)", "ProgramsGroups::delete/$1");
+  $routes->post("add", "ProgramsGroups::create");
+  $routes->post("update", "ProgramsGroups::update");
+});
+
+
 //GROUP ROUTES
 $routes->group("profile",['filter' => 'AuthCheck'], function ($routes) {
   $routes->get("show/(:num)", "Profile::index/$1");

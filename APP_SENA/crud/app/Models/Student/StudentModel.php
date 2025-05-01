@@ -37,4 +37,16 @@ class StudentModel extends Model
         }
         return $result;
     }
+    // Get all students by id
+    public function sp_students_id($id)
+    {
+        try {
+            $sql    = "CALL sp_students_id(?);";
+            $query  = $this->db->query($sql, $id);
+            $result = $query->getResultArray();
+        } catch (Exception $e) {
+            $result = null;
+        }
+        return $result;
+    }
 }

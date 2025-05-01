@@ -1,25 +1,25 @@
 "use strict";
 
 window.onload = function () {
-  console.log("Students loaded");
-  // Initialize the Students
+  console.log("Courses  loaded");
+  // Initialize the curse
 }
 /* Author:DIEGO CASALLAS
-* Date:17/05/2024
-* Descriptions:This is controller Students
+* Date:29/05/2024
+* Descriptions:This is controller Curse 
 * **/
 
 /* These lines of code are declaring constants and initializing variables in a JavaScript file. Here is
 a breakdown of what each line is doing: */
 const formId = 'my-form';
 const modalId = 'my-modal';
-const model = 'students';
+const model = 'programs';
 const tableId = 'table-index';
 const preloadId = 'preloadId';
-const actionsForms = ['block-input','hidden-input'];
+const classEdit = 'edit-input';
 const textConfirm = 'Press a button!\nEither OK or Cancel.';
-const btnActionsForm = 'btnSubmit';
-const mainApp = new Main(modalId, formId, actionsForms, preloadId);
+const btnActionsForm = 'btn_actions_form';
+const mainApp = new Main(modalId, formId, classEdit, preloadId);
 
 /* These lines of code are declaring and initializing variables in a JavaScript file. Here is a
 breakdown of what each variable is used for: */
@@ -46,7 +46,7 @@ function show(id) {
  * modal.
  */
 function add() {
-  mainApp.disabledFormEdit(0,true);
+  mainApp.enableFormAll();
   mainApp.resetForm();
   insertUpdate = true;
   mainApp.btnEnabledDisabled(false,btnActionsForm);
@@ -76,7 +76,7 @@ function edit(id) {
  */
 async function delete_(id) {
   method = 'GET';
-  url = URI_STUDENT + LIST_CRUD[3] + '/' + id;
+  url = URI_PROGRAMS + LIST_CRUD[3] + '/' + id;
   data = "";
   if (confirm(textConfirm) == true) {
     resultFetch = getData(data, method, url);
@@ -88,7 +88,7 @@ async function delete_(id) {
       })
       .catch(error => {
         console.error(error);
-        //hidden Preload
+        //hidden Preload 
         mainApp.hiddenPreload();
       })
       .finally();
@@ -104,28 +104,27 @@ async function delete_(id) {
  */
 async function getDataId(id) {
   method = 'GET';
-  url = URI_STUDENT + LIST_CRUD[1] + '/' + id;
+  url = URI_PROGRAMS + LIST_CRUD[1] + '/' + id;
   data = mainApp.getDataFormJson();
   resultFetch = getData(data, method, url);
-
   resultFetch.then(response => response.json())
     .then(data => {
-
-      // console.log(data);
-      ///Set data form
-      mainApp.setDataFormJson(data[model][0]);
-      //show Modal
+      //console.log(data);
+      ///Set data form 
+      mainApp.setDataFormJson(data[model]);
+      //show Modal 
       mainApp.showModal();
-      //hidden Preload
+      //hidden Preload 
       mainApp.hiddenPreload();
     })
     .catch(error => {
       console.error(error);
-      //hidden Preload
+      //hidden Preload 
       mainApp.hiddenPreload();
     })
     .finally();
 }
+
 
 /**
  * The function `getData` is an asynchronous function that sends a request to a specified URL using the
@@ -144,7 +143,7 @@ async function getDataId(id) {
  */
 async function getData(data, method, url) {
   var parameters;
-  //Show Preload
+  //Show Preload 
   mainApp.showPreload();
   if (method == "GET") {
     parameters = {
@@ -179,45 +178,45 @@ is submitted. Here is a breakdown of what the code is doing: */
 mainApp.getForm().addEventListener('submit', async function (event) {
   event.preventDefault();
   if (mainApp.setValidateForm()) {
-    //Show Preload
+    //Show Preload 
     mainApp.showPreload();
     if (insertUpdate) {
       method = 'POST';
-      url = URI_STUDENT + LIST_CRUD[0];
-      data = mainApp.getDataFormJson();
-      console.log(data);
-      resultFetch = getData(data, method, url);
-      resultFetch.then(response => response.json())
-        .then(data => {
-          //console.log(data);
-          //show Modal
-          mainApp.hiddenModal();
-          //Reload View
-          reloadPage();
-        })
-        .catch(error => {
-          console.error(error);
-          //hidden Preload
-          mainApp.hiddenPreload();
-        })
-        .finally();
-    } else {
-      method = 'POST';
-      url = URI_STUDENT + LIST_CRUD[2];
+      url = URI_PROGRAMS + LIST_CRUD[0];
       data = mainApp.getDataFormJson();
       //console.log(data);
       resultFetch = getData(data, method, url);
       resultFetch.then(response => response.json())
         .then(data => {
           //console.log(data);
-          //show Modal
+          //show Modal 
           mainApp.hiddenModal();
           //Reload View
           reloadPage();
         })
         .catch(error => {
           console.error(error);
-          //hidden Preload
+          //hidden Preload 
+          mainApp.hiddenPreload();
+        })
+        .finally();
+    } else {
+      method = 'POST';
+      url = URI_PROGRAMS + LIST_CRUD[2];
+      data = mainApp.getDataFormJson();
+      //console.log(data);
+      resultFetch = getData(data, method, url);
+      resultFetch.then(response => response.json())
+        .then(data => {
+          //console.log(data);
+          //show Modal 
+          mainApp.hiddenModal();
+          //Reload View
+          reloadPage();
+        })
+        .catch(error => {
+          console.error(error);
+          //hidden Preload 
           mainApp.hiddenPreload();
         })
         .finally();
@@ -233,7 +232,7 @@ mainApp.getForm().addEventListener('submit', async function (event) {
  */
 function reloadPage() {
   setTimeout(function () {
-    //hidden Preload
+    //hidden Preload 
     mainApp.hiddenPreload();
     location.reload();
   }, 500);

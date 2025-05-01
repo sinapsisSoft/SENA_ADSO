@@ -39,9 +39,10 @@
     <input type="date" class="form-control " id="Instructor_birth_date" name="Instructor_birth_date" placeholder="Birth Date" required>
     <label for="Instructor_birth_date">Birth Date </label>
   </div>
+ 
   <div class="form-floating mb-3 col-12">
     <select class="form-select" aria-label="Id Parent" id="Instructor_gender" name="Instructor_gender" disabled>
-      <option value=NULL selected>Open this select Gender </option>
+      <option value=NULL selected disabled>Open this select Gender </option>
       <option value="male" >male </option>
       <option value="female" >female </option>
       <option value="other" >other </option>
@@ -50,7 +51,7 @@
   </div>
   <div class="form-floating mb-3 col-12">
     <select class="form-select" aria-label="Id Parent" id="User_fk" name="User_fk" disabled>
-      <option value=NULL selected>Open this select User </option>
+      <option value=NULL selected disabled>Open this select User </option>
       <?php if ($users) : ?>
         <?php foreach ($users as $obj) : ?>
           <option value="<?= $obj['User_id'] ?>"><?= $obj['User_user'] ?></option>
@@ -60,7 +61,7 @@
   </div>
   <div class="form-floating mb-3 col-12">
     <select class="form-select" aria-label="Id Parent" id="Specialty_fk" name="Specialty_fk" disabled>
-      <option value=NULL selected>Open this select Specialty </option>
+      <option value=NULL selected disabled>Open this select Specialty </option>
       <?php if ($specialties) : ?>
         <?php foreach ($specialties as $obj) : ?>
           <option value="<?= $obj['Specialty_id'] ?>"><?= $obj['Specialty_name'] ?></option>
@@ -70,7 +71,7 @@
   </div>
   <div class="form-floating mb-3 col-12">
     <select class="form-select" aria-label="Id Parent" id="User_status_fk" name="User_status_fk" disabled>
-      <option value=NULL selected>Open this select Status </option>
+      <option value=NULL selected disabled>Open this select Status </option>
       <?php if ($userStatus) : ?>
         <?php foreach ($userStatus as $obj) : ?>
           <option value="<?= $obj['User_status_id'] ?>"><?= $obj['User_status_name'] ?></option>

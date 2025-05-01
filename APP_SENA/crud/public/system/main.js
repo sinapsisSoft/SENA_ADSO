@@ -18,7 +18,7 @@ class Main {
    * @param formId - The `formId` parameter in the constructor function refers to the ID of the form
    * element in the HTML document. This ID is used to select and manipulate the form element within the
    * JavaScript code.
-   * @param classEdit - The `classEdit` parameter in the constructor function is used to store a CSS
+   * @param classActions - The `classActions` parameter in the constructor function is used to store a CSS
    * class name that will be used for editing elements in the form. This class name will be applied to
    * elements within the form to indicate that they are in edit mode.
    * @param preloadId - The `preloadId` parameter in the constructor function is used to specify the ID
@@ -26,22 +26,22 @@ class Main {
    * is typically displayed while data is being loaded or processed asynchronously to provide feedback to
    * the user that an operation is in progress.
    */
-  constructor(modalId, formId, classEdit, preloadId) {
+  constructor(modalId, formId, actions, preloadId) {
 
 
     var arrayModal = [];
     var arrayForm = [];
+    var arrayActions = [];
 
     if (Array.isArray(modalId)) {
       for (let i = 0; i < modalId.length; i++) {
         arrayModal.push(new bootstrap.Modal(document.getElementById(modalId[i])));
       }
-
     } else {
       arrayModal.push(new bootstrap.Modal(document.getElementById(modalId)));
-
     }
     this.myModal = arrayModal;
+
     if (Array.isArray(formId)) {
       for (let i = 0; i < formId.length; i++) {
         arrayForm.push(document.getElementById(formId[i]));
@@ -49,9 +49,18 @@ class Main {
     } else {
       arrayForm.push(document.getElementById(formId));
     }
+    if (Array.isArray(actions)) {
+      for (let i = 0; i < formId.length; i++) {
+        arrayActions.push(actions[i]);
+      }
+    } else {
+      arrayActions.push(actions);
+      arrayActions.push("hidden-input");
+    }
+
     this.myForm = arrayForm;
 
-    this.classEdit = classEdit;
+    this.classActions = arrayActions;
     this.elementJson = {};
     this.fromData = new FormData();
     this.preload = document.getElementById(preloadId);
@@ -97,35 +106,89 @@ class Main {
   /**
    * The function `disabledFormAll` disables all input and select elements within a specified form.
    */
-  disabledFormAll(position = 0) {
+  disabledFormAll(position = 0, hidden = false) {
     var elementsInput = this.myForm[position].querySelectorAll('input');
     var elementsSelect = this.myForm[position].querySelectorAll('select');
+    var elementsTextArea = this.myForm[position].querySelectorAll('textarea');
     for (let i = 0; i < elementsInput.length; i++) {
-      elementsInput[i].disabled = true;
+      if (elementsInput[i].classList.contains(this.classActions[1])) {
+        if (hidden) {
+          elementsInput[i].type = "hidden";
+          elementsInput[i].disabled = true;
+        } else {
+          elementsInput[i].type = "text";
+        }
+      } else {
+        elementsInput[i].disabled = true;
+      }
     }
     for (let j = 0; j < elementsSelect.length; j++) {
-      elementsSelect[j].disabled = true;
+      if (elementsSelect[j].classList.contains(this.classActions[1])) {
+        if (hidden) {
+          elementsSelect[j].hidden = true;
+        } else {
+          elementsSelect[j].hidden = false;
+        }
+      } else {
+        elementsSelect[j].disabled = true;
+      }
+    }
+    for (let j = 0; j < elementsTextArea.length; j++) {
+      elementsTextArea[j].disabled = true;
     }
   }
 
   /**
    * The function `disabledFormEdit` disables form elements based on their class name.
    */
-  disabledFormEdit(position = 0) {
+  disabledFormEdit(position = 0, hidden = false) {
     var elementsInput = this.myForm[position].querySelectorAll('input');
     var elementsSelect = this.myForm[position].querySelectorAll('select');
+    var elementsTextArea = this.myForm[position].querySelectorAll('textarea');
     for (let i = 0; i < elementsInput.length; i++) {
-      if (elementsInput[i].classList.contains(this.classEdit)) {
-        elementsInput[i].disabled = true;
+      if (elementsInput[i].classList.contains(this.classActions[1])) {
+        if (hidden) {
+          elementsInput[i].type = "hidden";
+          elementsInput[i].disabled = true;
+        } else {
+          elementsInput[i].type = "text";
+        }
       } else {
-        elementsInput[i].disabled = false;
+        if (elementsInput[i].classList.contains(this.classActions[0])) {
+          elementsInput[i].disabled = true;
+        } else {
+          elementsInput[i].disabled = false;
+        }
       }
     }
+
     for (let j = 0; j < elementsSelect.length; j++) {
-      if (elementsSelect[j].classList.contains(this.classEdit)) {
-        elementsSelect[j].disabled = true;
+      if (elementsSelect[j].classList.contains(this.classActions[1])) {
+        if (hidden) {
+          elementsSelect[j].hidden = true;
+        } else {
+          elementsSelect[j].hidden = false;
+        }
       } else {
-        elementsSelect[j].disabled = false;
+        if (elementsSelect[j].classList.contains(this.classActions[0])) {
+          elementsSelect[j].disabled = true;
+        } else {
+          elementsSelect[j].disabled = false;
+        }
+      }
+    }
+    for (let k = 0; k < elementsTextArea.length; k++) {
+      if (elementsTextArea[k].classList.contains(this.classActions[1])) {
+        if (hidden) {
+          elementsTextArea[k].type = "hidden";
+          elementsTextArea[k].disabled = true;
+        }
+      } else {
+        if (elementsTextArea[k].classList.contains(this.classActions)) {
+          elementsTextArea[k].disabled = true;
+        } else {
+          elementsTextArea[k].disabled = false;
+        }
       }
     }
   }
@@ -136,11 +199,15 @@ class Main {
   enableFormAll(position = 0) {
     var elementsInput = this.myForm[position].querySelectorAll('input');
     var elementsSelect = this.myForm[position].querySelectorAll('select');
+    var elementsTextArea = this.myForm[position].querySelectorAll('textarea');
     for (let i = 0; i < elementsInput.length; i++) {
       elementsInput[i].disabled = false;
     }
     for (let j = 0; j < elementsSelect.length; j++) {
       elementsSelect[j].disabled = false;
+    }
+    for (let j = 0; j < elementsTextArea.length; j++) {
+      elementsTextArea[j].disabled = false;
     }
   }
 
@@ -151,11 +218,15 @@ class Main {
   resetForm(position = 0) {
     var elementsInput = this.myForm[position].querySelectorAll('input');
     var elementsSelect = this.myForm[position].querySelectorAll('select');
+    var elementsTextArea = this.myForm[position].querySelectorAll('textarea');
     for (let i = 0; i < elementsInput.length; i++) {
       elementsInput[i].value = "";
     }
     for (let j = 0; j < elementsSelect.length; j++) {
       elementsSelect[j].value = "";
+    }
+    for (let j = 0; j < elementsTextArea.length; j++) {
+      elementsTextArea[j].value = "";
     }
     this.myForm[position].reset();
   }
@@ -169,7 +240,8 @@ class Main {
    * status for checkboxes).
    */
   getDataFormJson(position = 0) {
-    var elementsForm = this.myForm[position].querySelectorAll('input, select');
+    var elementsForm = this.myForm[position].querySelectorAll('input, select, textarea');
+
     let getJson = {};
     elementsForm.forEach(function (element) {
       if (element.id) {
@@ -180,6 +252,9 @@ class Main {
             getJson[element.id] = element.value.trim();
           }
         } else if (element.tagName === 'SELECT') {
+          getJson[element.id] = element.value.trim();
+        }
+        else if (element.tagName === 'TEXTAREA') {
           getJson[element.id] = element.value.trim();
         }
       }
@@ -194,7 +269,7 @@ class Main {
    * with the data from the form elements.
    */
   getDataFormData(position = 0) {
-    var elementsForm = this.objForm[position].querySelectorAll('input, select');
+    var elementsForm = this.objForm[position].querySelectorAll('input, select,textarea');
     elementsForm.forEach(function (element) {
       if (element.id) {
         if (element.tagName === 'INPUT') {
@@ -205,6 +280,9 @@ class Main {
           }
         } else if (element.tagName === 'SELECT') {
           this.fromData.append(element.id, element.value.trim());
+        }
+        else if (element.tagName === 'TEXTAREA') {
+          getJson[element.id] = element.value.trim();
         }
       }
     });
@@ -221,7 +299,7 @@ class Main {
    */
   setDataFormJson(json, position = 0) {
 
-    let elements = this.myForm[position].querySelectorAll("input,select");
+    let elements = this.myForm[position].querySelectorAll("input,select,textarea");
     let jsonKeys = Object.keys(json);
     for (let i = 0; i < elements.length; i++) {
       if (elements[i].type == "checkbox") {
@@ -250,7 +328,7 @@ class Main {
    */
   setValidateForm(position = 0) {
     const objForm = this.myForm[position];
-    const inputs = objForm.querySelectorAll('input');
+    const inputs = objForm.querySelectorAll('input,textarea');
     const selects = objForm.querySelectorAll('select');
     let formValidate = true;
     for (const input of inputs) {
