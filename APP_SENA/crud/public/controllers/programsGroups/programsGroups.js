@@ -14,7 +14,7 @@ a breakdown of what each line is doing: */
 const formId = ['my-form', 'students-form', 'management-form', 'assessment-form'];
 const modalId = ['my-modal', 'students-modal', 'management-modal', 'assessment-modal'];
 const model = 'programGroups';
-const tableId = ['table-index', 'table-index-students', 'table-index-management', 'table-index-assessment'];
+const tableId = ['table-index',  'table-index-management', 'table-index-assessment'];
 const preloadId = 'preloadId';
 const classEdit = 'edit-input';
 const textConfirm = 'Press a button!\nEither OK or Cancel.';
@@ -174,7 +174,6 @@ $(document).ready(function () {
     $('#' + tableId[i]).DataTable();
   }
 
-
 });
 
 /* The code snippet you provided is an event listener attached to the form element within the `mainApp`
@@ -247,8 +246,10 @@ async function getProgramsGroups() {
   resultFetch = getData(data, method, url);
   resultFetch.then(response => response.json())
     .then(data => {
-      console.log(data[model][0]);
-
+      //console.log(data[model]);
+      let arrayColumn = ['#','Document','First Name', 'Last Name','Phone','Email'];
+      let arrayActions = ['add_student_group'];
+      mainApp.createTable('table-index-students', arrayColumn,data[model],arrayActions);
     })
     .catch(error => {
       console.error(error);

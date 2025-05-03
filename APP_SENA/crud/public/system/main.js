@@ -479,8 +479,33 @@ class Main {
     btnObj.textContent = type ? 'Block' : 'Send';
   }
 
-  createTable(tableId, columns, data,actions) { 
-        
-  }
+  createTable(tableId, columns, data, actions = null) {
+    const table = document.getElementById(tableId);
+    const tbody = table.querySelector('tbody');
+    tbody.innerHTML = "";
+    let body = "";
 
-}
+    // Generate rows
+    for (let j = 0; j < data.length; j++) {
+      body += '<tr class="text-center">';
+      for (let k = 0; k <columns.length; k++) {
+        body +=`<td>${Object.values(data[j])[k]}</td>`;
+        if(actions.length>0){
+          for (let l = 0; l <actions.length; l++) {
+            body +=`<td><div class="form-check form-switch">
+                    <input class="form-check-input" style="width: 50%;margin: 0 auto;padding-top: 20px;" onchange="${actions[0]}(${Object.values(data[j])[0]},this)" type="checkbox" role="switch" id="Check_<?php echo $obj['Student_id']; ?>" >
+                  </div></td>`;
+          }
+        }
+      }
+      
+
+      body += "</tr>";
+    }
+    tbody.insertAdjacentHTML('beforeend', body);
+
+    $('#'+tableId).dataTable();
+  }
+ 
+} 
+ 
