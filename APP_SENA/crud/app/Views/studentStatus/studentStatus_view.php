@@ -29,7 +29,7 @@
         <button type="button" class="btn btn-primary btn-actions" title="Button new User Status" onclick="add()" style="font-size: 0.5em;">
         <i class="bi bi-plus-circle-fill"></i> </button>
         <!--Container Table-->
-        <?php require_once('../app/Views/role/table.php') ?>
+        <?php require_once('../app/Views/studentStatus/table.php') ?>
         <!--End Container Table-->
       </div>
     </div>
@@ -49,7 +49,7 @@
         </div>
         <div class="modal-body">
           <!--Form-->
-          <?php require_once('../app/Views/role/form.php') ?>
+          <?php require_once('../app/Views/studentStatus/form.php') ?>
           <!--End Form-->
         </div>
         <div class="modal-footer">
@@ -59,13 +59,12 @@
       </div>
     </div>
   </div>
-
   <!--End Modal-->
   <!--JS-->
   <?php require_once('../app/Views/assets/js/js.php') ?>
   <?php require_once('../app/Views/assets/js/dataTable.php') ?>
   <!--JS Controller-->
-  <script src="../controllers/role/role.js"></script>
+  <script src="../controllers/studentStatus/studentStatus.js"></script>
 </body>
 
 </html>

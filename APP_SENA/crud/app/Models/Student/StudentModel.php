@@ -12,7 +12,7 @@ class StudentModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['Student_id','Student_document','Student_first_name','Student_last_name','Student_phone','Student_email','Student_address','Student_birth_date','Student_gender','User_fk','Document_type_fk','updated_at'];
+    protected $allowedFields    = ['Student_id','Student_document','Student_first_name','Student_last_name','Student_phone','Student_email','Student_address','Student_birth_date','Student_gender','User_fk','Document_type_fk','Student_status_fk','updated_at'];
 
     protected bool $allowEmptyInserts = false;
 
@@ -43,6 +43,18 @@ class StudentModel extends Model
         try {
             $sql    = "CALL sp_students_id(?);";
             $query  = $this->db->query($sql, $id);
+            $result = $query->getResultArray();
+        } catch (Exception $e) {
+            $result = null;
+        }
+        return $result;
+    }
+    // Get all students not in program group 
+    public function sp_students_group()
+    {
+        try {
+            $sql    = "CALL sp_students_group();";
+            $query  = $this->db->query($sql);
             $result = $query->getResultArray();
         } catch (Exception $e) {
             $result = null;

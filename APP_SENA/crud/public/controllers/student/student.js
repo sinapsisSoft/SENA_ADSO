@@ -18,7 +18,7 @@ const tableId = 'table-index';
 const preloadId = 'preloadId';
 const actionsForms = ['block-input','hidden-input'];
 const textConfirm = 'Press a button!\nEither OK or Cancel.';
-const btnActionsForm = 'btnSubmit';
+const btnActionsForm = 'btn_Submit';
 const mainApp = new Main(modalId, formId, actionsForms, preloadId);
 
 /* These lines of code are declaring and initializing variables in a JavaScript file. Here is a

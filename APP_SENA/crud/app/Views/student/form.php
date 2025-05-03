@@ -10,6 +10,16 @@
     <label for="Student_last_name">Last Name </label>
   </div>
   <div class="form-floating mb-3 col-12">
+    <select class="form-select" aria-label="Id Parent" id="Student_status_fk" name="Student_status_fk" disabled>
+      <option value=NULL selected disabled>Open this select Status </option>
+      <?php if ($studentStatus) : ?>
+        <?php foreach ($studentStatus as $obj) : ?>
+          <option value="<?= $obj['Student_status_id'] ?>"><?= $obj['Student_status_name'] ?></option>
+        <?php endforeach; ?>
+      <?php endif; ?>
+    </select>
+  </div>
+  <div class="form-floating mb-3 col-12">
     <select class="form-select" aria-label="Id Parent" id="Document_type_fk" name="Document_type_fk" disabled>
       <option value=NULL selected disabled>Open this select Document Type </option>
       <?php if ($documentType) : ?>

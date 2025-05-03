@@ -21,7 +21,7 @@ const tablePermissionsId = 'table-permissions';
 const preloadId = 'preloadId';
 const classEdit = 'edit-input';
 const textConfirm = 'Press a button!\nEither OK or Cancel.';
-const btnActionsForm = 'btnSubmit';
+const btnActionsForm = 'btn_Submit';
 const mainApp = new Main(modalId, formId, classEdit, preloadId);
 
 

@@ -14,11 +14,11 @@ a breakdown of what each line is doing: */
 const formId = ['my-form', 'students-form', 'management-form', 'assessment-form'];
 const modalId = ['my-modal', 'students-modal', 'management-modal', 'assessment-modal'];
 const model = 'programGroups';
-const tableId = 'table-index';
+const tableId = ['table-index', 'table-index-students', 'table-index-management', 'table-index-assessment'];
 const preloadId = 'preloadId';
 const classEdit = 'edit-input';
 const textConfirm = 'Press a button!\nEither OK or Cancel.';
-const btnActions = ['btn_form','btn_students_form','btn_management_form','btn_assessment_form'];
+const btnActions = ['btn_form', 'btn_students_form', 'btn_management_form', 'btn_assessment_form'];
 const mainApp = new Main(modalId, formId, classEdit, preloadId);
 
 /* These lines of code are declaring and initializing variables in a JavaScript file. Here is a
@@ -28,6 +28,7 @@ var url = "";
 var method = "";
 var data = "";
 var resultFetch = null;
+var getKeyModule = { 'group_id': 0, 'student_id': 0 };
 
 /**
  * The function `showStatus` disables all form elements, resets the form, enables a button, and
@@ -169,7 +170,11 @@ async function getData(data, method, url) {
 /* The code `$(document).ready(function () { $('#' + tableId).DataTable(); });` is using jQuery to
 initialize a DataTable on a specific HTML table element identified by the `tableId` variable. */
 $(document).ready(function () {
-  $('#' + tableId).DataTable();
+  for (let i = 0; i < tableId.length; i++) {
+    $('#' + tableId[i]).DataTable();
+  }
+
+
 });
 
 /* The code snippet you provided is an event listener attached to the form element within the `mainApp`
@@ -232,6 +237,54 @@ function show_student(id) {
   mainApp.disabledFormEdit(1);
   mainApp.resetForm(1);
   mainApp.btnEnabledDisabled(true, btnActions[1]);
+  getKeyModule['group_id'] = id;
+  getProgramsGroups();
+}
+async function getProgramsGroups() {
+  method = 'POST';
+  url = URI_PROGRAMS_STUDENT_GROUPS + LIST_CRUD[4];
+  data = "";
+  resultFetch = getData(data, method, url);
+  resultFetch.then(response => response.json())
+    .then(data => {
+      console.log(data[model][0]);
+
+    })
+    .catch(error => {
+      console.error(error);
+      //hidden Preload 
+      mainApp.hiddenPreload();
+    })
+    .finally();
+
+}
+function add_student_group(id, object) {
+
+  getKeyModule['student_id'] = id;
+  console.log(getKeyModule);
+  if (confirm(textConfirm) == true) {
+    method = 'POST';
+    url = URI_PROGRAMS_STUDENT_GROUPS + LIST_CRUD[0];
+    data = getKeyModule;
+    //console.log(data);
+    resultFetch = getData(data, method, url);
+    resultFetch.then(response => response.json())
+      .then(data => {
+        console.log(data);
+        //show Modal 
+        //mainApp.hiddenModal();
+        //Reload View
+        //reloadPage();
+      })
+      .catch(error => {
+        console.error(error);
+        //hidden Preload 
+        mainApp.hiddenPreload();
+      })
+      .finally();
+  } else {
+    object.checked = false;
+  }
 }
 function show_management(id) {
   mainApp.showModal(2);

@@ -1,19 +1,18 @@
 "use strict";
-
 window.onload = function () {
-  console.log("Specialty loaded");
-  // Initialize the specialty
+  console.log("Document Types loaded");
+  // Initialize the document types
 }
 /* Author:DIEGO CASALLAS
-* Date:09/04/2024
-* Descriptions:This is controller specialty  
+* Date:27/03/2025
+* Descriptions:This is controller Document Types
 * **/
 
 /* These lines of code are declaring constants and initializing variables in a JavaScript file. Here is
 a breakdown of what each line is doing: */
 const formId = 'my-form';
 const modalId = 'my-modal';
-const model = 'specialty';
+const model = 'studentStatus';
 const tableId = 'table-index';
 const preloadId = 'preloadId';
 const classEdit = 'edit-input';
@@ -76,7 +75,7 @@ function edit(id) {
  */
 async function delete_(id) {
   method = 'GET';
-  url = URI_SPECIALTY + LIST_CRUD[3] + '/' + id;
+  url = URI_STATUS_STUDENT + LIST_CRUD[3] + '/' + id;
   data = "";
   if (confirm(textConfirm) == true) {
     resultFetch = getData(data, method, url);
@@ -104,7 +103,7 @@ async function delete_(id) {
  */
 async function getDataId(id) {
   method = 'GET';
-  url = URI_SPECIALTY + LIST_CRUD[1] + '/' + id;
+  url = URI_STATUS_STUDENT + LIST_CRUD[1] + '/' + id;
   data = mainApp.getDataFormJson();
   resultFetch = getData(data, method, url);
   resultFetch.then(response => response.json())
@@ -124,7 +123,6 @@ async function getDataId(id) {
     })
     .finally();
 }
-
 
 /**
  * The function `getData` is an asynchronous function that sends a request to a specified URL using the
@@ -182,7 +180,7 @@ mainApp.getForm().addEventListener('submit', async function (event) {
     mainApp.showPreload();
     if (insertUpdate) {
       method = 'POST';
-      url = URI_SPECIALTY + LIST_CRUD[0];
+      url = URI_STATUS_STUDENT + LIST_CRUD[0];
       data = mainApp.getDataFormJson();
       resultFetch = getData(data, method, url);
       resultFetch.then(response => response.json())
@@ -201,7 +199,7 @@ mainApp.getForm().addEventListener('submit', async function (event) {
         .finally();
     } else {
       method = 'POST';
-      url = URI_SPECIALTY + LIST_CRUD[2];
+      url = URI_STATUS_STUDENT + LIST_CRUD[2];
       data = mainApp.getDataFormJson();
       const resultFetch = getData(data, method, url);
       resultFetch.then(response => response.json())

@@ -8,6 +8,8 @@
 namespace App\Controllers\ProgramsGroups;
 //These are the class that will be used in this controller
 use App\Models\ProgramsGroups\ProgramsGroupsModel;
+use App\Models\ProgramsGroups\ProgramsGroupStudentModel;
+use App\Models\Student\StudentModel;
 use App\Models\Role\RoleModulesModel;
 use App\Models\Profile\ProfileModel;
 use CodeIgniter\Controller;
@@ -19,6 +21,8 @@ class ProgramsGroups extends Controller
   //Variable declarations. 
   private $primaryKey;
   private $programsGroupsModel;
+  private $programsGroupStudentModel;
+  private $studentModel;
   private $profileModel;
   private $roleModuleModel;
   private $data;
@@ -28,6 +32,8 @@ class ProgramsGroups extends Controller
   { 
     $this->primaryKey = "Program_group_id";
     $this->programsGroupsModel = new ProgramsGroupsModel();
+    $this->programsGroupStudentModel = new ProgramsGroupStudentModel();
+    $this->studentModel = new StudentModel();
     $this->roleModuleModel = new RoleModulesModel();
     $this->profileModel = new ProfileModel();
     $this->data = [];
@@ -38,11 +44,11 @@ class ProgramsGroups extends Controller
   {
     $this->data['title'] = "PROGRAMS GROUPS";
     $this->data[$this->model] = $this->programsGroupsModel->orderBy($this->primaryKey, 'ASC')->findAll();
+    $this->data['students'] = $this->studentModel->sp_students_group();
     $this->data['profile'] =  $this->profileModel->where('User_id_fk', (int)$this->getSessionIdUser()['User_id'])->first();
     $this->data['userModules'] =  $this->roleModuleModel->sp_role_modules_id((int)$this->getSessionIdUser()['Roles_fk']);
     return view('programsGroups/programsGroups_view', $this->data);
   }
-
   
   //This method consists of creating, obtains the data from the POST method, return Json
   public function create()
@@ -121,22 +127,68 @@ class ProgramsGroups extends Controller
   //This method consists of delete user, obtains id the data from the GET method, return Json
   public function delete($id = null)
   {
-    try {
-      //Delete data model 
-      if ($this->programsGroupsModel->where($this->primaryKey, $id)->delete($id)) {
+    if ($this->request->isAJAX()) {
+      //Select student  model 
+      if ($data[$this->model] = $this->programsGroupsModel->where($this->primaryKey, $id)->first()) {
         $data['message'] = 'success';
         $data['response'] = ResponseInterface::HTTP_OK;
-        $data['data'] = "OK";
         $data['csrf'] = csrf_hash();
       } else {
-        $data['message'] = 'Error Ajax';
-        $data['response'] = ResponseInterface::HTTP_CONFLICT;
-        $data['data'] = 'error';
+        $data['message'] = 'Error Program Group';
+        $data['response'] = ResponseInterface::HTTP_NO_CONTENT;
+        $data['data'] = '';
       }
-    } catch (\Exception $e) {
-      $data['message'] = $e;
+    } else {
+      $data['message'] = 'Error Ajax';
       $data['response'] = ResponseInterface::HTTP_CONFLICT;
-      $data['data'] = 'Error';
+      $data['data'] = '';
+    }
+    //Change array to Json
+    echo json_encode($data);
+  }
+   //This method consists of delete user, obtains id the data from the GET method, return Json
+   public function addStudent()
+   {
+    if ($this->request->isAJAX()) {
+      $dataModel = $this->getDataGroupModel();
+      //Query Insert 
+      if ($this->programsGroupStudentModel->insert($dataModel)) {
+        $data['message'] = 'success';
+        $data['response'] = ResponseInterface::HTTP_OK;
+        $data['data'] = $dataModel;
+        $data['csrf'] = csrf_hash();
+     } else {
+        $data['message'] = 'Error create program group';
+        $data['response'] = ResponseInterface::HTTP_NO_CONTENT;
+        $data['data'] = '';
+      }
+    } else {
+      $data['message'] = 'Error Ajax';
+      $data['response'] = ResponseInterface::HTTP_CONFLICT;
+      $data['data'] = '';
+    }
+    //Change array to Json
+    echo json_encode($dataModel);
+   }
+    //This method consists of update , obtains id the data from the POST method, return Json
+  public function getStudentGroups()
+  {
+     //Validate is ajax
+     if ($this->request->isAJAX()) {
+      //Select student  model 
+      if ($data[$this->model] = $this->studentModel->sp_students_group()) {
+        $data['message'] = 'success';
+        $data['response'] = ResponseInterface::HTTP_OK;
+        $data['csrf'] = csrf_hash();
+      } else {
+        $data['message'] = 'Error Program Group';
+        $data['response'] = ResponseInterface::HTTP_NO_CONTENT;
+        $data['data'] = '';
+      }
+    } else {
+      $data['message'] = 'Error Ajax';
+      $data['response'] = ResponseInterface::HTTP_CONFLICT;
+      $data['data'] = '';
     }
     //Change array to Json
     echo json_encode($data);
@@ -152,6 +204,16 @@ class ProgramsGroups extends Controller
       'Program_group_end_date' => $this->request->getVar('Program_group_end_date'),
       'Program_group_status' => $this->request->getVar('Program_group_status'),
       'updated_at' => $this->request->getVar('updated_at'),
+    ];
+    return $data;
+  }
+  //This method consists of create is model the data in the array associative, return Array
+  public function getDataGroupModel()
+  {
+    
+    $data = [
+      'Program_group_fk' => $this->request->getVar('group_id'),
+      'Student_fk' => $this->request->getVar('student_id')
     ];
     return $data;
   }

@@ -109,6 +109,15 @@ $routes->group("student",['namespace' => 'App\Controllers\Student','filter' => '
   $routes->post("add", "Student::create");
   $routes->post("update", "Student::update");
 });
+//GROUP ROUTES STUDENT STATUS
+$routes->group("studentStatus",['namespace' => 'App\Controllers\Student','filter' => 'AuthCheck'],function($routes){
+  $routes->get("/", "StudentStatus::index");
+  $routes->get("show", "StudentStatus::index");
+  $routes->get("edit/(:num)", "StudentStatus::singleStudentStatus/$1");
+  $routes->get("delete/(:num)", "StudentStatus::delete/$1");
+  $routes->post("add", "StudentStatus::create");
+  $routes->post("update", "StudentStatus::update");
+});
 //GROUP ROUTES STUDENT
 $routes->group("instructor",['namespace' => 'App\Controllers\Instructor','filter' => 'AuthCheck'],function($routes){
   $routes->get("/", "Instructor::index");
@@ -132,11 +141,17 @@ $routes->group("programs",['namespace' => 'App\Controllers\Programs','filter' =>
 $routes->group("programsGroups",['namespace' => 'App\Controllers\ProgramsGroups','filter' => 'AuthCheck'],function($routes){
   $routes->get("/", "ProgramsGroups::index");
   $routes->get("show", "ProgramsGroups::index");
-  $routes->get("edit/(:num)", "ProgramsGroups::singleProgramsGroups/$1");
+  $routes->post("edit/(:num)", "ProgramsGroups::singleProgramsGroups/$1");
   $routes->get("delete/(:num)", "ProgramsGroups::delete/$1");
   $routes->post("add", "ProgramsGroups::create");
   $routes->post("update", "ProgramsGroups::update");
 });
+//GROUP ROUTES PROGRAMS STUDENT GROUPS
+$routes->group("programsStudentGroups",['namespace' => 'App\Controllers\ProgramsGroups','filter' => 'AuthCheck'],function($routes){
+  $routes->post("add", "ProgramsGroups::addStudent");
+  $routes->post("show", "ProgramsGroups::getStudentGroups");
+});
+
 
 
 //GROUP ROUTES

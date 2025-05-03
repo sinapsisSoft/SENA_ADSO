@@ -479,4 +479,8 @@ class Main {
     btnObj.textContent = type ? 'Block' : 'Send';
   }
 
+  createTable(tableId, columns, data) { 
+    
+  }
+
 }
