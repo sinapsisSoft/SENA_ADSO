@@ -1,9 +1,6 @@
 "use strict";
 
-window.onload = function () {
-  console.log("program Groups  loaded");
-  // Initialize the programGroups
-}
+
 /* Author:DIEGO CASALLAS
 * Date:29/05/2024
 * Descriptions:This is controller Curse 
@@ -14,7 +11,7 @@ a breakdown of what each line is doing: */
 const formId = ['my-form', 'students-form', 'management-form', 'assessment-form'];
 const modalId = ['my-modal', 'students-modal', 'management-modal', 'assessment-modal'];
 const model = 'programGroups';
-const tableId = ['table-index',  'table-index-management', 'table-index-assessment'];
+const tableId = ['table-index','table-index-students','table-index-management', 'table-index-assessment'];
 const preloadId = 'preloadId';
 const classEdit = 'edit-input';
 const textConfirm = 'Press a button!\nEither OK or Cancel.';
@@ -167,15 +164,6 @@ async function getData(data, method, url) {
   return await fetch(url, parameters);
 }
 
-/* The code `$(document).ready(function () { $('#' + tableId).DataTable(); });` is using jQuery to
-initialize a DataTable on a specific HTML table element identified by the `tableId` variable. */
-$(document).ready(function () {
-  for (let i = 0; i < tableId.length; i++) {
-    $('#' + tableId[i]).DataTable();
-  }
-
-});
-
 /* The code snippet you provided is an event listener attached to the form element within the `mainApp`
 object. It listens for the `submit` event on the form and executes a series of actions when the form
 is submitted. Here is a breakdown of what the code is doing: */
@@ -232,12 +220,13 @@ mainApp.getForm().addEventListener('submit', async function (event) {
 });
 
 function show_student(id) {
-  mainApp.showModal(1);
+ 
   mainApp.disabledFormEdit(1);
   mainApp.resetForm(1);
   mainApp.btnEnabledDisabled(true, btnActions[1]);
   getKeyModule['group_id'] = id;
   getProgramsGroups();
+  
 }
 async function getProgramsGroups() {
   method = 'POST';
@@ -248,8 +237,18 @@ async function getProgramsGroups() {
     .then(data => {
       //console.log(data[model]);
       let arrayColumn = ['#','Document','First Name', 'Last Name','Phone','Email'];
-      let arrayActions = ['add_student_group'];
-      mainApp.createTable('table-index-students', arrayColumn,data[model],arrayActions);
+      let arrayActions = [
+        {
+          name: 'add_student_group',
+          label: 'Add to Group',
+          icon: 'bi-person-plus-fill',
+          type: 'primary' 
+        }
+        
+      ];
+      mainApp.createTable('table-index-students', arrayColumn,data[model],true,arrayActions);
+      mainApp.hiddenPreload();
+      mainApp.showModal(1);
     })
     .catch(error => {
       console.error(error);
@@ -259,11 +258,11 @@ async function getProgramsGroups() {
     .finally();
 
 }
-function add_student_group(id, object) {
-
+async function add_student_group(id) {
+  
   getKeyModule['student_id'] = id;
-  console.log(getKeyModule);
   if (confirm(textConfirm) == true) {
+    
     method = 'POST';
     url = URI_PROGRAMS_STUDENT_GROUPS + LIST_CRUD[0];
     data = getKeyModule;
@@ -271,11 +270,11 @@ function add_student_group(id, object) {
     resultFetch = getData(data, method, url);
     resultFetch.then(response => response.json())
       .then(data => {
-        console.log(data);
-        //show Modal 
-        //mainApp.hiddenModal();
-        //Reload View
-        //reloadPage();
+        //Create table
+        getProgramsGroups().finally(() => {
+          mainApp.hiddenPreload();
+        }) ;
+
       })
       .catch(error => {
         console.error(error);
@@ -284,7 +283,7 @@ function add_student_group(id, object) {
       })
       .finally();
   } else {
-    object.checked = false;
+    
   }
 }
 function show_management(id) {
@@ -312,3 +311,12 @@ function reloadPage() {
   }, 500);
 }
 
+window.onload = function () {
+  console.log("program Groups  loaded");
+  // Initialize the programGroups
+  mainApp.showPreload();
+  mainApp.refreshTable(tableId[0]);
+  setTimeout(() => {
+    mainApp.hiddenPreload();
+  }, 1000);
+}

@@ -1,4 +1,5 @@
 const LIST_CRUD=['add','edit','update','delete','show'];
+const LIST_CRUD_ICONS=['bi bi-person-add','bi bi-pencil-square','update','bi bi-person-x','show','bi bi-eye-fill'];
 //Routes 
 const URI_STATUS="/userStatus/";
 const URI_DOCUMENT_TYPE="/documentTypes/";

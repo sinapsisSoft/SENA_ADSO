@@ -44,7 +44,6 @@ class ProgramsGroups extends Controller
   {
     $this->data['title'] = "PROGRAMS GROUPS";
     $this->data[$this->model] = $this->programsGroupsModel->orderBy($this->primaryKey, 'ASC')->findAll();
-    $this->data['students'] = $this->studentModel->sp_students_group();
     $this->data['profile'] =  $this->profileModel->where('User_id_fk', (int)$this->getSessionIdUser()['User_id'])->first();
     $this->data['userModules'] =  $this->roleModuleModel->sp_role_modules_id((int)$this->getSessionIdUser()['Roles_fk']);
     return view('programsGroups/programsGroups_view', $this->data);

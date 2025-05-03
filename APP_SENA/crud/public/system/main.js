@@ -79,6 +79,7 @@ class Main {
    */
   hiddenPreload() {
     this.preload.style.display = "none";
+    
   }
 
   /**
@@ -464,6 +465,15 @@ class Main {
     }
   }
 
+  /**
+   * The function `btnEnabledDisabled` toggles the enabled/disabled state and styling of a button based
+   * on the `type` parameter.
+   * @param type - The `type` parameter in the `btnEnabledDisabled` function is used to determine whether
+   * the button should be enabled or disabled. If `type` is falsy (e.g., false, null, undefined), the
+   * button will be disabled and styled as a primary button. If `type` is
+   * @param elementId - The `elementId` parameter in the `btnEnabledDisabled` function is the ID of the
+   * HTML element (usually a button) that you want to enable or disable based on the `type` parameter.
+   */
   btnEnabledDisabled(type, elementId) {
     let btnObj = document.getElementById(elementId);
     btnObj.classList.remove('btn-primary', 'btn-secondary');
@@ -479,33 +489,39 @@ class Main {
     btnObj.textContent = type ? 'Block' : 'Send';
   }
 
-  createTable(tableId, columns, data, actions = null) {
+
+  createTable(tableId, columns, data, addActions = false, btnActions = 0) {
     const table = document.getElementById(tableId);
     const tbody = table.querySelector('tbody');
     tbody.innerHTML = "";
-    let body = "";
-
-    // Generate rows
-    for (let j = 0; j < data.length; j++) {
-      body += '<tr class="text-center">';
-      for (let k = 0; k <columns.length; k++) {
-        body +=`<td>${Object.values(data[j])[k]}</td>`;
-        if(actions.length>0){
-          for (let l = 0; l <actions.length; l++) {
-            body +=`<td><div class="form-check form-switch">
-                    <input class="form-check-input" style="width: 50%;margin: 0 auto;padding-top: 20px;" onchange="${actions[0]}(${Object.values(data[j])[0]},this)" type="checkbox" role="switch" id="Check_<?php echo $obj['Student_id']; ?>" >
-                  </div></td>`;
-          }
-        }
+    let tds = "";
+    let tr = "";
+    for (let i = 0; i < Object.keys(data).length; i++) {
+      let obj = Object.entries(data[i]);
+      tds = "";
+      for (let j = 0; j < columns.length; j++) {
+        tds += `<td>${obj[j][1]}</td>`;
       }
-      
+      if (addActions) {
 
-      body += "</tr>";
+        tds += `<td><div class="btn-group" role="group" aria-label="Basic mixed styles">`;
+
+        for (let k = 0; k < btnActions.length; k++) {
+          tds += `<button type="button" title="${btnActions[k].label}" class="btn btn-${btnActions[k].type} btn-actions" onclick="${btnActions[k].name}(${obj[0][1]})"><i class="${btnActions[k].icon}"></i></button>`;
+        }
+        tds += `</div></td>`;
+
+      }
+      tr += "<tr class='text-center'>" + tds + "</tr>";
+      tds = "";
     }
-    tbody.insertAdjacentHTML('beforeend', body);
-
-    $('#'+tableId).dataTable();
+    tbody.innerHTML = tr;
+    tr = "";
+    this.refreshTable(tableId);
   }
- 
-} 
- 
+
+  refreshTable(tableId) {
+    $('#' + tableId).DataTable();
+  }
+
+}
