@@ -12,7 +12,14 @@
           <input type="hidden" class="form-control" id="Management_group_id" name="Management_group_id" value=null>
           <input type="hidden" class="form-control" id="updated_at" name="updated_at" value=null>
           <input type="hidden" class="form-control" id="Program_group_fk" name="Program_group_fk"  value="">
-          
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control " id="Management_group_name" name="Management_group_name" placeholder="Management Name" required>
+            <label for="Management_group_name">Management Name </label>
+          </div>
+          <div class="form-floating mb-3">
+            <input type="number" class="form-control " id="Management_group_position" name="Management_group_position" placeholder="Position" required>
+            <label for="Management_group_position">Management Position </label>
+          </div>
           <div class="form-floating mb-3">
             <input type="date" class="form-control " id="Management_group_start_date" name="Management_group_start_date" placeholder="Date" required>
             <label for="Management_group_start_date">Management Start Date </label>
@@ -22,7 +29,7 @@
             <label for="Management_group_end_date">Management End Date </label>
           </div>
           <div class="form-floating mb-3">
-            <input type="text" class="form-control" value="<?=$programGroup['Program_group_code']?>" id="Program_group_code" name="Program_group_code" placeholder="Code Group" required disabled>
+            <input type="text" class="form-control block-input hidden-input" value="<?=$programGroup['Program_group_code']?>" id="Program_group_code" name="Program_group_code" placeholder="Code Group" required disabled>
             <label for="Program_group_code">Code Group </label>
           </div>
           

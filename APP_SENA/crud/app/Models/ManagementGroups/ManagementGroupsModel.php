@@ -13,7 +13,7 @@ class ManagementGroupsModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['Management_group_id', 'Management_group_start_date', 'Management_group_end_date', 'Program_group_fk', 'Management_group_status', 'updated_at'];
+    protected $allowedFields    = ['Management_group_id','Management_group_name','Management_group_position','Management_group_start_date', 'Management_group_end_date', 'Program_group_fk', 'Management_group_status', 'updated_at'];
 
     protected bool $allowEmptyInserts = false;
 

@@ -3,6 +3,8 @@
     <thead class="table-dark">
       <tr class="text-center">
         <th scope="col">#</th>
+        <th scope="col">Position</th>
+        <th scope="col">Name</th>
         <th scope="col">Start Date</th>
         <th scope="col">End Date</th>
         <th scope="col">Code</th>
@@ -15,18 +17,32 @@
         <?php foreach ($managementGroup  as $obj) : ?>
           <tr class="text-center">
             <td><?php echo $obj['Management_group_id']; ?></td>
+            <td><?php echo $obj['Management_group_position']; ?></td>
+            <td><?php echo $obj['Management_group_name']; ?></td>
             <td><?php echo $obj['Management_group_start_date']; ?></td>
             <td><?php echo $obj['Management_group_end_date']; ?></td>
             <td><?php echo $obj['Program_group_code']; ?></td>
             <td><?php echo $obj['Management_group_status']; ?></td>
             <td>
-              <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                <button type="button" title="Button Show Management group"
+
+              <div class="row justify-content-center">
+                <div class="col-6">
+                  <div class="btn-group-vertical btn-group-sm" role="group" aria-label="Basic mixed styles example">
+                    <button type="button" title="Button Add Instructors to Management group"
+                      onclick="add_instructor(<?php echo $obj['Management_group_id']; ?>)" class="btn btn-info btn-actions"><i class="bi bi-person-raised-hand"></i></button>
+                    
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="btn-group-vertical btn-group-sm" role="group" aria-label="Basic mixed styles example">
+                  <button type="button" title="Button Show Management group"
                   onclick="show(<?php echo $obj['Management_group_id']; ?>)" class="btn btn-success btn-actions"><i class="bi bi-eye-fill"></i></button>
-                <button type="button" title="Button Edit Management group"
-                  onclick="edit(<?php echo $obj['Management_group_id']; ?>)" class="btn btn-warning btn-actions"><i class="bi bi-pencil-square"></i> </button>
-                <button type="button" title="Button Delete Management group"
-                  onclick="delete_(<?php echo $obj['Management_group_id']; ?>)" class="btn btn-danger btn-actions"><i class="bi bi-trash-fill"></i></button>
+                    <button type="button" title="Button Edit Management group"
+                      onclick="edit(<?php echo $obj['Management_group_id']; ?>)" class="btn btn-warning btn-actions"><i class="bi bi-pencil-square"></i> </button>
+                    <button type="button" title="Button Delete Management group"
+                      onclick="delete_(<?php echo $obj['Management_group_id']; ?>)" class="btn btn-danger btn-actions"><i class="bi bi-trash-fill"></i></button>
+                  </div>
+                </div>
               </div>
             </td>
           </tr>
@@ -36,6 +52,8 @@
     <tfoot class="table-dark">
       <tr class="text-center">
         <th scope="col">#</th>
+        <th scope="col">Position</th>
+        <th scope="col">Name</th>
         <th scope="col">Start Date</th>
         <th scope="col">End Date</th>
         <th scope="col">Code</th>

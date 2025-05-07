@@ -127,24 +127,24 @@ class ProgramsGroups extends Controller
   //This method consists of delete user, obtains id the data from the GET method, return Json
   public function delete($id = null)
   {
-    if ($this->request->isAJAX()) {
-      //Select student  model 
-      if ($data[$this->model] = $this->programsGroupsModel->where($this->primaryKey, $id)->first()) {
-        $data['message'] = 'success';
-        $data['response'] = ResponseInterface::HTTP_OK;
-        $data['csrf'] = csrf_hash();
-      } else {
-        $data['message'] = 'Error Program Group';
-        $data['response'] = ResponseInterface::HTTP_NO_CONTENT;
-        $data['data'] = '';
-      }
-    } else {
-      $data['message'] = 'Error Ajax';
-      $data['response'] = ResponseInterface::HTTP_CONFLICT;
-      $data['data'] = '';
-    }
-    //Change array to Json
-    echo json_encode($data);
+    // if ($this->request->isAJAX()) {
+    //   //Select student  model 
+    //   if ($data[$this->model] = $this->programsGroupsModel->where($this->primaryKey, $id)->first()) {
+    //     $data['message'] = 'success';
+    //     $data['response'] = ResponseInterface::HTTP_OK;
+    //     $data['csrf'] = csrf_hash();
+    //   } else {
+    //     $data['message'] = 'Error Program Group';
+    //     $data['response'] = ResponseInterface::HTTP_NO_CONTENT;
+    //     $data['data'] = '';
+    //   }
+    // } else {
+    //   $data['message'] = 'Error Ajax';
+    //   $data['response'] = ResponseInterface::HTTP_CONFLICT;
+    //   $data['data'] = '';
+    // }
+    // //Change array to Json
+    // echo json_encode($data);
   }
    //This method consists of delete user, obtains id the data from the GET method, return Json
    public function addStudent()

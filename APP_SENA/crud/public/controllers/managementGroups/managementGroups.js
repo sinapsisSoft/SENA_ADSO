@@ -10,13 +10,13 @@
 a breakdown of what each line is doing: */
 const formId = 'management-form';
 const modalId = 'management-modal';
-const model = 'programGroups';
+const model = 'managementGroup';
 const tableId = ['table-management','table-index-students','table-index-management', 'table-index-assessment'];
 const preloadId = 'preloadId';
-const classEdit = 'edit-input';
+const actionsForms = ['block-input','hidden-input'];
 const textConfirm = 'Press a button!\nEither OK or Cancel.';
 const btnActions = ['btn_management_form', 'btn_students_form', 'btn_management_form', 'btn_assessment_form'];
-const mainApp = new Main(modalId, formId, classEdit, preloadId);
+const mainApp = new Main(modalId, formId, actionsForms, preloadId);
 
 /* These lines of code are declaring and initializing variables in a JavaScript file. Here is a
 breakdown of what each variable is used for: */
@@ -44,12 +44,15 @@ function show(id) {
  * modal.
  */
 function add(id) {
-  mainApp.enableFormAll();
+  mainApp.disabledFormEdit();
   mainApp.resetForm();
   insertUpdate = true;
   mainApp.btnEnabledDisabled(false, btnActions[0]);
   mainApp.showModal();
   mainApp.setDataInput('Program_group_fk', id);
+}
+function  add_instructor(id){
+  
 }
 
 /**
@@ -74,9 +77,10 @@ function edit(id) {
  * deleted from the system.
  */
 async function delete_(id) {
-  method = 'GET';
-  url = URI_PROGRAMS_GROUPS + LIST_CRUD[3] + '/' + id;
+  method = 'DELETE';
+  url = URI_MANAGEMENT_GROUPS + LIST_CRUD[3] + '/' + id;
   data = "";
+
   if (confirm(textConfirm) == true) {
     resultFetch = getData(data, method, url);
     resultFetch.then(response => response.json())
@@ -92,6 +96,7 @@ async function delete_(id) {
       })
       .finally();
   } else {
+
   }
 }
 
@@ -102,8 +107,8 @@ async function delete_(id) {
  * you want to retrieve.
  */
 async function getDataId(id) {
-  method = 'GET';
-  url = URI_PROGRAMS_GROUPS + LIST_CRUD[1] + '/' + id;
+  method = 'POST';
+  url = URI_MANAGEMENT_GROUPS + LIST_CRUD[1] + '/' + id;
   data = mainApp.getDataFormJson();
   resultFetch = getData(data, method, url);
   resultFetch.then(response => response.json())
@@ -195,7 +200,7 @@ mainApp.getForm().addEventListener('submit', async function (event) {
         })
         .finally();
     } else {
-      method = 'POST';
+      method = 'PUT';
       url = URI_MANAGEMENT_GROUPS + LIST_CRUD[2];
       data = mainApp.getDataFormJson();
       //console.log(data);

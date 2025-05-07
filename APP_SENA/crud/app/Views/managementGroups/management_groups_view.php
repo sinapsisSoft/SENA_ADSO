@@ -32,7 +32,6 @@
           <i class="bi bi-plus-circle-fill"></i> </button>
         <!--Container Table-->
         <?php require_once('../app/Views/managementGroups/table.php') ?>
-
         <!--End Container Table-->
       </div>
     </div>

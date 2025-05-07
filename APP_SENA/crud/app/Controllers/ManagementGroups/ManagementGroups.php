@@ -50,7 +50,7 @@ class ManagementGroups extends Controller
     $this->data['userModules'] =  $this->roleModuleModel->sp_role_modules_id((int)$this->getSessionIdUser()['Roles_fk']);
     return view('managementGroups/management_groups_view', $this->data);
   }
-  
+
 
   //This method consists of creating, obtains the data from the POST method, return Json
   public function create()
@@ -58,17 +58,16 @@ class ManagementGroups extends Controller
     if ($this->request->isAJAX()) {
       $dataModel = $this->getDataModel();
       //Query Insert 
-      // if ($this->managementGroupsModel->insert($dataModel)) {
-      //$dataModel['Program_group_fk'] = $this->primaryKeyProgramsGroups;
-      $this->data['message'] = 'success';
-      $this->data['response'] = ResponseInterface::HTTP_OK;
-      $this->data['data'] = $dataModel;
-      $this->data['csrf'] = csrf_hash();
-      //  } else {
-      //   $this->data['message'] = 'Error create program group';
-      //   $this->data['response'] = ResponseInterface::HTTP_NO_CONTENT;
-      //   $this->data['data'] = ""   ;
-      // }
+      if ($this->managementGroupsModel->insert($dataModel)) {
+        $this->data['message'] = 'success';
+        $this->data['response'] = ResponseInterface::HTTP_OK;
+        $this->data['data'] = $dataModel;
+        $this->data['csrf'] = csrf_hash();
+      } else {
+        $this->data['message'] = 'Error create program group';
+        $this->data['response'] = ResponseInterface::HTTP_NO_CONTENT;
+        $this->data['data'] = "";
+      }
     } else {
       $this->data['message'] = 'Error Ajax';
       $this->data['response'] = ResponseInterface::HTTP_CONFLICT;
@@ -130,61 +129,69 @@ class ManagementGroups extends Controller
   //This method consists of delete user, obtains id the data from the GET method, return Json
   public function delete($id = null)
   {
-    if ($this->request->isAJAX()) {
-      //Select student  model 
-      if ($this->data[$this->model] = $this->managementGroupsModel->where($this->primaryKey, $id)->first()) {
-        $this->data['message'] = 'success';
-        $this->data['response'] = ResponseInterface::HTTP_OK;
-        $this->data['csrf'] = csrf_hash();
+    try {
+      if ($this->request->isAJAX()) {
+        //Select student  model 
+        if ($this->managementGroupsModel->where($this->primaryKey, $id)->delete($id)) {
+          $this->data['message'] = 'success';
+          $this->data['response'] = ResponseInterface::HTTP_OK;
+          $this->data['data'] = "OK";
+          $this->data['csrf'] = csrf_hash();
+        } else {
+          $this->data['message'] = 'Error Ajax';
+          $this->data['response'] = ResponseInterface::HTTP_CONFLICT;
+          $this->data['data'] = 'error';
+        }
       } else {
-        $this->data['message'] = 'Error Program Group';
-        $this->data['response'] = ResponseInterface::HTTP_NO_CONTENT;
+        $this->data['message'] = 'Error Ajax';
+        $this->data['response'] = ResponseInterface::HTTP_CONFLICT;
         $this->data['data'] = '';
       }
-    } else {
-      $this->data['message'] = 'Error Ajax';
+    } catch (\Exception $e) {
+      $this->data['message'] = $e;
       $this->data['response'] = ResponseInterface::HTTP_CONFLICT;
-      $this->data['data'] = '';
+      $this->data['data'] = 'Error';
     }
     //Change array to Json
     echo json_encode($this->data);
   }
 
-  //This method consists of update , obtains id the data from the POST method, return Json
-  public function singleManagementGroups()
-  {
-    //Validate is ajax
+
+  //This method consists of single User Status , obtains id the data from the GET method, return Json
+  public function singleManagementGroups($id = null)
+  {    //Validate is ajax
     if ($this->request->isAJAX()) {
-      //Select student  model 
-      if ($this->data[$this->model] = $this->studentModel->sp_students_no_group()) {
-        $this->data['message'] = 'success';
-        $this->data['response'] = ResponseInterface::HTTP_OK;
-        $this->data['csrf'] = csrf_hash();
+      //Select user status model 
+      if ($data[$this->model] = $this->managementGroupsModel->where($this->primaryKey, $id)->first()) {
+        $data['message'] = 'success';
+        $data['response'] = ResponseInterface::HTTP_OK;
+        $data['csrf'] = csrf_hash();
       } else {
-        $this->data['message'] = 'Error Program Group';
-        $this->data['response'] = ResponseInterface::HTTP_NO_CONTENT;
-        $this->data['data'] = '';
+        $data['message'] = 'Error create user';
+        $data['response'] = ResponseInterface::HTTP_NO_CONTENT;
+        $data['data'] = '';
       }
     } else {
-      $this->data['message'] = 'Error Ajax';
-      $this->data['response'] = ResponseInterface::HTTP_CONFLICT;
-      $this->data['data'] = '';
+      $data['message'] = 'Error Ajax';
+      $data['response'] = ResponseInterface::HTTP_CONFLICT;
+      $data['data'] = '';
     }
     //Change array to Json
-    echo json_encode($this->data);
+    echo json_encode($data);
   }
   //This method consists of create is model the data in the array associative, return Array
   public function getDataModel()
   {
 
-    return[
+    return [
       'Management_group_id' => $this->request->getVar('Management_group_id'),
+      'Management_group_position' => $this->request->getVar('Management_group_position'),
+      'Management_group_name' => $this->request->getVar('Management_group_name'),
       'Management_group_start_date' => $this->request->getVar('Management_group_start_date'),
       'Management_group_end_date' => $this->request->getVar('Management_group_end_date'),
-      'Program_group_fk' =>$this->request->getVar('Program_group_fk'),
+      'Program_group_fk' => $this->request->getVar('Program_group_fk'),
       'Management_group_status' => $this->request->getVar('Management_group_status'),
       'updated_at' => $this->request->getVar('updated_at'),
     ];
- 
-  } 
+  }
 }
