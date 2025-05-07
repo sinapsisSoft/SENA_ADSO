@@ -43,7 +43,8 @@ class ProgramsGroups extends Controller
   public function index()
   {
     $this->data['title'] = "PROGRAMS GROUPS";
-    $this->data[$this->model] = $this->programsGroupsModel->orderBy($this->primaryKey, 'ASC')->findAll();
+    
+    $this->data[$this->model] = $this->programsGroupsModel->sp_programs_groups();
     $this->data['profile'] =  $this->profileModel->where('User_id_fk', (int)$this->getSessionIdUser()['User_id'])->first();
     $this->data['userModules'] =  $this->roleModuleModel->sp_role_modules_id((int)$this->getSessionIdUser()['Roles_fk']);
     return view('programsGroups/programsGroups_view', $this->data);
@@ -175,7 +176,7 @@ class ProgramsGroups extends Controller
      //Validate is ajax
      if ($this->request->isAJAX()) {
       //Select student  model 
-      if ($data[$this->model] = $this->studentModel->sp_students_group()) {
+      if ($data[$this->model] = $this->studentModel->sp_students_no_group()) {
         $data['message'] = 'success';
         $data['response'] = ResponseInterface::HTTP_OK;
         $data['csrf'] = csrf_hash();

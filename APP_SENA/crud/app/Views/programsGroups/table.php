@@ -25,7 +25,7 @@
                   <button type="button" title="Button Delete Student Programs group"
                   onclick="show_student(<?php echo $obj['Program_group_id']; ?>)" class="btn btn-info btn-actions"><i class="bi bi-person-badge-fill"></i></button>
                   <button type="button" title="Button manager  Management Programs group"
-                  onclick="show_management(<?php echo $obj['Program_group_id']; ?>)" class="btn btn-primary btn-actions"><i class="bi bi-activity"></i></button>
+                  onclick="show_management(<?php echo $obj['group_id']; ?>)" class="btn btn-primary btn-actions"><i class="bi bi-activity"></i></button>
                   <button type="button" title="Button manager  Assessment Programs group"
                   onclick="show_assessment(<?php echo $obj['Program_group_id']; ?>)" class="btn btn-light btn-actions"><i class="bi bi-bar-chart-steps"></i></button>
                   <button type="button" title="Button Show Programs group"

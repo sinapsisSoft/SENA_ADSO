@@ -9,7 +9,7 @@
 /* These lines of code are declaring constants and initializing variables in a JavaScript file. Here is
 a breakdown of what each line is doing: */
 const formId = ['my-form', 'students-form', 'management-form', 'assessment-form'];
-const modalId = ['my-modal', 'students-modal', 'management-modal', 'assessment-modal'];
+const modalId = ['my-modal', 'students-modal', 'assessment-modal'];
 const model = 'programGroups';
 const tableId = ['table-index','table-index-students','table-index-management', 'table-index-assessment'];
 const preloadId = 'preloadId';
@@ -258,6 +258,7 @@ async function getProgramsGroups() {
     .finally();
 
 }
+
 async function add_student_group(id) {
   
   getKeyModule['student_id'] = id;
@@ -287,16 +288,17 @@ async function add_student_group(id) {
   }
 }
 function show_management(id) {
+  mainApp.showPreload();
+  setTimeout(() => {
+    window.location.href = URI_MANAGEMENT_GROUPS + LIST_CRUD[4] + '/' + id;
+  }, 1000);
+  
+}
+function show_assessment(id) {
   mainApp.showModal(2);
   mainApp.disabledFormEdit(2);
   mainApp.resetForm(2);
   mainApp.btnEnabledDisabled(true, btnActions[2]);
-}
-function show_assessment(id) {
-  mainApp.showModal(3);
-  mainApp.disabledFormEdit(3);
-  mainApp.resetForm(3);
-  mainApp.btnEnabledDisabled(true, btnActions[3]);
 }
 
 /**

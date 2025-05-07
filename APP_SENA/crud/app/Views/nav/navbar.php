@@ -4,7 +4,7 @@ $getUser = $session->get(LOGGED_USER);
 ?>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#"><img src="../assets/img/logos/logo.png" width="35px" alt=""></a>
+    <a class="navbar-brand" href="#"><img src="<?= base_url('assets/img/logos/logo.png') ?>" width="35px" alt=""></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>

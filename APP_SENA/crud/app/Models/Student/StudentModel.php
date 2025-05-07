@@ -50,11 +50,32 @@ class StudentModel extends Model
         return $result;
     }
     // Get all students not in program group 
-    public function sp_students_group()
+    public function sp_students_no_group()
     {
         try {
-            $sql    = "CALL sp_students_group();";
+            $sql    = "CALL sp_students_no_group();";
             $query  = $this->db->query($sql);
+            $result = $query->getResultArray();
+        } catch (Exception $e) {
+            $result = null;
+        }
+        return $result;
+    }
+   /**
+    * This PHP function calls a stored procedure to retrieve a group of students based on a given ID.
+    * 
+    * @param id The `sp_students_group` function appears to be a PHP function that executes a stored
+    * procedure to retrieve student group information from a database. The function takes an ``
+    * parameter as input.
+    * 
+    * @return The function `sp_students_group` is returning the result of the query execution as an
+    * array. If an exception occurs during the query execution, it will return `null`.
+    */
+    public function sp_students_group($id)
+    {
+        try {
+            $sql    = "CALL sp_students_group(?);";
+            $query  = $this->db->query($sql, $id);
             $result = $query->getResultArray();
         } catch (Exception $e) {
             $result = null;

@@ -152,6 +152,15 @@ $routes->group("programsStudentGroups",['namespace' => 'App\Controllers\Programs
   $routes->post("show", "ProgramsGroups::getStudentGroups");
 });
 
+//GROUP ROUTES PROGRAMS GROUPS
+$routes->group("managementGroups",['namespace' => 'App\Controllers\ManagementGroups','filter' => 'AuthCheck'],function($routes){
+  $routes->get("show/(:num)", "ManagementGroups::index/$1");
+  $routes->post("edit/(:num)", "ManagementGroups::singleManagementGroups/$1");
+  $routes->get("delete/(:num)", "ManagementGroups::delete/$1");
+  $routes->post("add", "ManagementGroups::create");
+  $routes->post("update", "ManagementGroups::update");
+});
+
 
 
 //GROUP ROUTES

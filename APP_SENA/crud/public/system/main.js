@@ -488,8 +488,27 @@ class Main {
     btnObj.disabled = type;
     btnObj.textContent = type ? 'Block' : 'Send';
   }
-
-
+  /**
+   * The function `createTable` generates an HTML table based on provided columns and data, with
+   * optional action buttons for each row.
+   * @param tableId - The `tableId` parameter is the id of the HTML table element where you want to
+   * display the data.
+   * @param columns - The `columns` parameter in the `createTable` function is an array that specifies
+   * the columns to be displayed in the table. Each element in the `columns` array represents a column
+   * in the table.
+   * @param data - The `data` parameter in the `createTable` function is an array of objects where each
+   * object represents a row of data to be displayed in the table. Each object should have key-value
+   * pairs where the key corresponds to a column name and the value is the data to be displayed in that
+   * cell.
+   * @param [addActions=false] - The `addActions` parameter in the `createTable` function is a boolean
+   * flag that determines whether additional action buttons should be added to each row in the table.
+   * If `addActions` is set to `true`, action buttons will be included based on the `btnActions`
+   * parameter provided. If
+   * @param [btnActions=0] - The `btnActions` parameter in the `createTable` function is used to
+   * specify the number of action buttons that will be displayed in each row of the table when
+   * `addActions` is set to `true`. It determines how many action buttons will be rendered for each row
+   * based on the provided value
+   */
   createTable(tableId, columns, data, addActions = false, btnActions = 0) {
     const table = document.getElementById(tableId);
     const tbody = table.querySelector('tbody');
@@ -503,14 +522,11 @@ class Main {
         tds += `<td>${obj[j][1]}</td>`;
       }
       if (addActions) {
-
         tds += `<td><div class="btn-group" role="group" aria-label="Basic mixed styles">`;
-
         for (let k = 0; k < btnActions.length; k++) {
           tds += `<button type="button" title="${btnActions[k].label}" class="btn btn-${btnActions[k].type} btn-actions" onclick="${btnActions[k].name}(${obj[0][1]})"><i class="${btnActions[k].icon}"></i></button>`;
         }
         tds += `</div></td>`;
-
       }
       tr += "<tr class='text-center'>" + tds + "</tr>";
       tds = "";
@@ -520,8 +536,21 @@ class Main {
     this.refreshTable(tableId);
   }
 
+  /**
+   * The function `refreshTable` initializes a DataTable for the table with the specified `tableId`.
+   * @param tableId - The `tableId` parameter is a string representing the ID of the HTML table element
+   * that you want to refresh using DataTables.
+   */
   refreshTable(tableId) {
     $('#' + tableId).DataTable();
   }
 
+  setDataInput(id, value) {
+    const input = document.getElementById(id);
+    if (input) {
+      input.value = value;
+    } else {
+      console.error(`Input with id ${id} not found.`);
+    }
+  }
 }
