@@ -20,20 +20,27 @@
             <td><?php echo $obj['Program_group_end_date']; ?></td>
             <td><?php echo $obj['Program_group_status']; ?></td>
             <td>
-              <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                
-                  <button type="button" title="Button Delete Student Programs group"
-                  onclick="show_student(<?php echo $obj['Program_group_id']; ?>)" class="btn btn-info btn-actions"><i class="bi bi-person-badge-fill"></i></button>
-                  <button type="button" title="Button manager  Management Programs group"
-                  onclick="show_management(<?php echo $obj['group_id']; ?>)" class="btn btn-primary btn-actions"><i class="bi bi-activity"></i></button>
-                  <button type="button" title="Button manager  Assessment Programs group"
-                  onclick="show_assessment(<?php echo $obj['Program_group_id']; ?>)" class="btn btn-light btn-actions"><i class="bi bi-bar-chart-steps"></i></button>
-                  <button type="button" title="Button Show Programs group"
-                  onclick="show(<?php echo $obj['Program_group_id']; ?>)" class="btn btn-success btn-actions"><i class="bi bi-eye-fill"></i></button>
-                <button type="button" title="Button Edit Programs group"
-                  onclick="edit(<?php echo $obj['Program_group_id']; ?>)" class="btn btn-warning btn-actions"><i class="bi bi-pencil-square" ></i> </button>
-                <button type="button" title="Button Delete Programs group"
-                  onclick="delete_(<?php echo $obj['Program_group_id']; ?>)" class="btn btn-danger btn-actions"><i class="bi bi-trash-fill"></i></button>
+              <div class="row justify-content-center">
+                <div class="col-6">
+                  <div class="btn-group-vertical btn-group-sm" role="group" aria-label="Basic mixed styles example">
+                    <button type="button" title="Button Show Students"
+                      onclick="show_student(<?php echo $obj['Program_group_id']; ?>)" class="btn btn-info btn-actions"><i class="bi bi-person-badge-fill"></i></button>
+                      <button type="button" title="Button Show Instructors"
+                      onclick="show_instructor(<?php echo $obj['Program_group_id']; ?>)" class="btn btn-light btn-actions"><i class="bi bi-person-raised-hand"></i></button>
+                    <button type="button" title="Button manager  Management Programs group"
+                      onclick="show_management(<?php echo $obj['Program_group_id']; ?>)" class="btn btn-primary btn-actions"><i class="bi bi-activity"></i></button>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="btn-group-vertical btn-group-sm" role="group" aria-label="Basic mixed styles example">
+                    <button type="button" title="Button Show Programs group"
+                      onclick="show(<?php echo $obj['Program_group_id']; ?>)" class="btn btn-success btn-actions"><i class="bi bi-eye-fill"></i></button>
+                    <button type="button" title="Button Edit Programs group"
+                      onclick="edit(<?php echo $obj['Program_group_id']; ?>)" class="btn btn-warning btn-actions"><i class="bi bi-pencil-square"></i> </button>
+                    <button type="button" title="Button Delete Programs group"
+                      onclick="delete_(<?php echo $obj['Program_group_id']; ?>)" class="btn btn-danger btn-actions"><i class="bi bi-trash-fill"></i></button>
+                  </div>
+                </div>
               </div>
             </td>
           </tr>

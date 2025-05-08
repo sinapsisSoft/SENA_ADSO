@@ -30,4 +30,27 @@ class InstructorModel extends Model
         }
         return $result;
     }
+
+    public function sp_instructs_no_group($id)
+    {
+        try {
+            $sql    = "CALL sp_instructs_no_group(?);";
+            $query  = $this->db->query($sql,$id);
+            $result = $query->getResultArray();
+        } catch (Exception $e) {
+            $result = null;
+        }
+        return $result;
+    }
+    public function sp_instructs_group()
+    {
+        try {
+            $sql    = "CALL sp_instructs_group();";
+            $query  = $this->db->query($sql);
+            $result = $query->getResultArray();
+        } catch (Exception $e) {
+            $result = null;
+        }
+        return $result;
+    }
 }

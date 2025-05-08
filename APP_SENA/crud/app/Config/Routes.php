@@ -149,7 +149,15 @@ $routes->group("programsGroups",['namespace' => 'App\Controllers\ProgramsGroups'
 //GROUP ROUTES PROGRAMS STUDENT GROUPS
 $routes->group("programsStudentGroups",['namespace' => 'App\Controllers\ProgramsGroups','filter' => 'AuthCheck'],function($routes){
   $routes->post("add", "ProgramsGroups::addStudent");
-  $routes->post("show", "ProgramsGroups::getStudentGroups");
+  $routes->get("show", "ProgramsGroups::getStudentNoGroups");
+  $routes->get("show/(:num)", "ProgramsGroups::getStudentGroups/$1");
+});
+
+//GROUP ROUTES PROGRAMS INSTRUCTOR GROUPS
+$routes->group("programsInstructorGroups",['namespace' => 'App\Controllers\ProgramsGroups','filter' => 'AuthCheck'],function($routes){
+  $routes->post("add", "ProgramsGroups::addInstructor");
+  $routes->get("show", "ProgramsGroups::getInstructorNoGroups");
+  $routes->get("show/(:num)", "ProgramsGroups::getInstructorGroups/$1");
 });
 
 //GROUP ROUTES PROGRAMS GROUPS

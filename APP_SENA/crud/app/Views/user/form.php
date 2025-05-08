@@ -1,28 +1,33 @@
 <form id="my-form" class="">
-  <input type="hidden" class="form-control" id="Course_id" name="Course_id" value=null>
+  <input type="hidden" class="form-control" id="User_id" name="User_id" value=null>
   <input type="hidden" class="form-control" id="updated_at" name="updated_at" value=null>
   <div class="form-floating mb-3">
-    <input type="text" class="form-control " id="Course_code" name="Course_code" placeholder="Code Curse" required>
-    <label for="Course_code">Code Curse </label>
+    <input type="email" class="form-control " id="User_user" name="User_user" placeholder="User" required>
+    <label for="User_user">User </label>
   </div>
   <div class="form-floating mb-3">
-    <input type="text" class="form-control " id="Course_program_name" name="Course_program_name" placeholder="Program Name" required>
-    <label for="Course_program_name">Program Name </label>
+    <input type="password" size="10" minlength="8" class="form-control " id="User_password" name="User_password" placeholder="Password" required>
+    <label for="User_password">Password </label>
   </div>
-  <div class="form-floating mb-3">
-    <input type="date" class="form-control " id="Course_start_date" name="Course_start_date" placeholder="Start date" required>
-    <label for="Course_start_date">Start Date </label>
-  </div>
-  <div class="form-floating mb-3">
-    <input type="date" class="form-control " id="Course_end_date" name="Course_end_date" placeholder="End Date" required>
-    <label for="Course_end_date">End Date </label>
+ 
+  <div class="form-floating mb-3 col-12">
+    <select class="form-select" aria-label="Id Parent" id="Roles_fk" name="Roles_fk">
+      <option value=NULL selected disabled>Open this select Role </option>
+      <?php if ($roles) : ?>
+        <?php foreach ($roles as $obj) : ?>
+          <option value="<?= $obj['Roles_id'] ?>"><?= $obj['Roles_name'] ?></option>
+        <?php endforeach; ?>
+      <?php endif; ?>
+    </select>
   </div>
   <div class="form-floating mb-3 col-12">
-    <select class="form-select" aria-label="Id Parent" id="Course_status" name="Course_status" disabled>
-      <option value=NULL selected>Open this select Status </option>
-      <option value="active" >Active </option>
-      <option value="inactive" >Inactive </option>
-      <option value="completed" >Completed </option>
+    <select class="form-select" aria-label="Id Parent" id="User_status_fk" name="User_status_fk">
+      <option value=NULL selected disabled>Open this select Status </option>
+      <?php if ($userStatus) : ?>
+        <?php foreach ($userStatus as $obj) : ?>
+          <option value="<?= $obj['User_status_id'] ?>"><?= $obj['User_status_name'] ?></option>
+        <?php endforeach; ?>
+      <?php endif; ?>
     </select>
   </div>
  

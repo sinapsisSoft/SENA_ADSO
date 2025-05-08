@@ -47,7 +47,7 @@
   <?php require_once('../app/Views/programsGroups/students_modal.php') ?>
   <!--End Modal programs Group Students-->
   <!--Modal programs Group management-->
-  <?php require_once('../app/Views/programsGroups/assessment_modal.php') ?>
+  <?php require_once('../app/Views/programsGroups/instructors_modal.php') ?>
   <!--End Modal programs Group management-->
 
   <!--JS-->

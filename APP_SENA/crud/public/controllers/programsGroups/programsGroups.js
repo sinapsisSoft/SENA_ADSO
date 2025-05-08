@@ -8,14 +8,14 @@
 
 /* These lines of code are declaring constants and initializing variables in a JavaScript file. Here is
 a breakdown of what each line is doing: */
-const formId = ['my-form', 'students-form', 'management-form', 'assessment-form'];
-const modalId = ['my-modal', 'students-modal', 'assessment-modal'];
+const formId = ['my-form', 'students-form', 'management-form', 'instructor-form'];
+const modalId = ['my-modal', 'students-modal', 'instructor-modal'];
 const model = 'programGroups';
-const tableId = ['table-index','table-index-students','table-index-management', 'table-index-assessment'];
+const tableId = ['table-index', 'table-group-students', 'table-no-group-students', 'table-index-management', 'table-group-instructor', 'table-no-group-instructor'];
 const preloadId = 'preloadId';
 const classEdit = 'edit-input';
 const textConfirm = 'Press a button!\nEither OK or Cancel.';
-const btnActions = ['btn_form', 'btn_students_form', 'btn_management_form', 'btn_assessment_form'];
+const btnActions = ['btn_form', 'btn_students_form', 'btn_management_form', 'btn_instructor_form'];
 const mainApp = new Main(modalId, formId, classEdit, preloadId);
 
 /* These lines of code are declaring and initializing variables in a JavaScript file. Here is a
@@ -25,7 +25,7 @@ var url = "";
 var method = "";
 var data = "";
 var resultFetch = null;
-var getKeyModule = { 'group_id': 0, 'student_id': 0 };
+var getKeyModule = { 'group_id': 0, 'student_id': 0, 'instructor_id': 0 };
 
 /**
  * The function `showStatus` disables all form elements, resets the form, enables a button, and
@@ -38,7 +38,6 @@ function show(id) {
   mainApp.btnEnabledDisabled(true, btnActions[0]);
   getDataId(id);
 }
-
 /**
  * The function `newStatus` enables a form, resets it, sets a flag, disables a button, and shows a
  * modal.
@@ -122,7 +121,6 @@ async function getDataId(id) {
     })
     .finally();
 }
-
 
 /**
  * The function `getData` is an asynchronous function that sends a request to a specified URL using the
@@ -219,34 +217,69 @@ mainApp.getForm().addEventListener('submit', async function (event) {
   }
 });
 
-function show_student(id) {
- 
-  mainApp.disabledFormEdit(1);
-  mainApp.resetForm(1);
+/**
+ * The function `show_student` sets certain elements as disabled, resets a form, enables a button,
+ * assigns a value to a key, and calls another function.
+ * @param id - The `id` parameter in the `show_student` function is used to identify a specific student
+ * or group of students. It is passed as an argument to the function and is then used to perform
+ * various actions such as disabling form editing, resetting the form, enabling a button, and setting a
+ * key module
+ */
+async function show_student(id) {
   mainApp.btnEnabledDisabled(true, btnActions[1]);
   getKeyModule['group_id'] = id;
-  getProgramsGroups();
-  
+  getStudentsGroups(id);
 }
-async function getProgramsGroups() {
-  method = 'POST';
+
+async function getStudentsGroups(id) {
+  method = 'GET';
+  url = URI_PROGRAMS_STUDENT_GROUPS + LIST_CRUD[4] + '/' + id;
+  data = "";
+  resultFetch = getData(data, method, url);
+  resultFetch.then(response => response.json())
+    .then(data => {
+      //console.log(data[model]);
+      let arrayColumn = ['#', 'Document', 'First Name', 'Last Name'];
+      let arrayActions = [
+        {
+          name: 'remove_student_group',
+          label: 'Remove to Group',
+          icon: 'bi-person-dash',
+          type: 'danger'
+        }
+
+      ];
+      getStudentsNoGroups().then(() => {
+        mainApp.createTable('table-group-students', arrayColumn, data[model], true, arrayActions);
+      });
+    })
+    .catch(error => {
+      console.error(error);
+      //hidden Preload 
+      mainApp.hiddenPreload();
+    })
+    .finally();
+}
+
+async function getStudentsNoGroups() {
+  method = 'GET';
   url = URI_PROGRAMS_STUDENT_GROUPS + LIST_CRUD[4];
   data = "";
   resultFetch = getData(data, method, url);
   resultFetch.then(response => response.json())
     .then(data => {
       //console.log(data[model]);
-      let arrayColumn = ['#','Document','First Name', 'Last Name','Phone','Email'];
+      let arrayColumn = ['#', 'Document', 'First Name', 'Last Name'];
       let arrayActions = [
         {
           name: 'add_student_group',
           label: 'Add to Group',
           icon: 'bi-person-plus-fill',
-          type: 'primary' 
+          type: 'primary'
         }
-        
+
       ];
-      mainApp.createTable('table-index-students', arrayColumn,data[model],true,arrayActions);
+      mainApp.createTable('table-no-group-students', arrayColumn, data[model], true, arrayActions);
       mainApp.hiddenPreload();
       mainApp.showModal(1);
     })
@@ -256,14 +289,17 @@ async function getProgramsGroups() {
       mainApp.hiddenPreload();
     })
     .finally();
-
 }
 
+/**
+ * The function `add_student_group` adds a student to a group after confirming the action and making a
+ * POST request to a specified URL.
+ * @param id - The `id` parameter in the `add_student_group` function is used to specify the student ID
+ * that will be added to a student group.
+ */
 async function add_student_group(id) {
-  
   getKeyModule['student_id'] = id;
   if (confirm(textConfirm) == true) {
-    
     method = 'POST';
     url = URI_PROGRAMS_STUDENT_GROUPS + LIST_CRUD[0];
     data = getKeyModule;
@@ -272,9 +308,6 @@ async function add_student_group(id) {
     resultFetch.then(response => response.json())
       .then(data => {
         //Create table
-        getProgramsGroups().finally(() => {
-          mainApp.hiddenPreload();
-        }) ;
 
       })
       .catch(error => {
@@ -284,21 +317,108 @@ async function add_student_group(id) {
       })
       .finally();
   } else {
-    
+
   }
 }
+
 function show_management(id) {
   mainApp.showPreload();
   setTimeout(() => {
     window.location.href = URI_MANAGEMENT_GROUPS + LIST_CRUD[4] + '/' + id;
   }, 1000);
-  
+
 }
-function show_assessment(id) {
-  mainApp.showModal(2);
-  mainApp.disabledFormEdit(2);
-  mainApp.resetForm(2);
-  mainApp.btnEnabledDisabled(true, btnActions[2]);
+
+async function show_instructor(id) {
+  mainApp.btnEnabledDisabled(true, btnActions[1]);
+  getKeyModule['group_id'] = id;
+  getInstructorsGroups(id);
+
+}
+
+async function getInstructorsGroups(id) {
+  method = 'GET';
+  url = URI_PROGRAMS_INSTRUCTOR_GROUPS + LIST_CRUD[4] + '/' + id;
+  data = "";
+  resultFetch = getData(data, method, url);
+  resultFetch.then(response => response.json())
+    .then(data => {
+      console.log(data[model]);
+      debugger;
+      let arrayColumn = ['#', 'Document', 'First Name', 'Last Name', 'Specialty'];
+      let arrayActions = [
+        {
+          name: 'add_instructor_group',
+          label: 'Remove to Group',
+          icon: 'bi-person-dash',
+          type: 'danger'
+        }
+      ];
+      getInstructorNoGroups().then(() => {
+        mainApp.createTable('table-group-instructor', arrayColumn, data[model], true, arrayActions);
+      });
+
+    })
+    .catch(error => {
+      console.error(error);
+      //hidden Preload 
+      mainApp.hiddenPreload();
+    })
+    .finally();
+}
+async function getInstructorNoGroups() {
+  method = 'GET';
+  url = URI_PROGRAMS_INSTRUCTOR_GROUPS + LIST_CRUD[4];
+  data = "";
+  resultFetch = getData(data, method, url);
+  resultFetch.then(response => response.json())
+    .then(data => {
+      console.log(data[model]);
+      debugger;
+      let arrayColumn = ['#', 'Document', 'First Name', 'Last Name'];
+      let arrayActions = [
+        {
+          name: 'add_instructor_group',
+          label: 'Add to Group',
+          icon: 'bi-person-plus-fill',
+          type: 'danger'
+        }
+
+      ];
+      //mainApp.createTable('table-no-group-instructor', arrayColumn, data[model], true, arrayActions);
+      mainApp.hiddenPreload();
+      mainApp.showModal(2);
+    })
+    .catch(error => {
+      console.error(error);
+      //hidden Preload 
+      mainApp.hiddenPreload();
+    })
+    .finally();
+}
+
+async function add_instructor_group(id) {
+  getKeyModule['instructor_id'] = id;
+  if (confirm(textConfirm) == true) {
+    method = 'POST';
+    url = URI_PROGRAMS_INSTRUCTOR_GROUPS + LIST_CRUD[0];
+    data = getKeyModule;
+    //console.log(data);
+    resultFetch = getData(data, method, url);
+    resultFetch.then(response => response.json())
+      .then(data => {
+        //Create table
+        console.log(data);
+      })
+      .catch(error => {
+        console.error(error);
+        //hidden Preload 
+        mainApp.hiddenPreload();
+      })
+      .finally();
+  } else {
+
+  }
 }
 
 /**
