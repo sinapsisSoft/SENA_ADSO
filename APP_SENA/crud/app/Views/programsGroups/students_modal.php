@@ -7,7 +7,7 @@
       </div>
       <div class="modal-body">
         <!--Form-->
-        <form id="students-form" class="">
+        <form id="student-form" class="">
           <!--Table-->
           <div class="row">
           <div class="col-6">
@@ -70,7 +70,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="submit" form="students-form" id="btn_students_form" class="btn btn-primary" disabled>Send Data</button>
+        <button type="submit" form="student-form" id="btn_student_form" class="btn btn-primary" disabled>Send Data</button>
       </div>
     </div>
   </div>

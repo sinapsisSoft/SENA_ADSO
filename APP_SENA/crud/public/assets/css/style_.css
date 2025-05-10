@@ -1,0 +1,132 @@
+/* Variables de color */
+:root {
+  --primary-color: #0d6efd;
+  --secondary-color: #6c757d;
+  --success-color: #198754;
+  --info-color: #0dcaf0;
+  --warning-color: #ffc107;
+  --danger-color: #dc3545;
+  --light-color: #f8f9fa;
+  --dark-color: #212529;
+}
+
+/* Estructura principal */
+.sidebar {
+  width: 280px;
+  transition: all 0.3s;
+  z-index: 1000;
+}
+
+.main-content {
+  margin-left: 280px;
+  transition: all 0.3s;
+}
+
+.sidebar-collapsed .sidebar {
+  width: 80px;
+}
+
+.sidebar-collapsed .main-content {
+  margin-left: 80px;
+}
+
+.sidebar-link {
+  transition: all 0.2s;
+  border-radius: 5px;
+  margin-bottom: 2px;
+}
+
+.sidebar-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-link.active {
+  background-color: rgba(255, 255, 255, 0.2);
+  font-weight: 500;
+}
+
+.sidebar-text {
+  transition: opacity 0.3s;
+}
+
+/* Elementos UI */
+.status-badge {
+  font-size: 0.8rem;
+  padding: 5px 10px;
+  font-weight: 500;
+}
+
+.progress-thin {
+  height: 6px;
+}
+
+.clickable-row {
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.clickable-row:hover {
+  background-color: rgba(13, 110, 253, 0.05);
+  transform: scale(1.005);
+}
+
+.filter-section {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+}
+
+/* Efectos y animaciones */
+.card-hover {
+  transition: all 0.3s;
+}
+
+.card-hover:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.sortable {
+  cursor: pointer;
+}
+
+.sortable:hover {
+  background-color: rgba(13, 110, 253, 0.05);
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .sidebar {
+      width: 80px;
+      overflow: hidden;
+  }
+  
+  .main-content {
+      margin-left: 80px;
+  }
+  
+  .sidebar-text {
+      display: none;
+  }
+  
+  .sidebar-expanded .sidebar {
+      width: 280px;
+  }
+  
+  .sidebar-expanded .sidebar-text {
+      display: inline;
+  }
+  
+  .sidebar-expanded .main-content {
+      margin-left: 280px;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-card {
+      margin-bottom: 15px;
+  }
+  
+  .filter-buttons .btn {
+      margin-bottom: 10px;
+  }
+}

@@ -31,7 +31,7 @@
         <button type="button" class="btn btn-primary btn-actions" title="Button new User Status" onclick="add()" style="font-size: 0.5em;">
           <i class="bi bi-plus-circle-fill"></i> </button>
         <!--Container Table-->
-        <?php require_once('../app/Views/programsGroups/table.php') ?>
+
         <!--End Container Table-->
       </div>
     </div>
@@ -41,15 +41,7 @@
   <!--Footer-->
   <?php require_once('../app/Views/footer/footer.php') ?>
   <!--End Footer-->
-  <!--Modal programs Group-->
-  <?php require_once('../app/Views/programsGroups/modal.php') ?>
-  <!--End Modal programs Group-->
-  <!--Modal programs Group Students-->
-  <?php require_once('../app/Views/programsGroups/students_modal.php') ?>
-  <!--End Modal programs Group Students-->
-  <!--Modal programs Group management-->
-  <?php require_once('../app/Views/programsGroups/instructors_modal.php') ?>
-  <!--End Modal programs Group management-->
+ 
 
   <!--JS-->
   <?php require_once('../app/Views/assets/js/js.php') ?>

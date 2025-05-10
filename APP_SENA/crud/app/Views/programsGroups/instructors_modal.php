@@ -11,7 +11,7 @@
           <!--Table-->
           <div class="row">
             <div class="col-6">
-              <div class="table-responsive mx-auto">
+            <div class="table-responsive mx-auto">
                 <table class="table table-hover" id="table-no-group-instructor">
                   <thead class="table-dark">
                     <tr class="text-center">
@@ -19,14 +19,11 @@
                       <th scope="col">Document</th>
                       <th scope="col">First Name</th>
                       <th scope="col">Last Name</th>
-                      <th scope="col">Phone</th>
-                      <th scope="col">Email</th>
                       <th scope="col">Specialty</th>
                       <th scope="col">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
-
                   </tbody>
                   <tfoot class="table-dark">
                     <tr class="text-center">
@@ -34,8 +31,6 @@
                       <th scope="col">Document</th>
                       <th scope="col">First Name</th>
                       <th scope="col">Last Name</th>
-                      <th scope="col">Phone</th>
-                      <th scope="col">Email</th>
                       <th scope="col">Specialty</th>
                       <th scope="col">Actions</th>
                     </tr>
@@ -44,6 +39,7 @@
               </div>
             </div>
             <div class="col-6">
+            
               <div class="table-responsive mx-auto">
                 <table class="table table-hover" id="table-group-instructor">
                   <thead class="table-dark">

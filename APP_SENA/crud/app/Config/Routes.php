@@ -149,6 +149,7 @@ $routes->group("programsGroups",['namespace' => 'App\Controllers\ProgramsGroups'
 //GROUP ROUTES PROGRAMS STUDENT GROUPS
 $routes->group("programsStudentGroups",['namespace' => 'App\Controllers\ProgramsGroups','filter' => 'AuthCheck'],function($routes){
   $routes->post("add", "ProgramsGroups::addStudent");
+  $routes->delete("delete/(:num)", "ProgramsGroups::removeStudent/$1");
   $routes->get("show", "ProgramsGroups::getStudentNoGroups");
   $routes->get("show/(:num)", "ProgramsGroups::getStudentGroups/$1");
 });
@@ -156,6 +157,7 @@ $routes->group("programsStudentGroups",['namespace' => 'App\Controllers\Programs
 //GROUP ROUTES PROGRAMS INSTRUCTOR GROUPS
 $routes->group("programsInstructorGroups",['namespace' => 'App\Controllers\ProgramsGroups','filter' => 'AuthCheck'],function($routes){
   $routes->post("add", "ProgramsGroups::addInstructor");
+  $routes->delete("delete/(:num)", "ProgramsGroups::removeInstructor/$1");
   $routes->get("show", "ProgramsGroups::getInstructorNoGroups");
   $routes->get("show/(:num)", "ProgramsGroups::getInstructorGroups/$1");
 });
@@ -167,6 +169,16 @@ $routes->group("managementGroups",['namespace' => 'App\Controllers\ManagementGro
   $routes->delete("delete/(:num)", "ManagementGroups::delete/$1");
   $routes->post("add", "ManagementGroups::create");
   $routes->put("update", "ManagementGroups::update");
+});
+
+//GROUP ROUTES PROGRAMS GROUPS
+$routes->group("questions",['namespace' => 'App\Controllers\Questions','filter' => 'AuthCheck'],function($routes){
+  $routes->get("/", "Questions::index");
+  $routes->get("show/", "Questions::index");
+  $routes->post("edit/(:num)", "Questions::singleQuestions/$1");
+  $routes->delete("delete/(:num)", "Questions::delete/$1");
+  $routes->post("add", "Questions::create");
+  $routes->put("update", "Questions::update");
 });
 
 

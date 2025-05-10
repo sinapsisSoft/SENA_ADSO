@@ -31,10 +31,10 @@ class InstructorModel extends Model
         return $result;
     }
 
-    public function sp_instructs_no_group($id)
+    public function sp_instructs_group($id)
     {
         try {
-            $sql    = "CALL sp_instructs_no_group(?);";
+            $sql    = "CALL sp_instructs_group(?);";
             $query  = $this->db->query($sql,$id);
             $result = $query->getResultArray();
         } catch (Exception $e) {
@@ -42,10 +42,10 @@ class InstructorModel extends Model
         }
         return $result;
     }
-    public function sp_instructs_group()
+    public function sp_instructs_no_group()
     {
         try {
-            $sql    = "CALL sp_instructs_group();";
+            $sql    = "CALL sp_instructs_no_group();";
             $query  = $this->db->query($sql);
             $result = $query->getResultArray();
         } catch (Exception $e) {

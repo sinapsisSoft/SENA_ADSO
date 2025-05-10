@@ -8,14 +8,14 @@
 
 /* These lines of code are declaring constants and initializing variables in a JavaScript file. Here is
 a breakdown of what each line is doing: */
-const formId = ['my-form', 'students-form', 'management-form', 'instructor-form'];
+const formId = ['my-form', 'student-form', 'management-form', 'instructor-form'];
 const modalId = ['my-modal', 'students-modal', 'instructor-modal'];
 const model = 'programGroups';
 const tableId = ['table-index', 'table-group-students', 'table-no-group-students', 'table-index-management', 'table-group-instructor', 'table-no-group-instructor'];
 const preloadId = 'preloadId';
 const classEdit = 'edit-input';
 const textConfirm = 'Press a button!\nEither OK or Cancel.';
-const btnActions = ['btn_form', 'btn_students_form', 'btn_management_form', 'btn_instructor_form'];
+const btnActions = ['btn_form', 'btn_student_form', 'btn_management_form', 'btn_instructor_form'];
 const mainApp = new Main(modalId, formId, classEdit, preloadId);
 
 /* These lines of code are declaring and initializing variables in a JavaScript file. Here is a
@@ -330,7 +330,7 @@ function show_management(id) {
 }
 
 async function show_instructor(id) {
-  mainApp.btnEnabledDisabled(true, btnActions[1]);
+  mainApp.btnEnabledDisabled(true, btnActions[3]);
   getKeyModule['group_id'] = id;
   getInstructorsGroups(id);
 
@@ -344,11 +344,10 @@ async function getInstructorsGroups(id) {
   resultFetch.then(response => response.json())
     .then(data => {
       console.log(data[model]);
-      debugger;
       let arrayColumn = ['#', 'Document', 'First Name', 'Last Name', 'Specialty'];
       let arrayActions = [
         {
-          name: 'add_instructor_group',
+          name: 'remove_instructor_group',
           label: 'Remove to Group',
           icon: 'bi-person-dash',
           type: 'danger'
@@ -356,11 +355,12 @@ async function getInstructorsGroups(id) {
       ];
       getInstructorNoGroups().then(() => {
         mainApp.createTable('table-group-instructor', arrayColumn, data[model], true, arrayActions);
+        mainApp.hiddenPreload();
+        mainApp.showModal(2);
       });
-
     })
     .catch(error => {
-      console.error(error);
+      console.error(error.messages);
       //hidden Preload 
       mainApp.hiddenPreload();
     })
@@ -374,18 +374,17 @@ async function getInstructorNoGroups() {
   resultFetch.then(response => response.json())
     .then(data => {
       console.log(data[model]);
-      debugger;
-      let arrayColumn = ['#', 'Document', 'First Name', 'Last Name'];
+      let arrayColumn = ['#', 'Document', 'First Name', 'Last Name', 'Specialty'];
       let arrayActions = [
         {
           name: 'add_instructor_group',
           label: 'Add to Group',
           icon: 'bi-person-plus-fill',
-          type: 'danger'
+          type: 'primary'
         }
 
       ];
-      //mainApp.createTable('table-no-group-instructor', arrayColumn, data[model], true, arrayActions);
+      mainApp.createTable('table-no-group-instructor', arrayColumn, data[model], true, arrayActions);
       mainApp.hiddenPreload();
       mainApp.showModal(2);
     })
@@ -395,6 +394,52 @@ async function getInstructorNoGroups() {
       mainApp.hiddenPreload();
     })
     .finally();
+}
+
+async function remove_instructor_group(id) {
+
+  if (confirm(textConfirm) == true) {
+    method = 'DELETE';
+    url = URI_PROGRAMS_INSTRUCTOR_GROUPS + LIST_CRUD[3] + '/' + id;
+    data = getKeyModule;
+    //console.log(data);
+    resultFetch = getData(data, method, url);
+    resultFetch.then(response => response.json())
+      .then(data => {
+        //Create table
+        console.log(data);
+      })
+      .catch(error => {
+        console.error(error);
+        //hidden Preload 
+        mainApp.hiddenPreload();
+      })
+      .finally();
+  } else {
+
+  }
+}
+async function remove_student_group(id) {
+  if (confirm(textConfirm) == true) {
+    method = 'DELETE';
+    url = URI_PROGRAMS_STUDENT_GROUPS + LIST_CRUD[3]+ '/' + id;
+    data = getKeyModule;
+    //console.log(data);
+    resultFetch = getData(data, method, url);
+    resultFetch.then(response => response.json())
+      .then(data => {
+        //Create table
+        console.log(data);
+      })
+      .catch(error => {
+        console.error(error);
+        //hidden Preload 
+        mainApp.hiddenPreload();
+      })
+      .finally();
+  } else {
+
+  }
 }
 
 async function add_instructor_group(id) {

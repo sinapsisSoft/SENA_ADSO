@@ -18,7 +18,17 @@ class ProgramsGroupInstructorModel extends Model
 
     protected $updatedField  = 'updated_at';
     protected $deletedField  = 'created_at';
-
+    public function sp_remove_instructor_group($id)
+    {
+        try {
+            $sql    = "CALL sp_remove_instructor_group(?);";
+            $query  = $this->db->query($sql,$id);
+            $result = $query->getResultArray();
+        } catch (Exception $e) {
+            $result = null;
+        }
+        return $result;
+    }
 
 }
 

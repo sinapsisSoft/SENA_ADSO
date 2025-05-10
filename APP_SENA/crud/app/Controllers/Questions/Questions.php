@@ -2,15 +2,13 @@
 
 /**
  * Author:DIEGO CASALLAS
- * Date:29/05/2024
+ * Date:09/05/2025
  * Descriptions:This is controller class for managing Programs Groups
  * **/
 //Is file namespace   
-namespace App\Controllers\ProgramsGroups;
+namespace App\Controllers\Questions;
 //These are the class that will be used in this controller
-use App\Models\ProgramsGroups\ProgramsGroupsModel;
-use App\Models\ProgramsGroups\ProgramsGroupStudentModel;
-use App\Models\ProgramsGroups\ProgramsGroupInstructorModel;
+use App\Models\Questions\QuestionsModel;
 use App\Models\Student\StudentModel;
 use App\Models\Instructor\InstructorModel;
 use App\Models\Role\RoleModulesModel;
@@ -19,11 +17,11 @@ use CodeIgniter\Controller;
 use CodeIgniter\HTTP\ResponseInterface;
 
 //This is the user class
-class ProgramsGroups extends Controller
+class Questions extends Controller
 {
   //Variable declarations. 
   private $primaryKey;
-  private $programsGroupsModel;
+  private $questionsModel;
   private $programsGroupStudentModel;
   private $ProgramsGroupInstructorModel;
   private $studentModel;
@@ -35,26 +33,24 @@ class ProgramsGroups extends Controller
   //This method is the constructor
   public function __construct()
   {
-    $this->primaryKey = "Program_group_id";
-    $this->programsGroupsModel = new ProgramsGroupsModel();
-    $this->programsGroupStudentModel = new ProgramsGroupStudentModel();
-    $this->ProgramsGroupInstructorModel = new ProgramsGroupInstructorModel();
+    $this->primaryKey = "Question_id";
+    $this->questionsModel = new QuestionsModel();
     $this->studentModel = new StudentModel();
     $this->instructorModel = new InstructorModel();
     $this->roleModuleModel = new RoleModulesModel();
     $this->profileModel = new ProfileModel();
     $this->data = [];
-    $this->model = "programGroups";
+    $this->model = "questions";
   }
   //This method is the index, Started the view, set parameters for send the data in the view of the html render  
   public function index()
   {
-    $this->data['title'] = "PROGRAMS GROUPS";
+    $this->data['title'] = "QUESTIONS";
 
-    $this->data[$this->model] = $this->programsGroupsModel->orderBy($this->primaryKey, 'ASC')->findAll();
+    $this->data[$this->model] = $this->questionsModel->orderBy($this->primaryKey, 'ASC')->findAll();
     $this->data['profile'] =  $this->profileModel->where('User_id_fk', (int)$this->getSessionIdUser()['User_id'])->first();
     $this->data['userModules'] =  $this->roleModuleModel->sp_role_modules_id((int)$this->getSessionIdUser()['Roles_fk']);
-    return view('programsGroups/programsGroups_view', $this->data);
+    return view('questions/evaluations_view', $this->data);
   }
 
   //This method consists of creating, obtains the data from the POST method, return Json
