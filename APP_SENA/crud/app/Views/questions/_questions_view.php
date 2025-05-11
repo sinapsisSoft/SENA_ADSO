@@ -31,7 +31,7 @@
         <button type="button" class="btn btn-primary btn-actions" title="Button new User Status" onclick="add()" style="font-size: 0.5em;">
           <i class="bi bi-plus-circle-fill"></i> </button>
         <!--Container Table-->
-        <?php require_once('../app/Views/questions/table.php') ?>
+
         <!--End Container Table-->
       </div>
     </div>
@@ -41,15 +41,13 @@
   <!--Footer-->
   <?php require_once('../app/Views/footer/footer.php') ?>
   <!--End Footer-->
-  <!--Modal programs Group-->
-  <?php require_once('../app/Views/questions/modal.php') ?>
-  <!--End Modal programs Group-->
+ 
 
   <!--JS-->
   <?php require_once('../app/Views/assets/js/js.php') ?>
   <?php require_once('../app/Views/assets/js/dataTable.php') ?>
   <!--JS Controller-->
-  <script src="<?= base_url('controllers/questions/questions.js') ?>"></script>
+  <script src="<?= base_url('controllers/programsGroups/programsGroups.js') ?>"></script>
 
 </body>
 

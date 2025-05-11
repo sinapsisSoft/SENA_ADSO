@@ -19,7 +19,29 @@ class QuestionsModel extends Model
     protected $updatedField  = 'updated_at';
     protected $deletedField  = 'created_at';
 
-
+    
+    public function sp_questions()
+    {
+        try {
+            $sql    = "CALL sp_questions();";
+            $query  = $this->db->query($sql);
+            $result = $query->getResultArray();
+        } catch (Exception $e) {
+            $result = null;
+        }
+        return $result;
+    }
+    public function sp_question_id($id)
+    {
+        try {
+            $sql    = "CALL sp_question_id(?);";
+            $query  = $this->db->query($sql,$id);
+            $result = $query->getResultArray();
+        } catch (Exception $e) {
+            $result = null;
+        }
+        return $result;
+    }
 }
 
 

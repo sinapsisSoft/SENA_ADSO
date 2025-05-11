@@ -26,7 +26,7 @@ class Main {
    * is typically displayed while data is being loaded or processed asynchronously to provide feedback to
    * the user that an operation is in progress.
    */
-  constructor(modalId, formId, actions, preloadId) {
+  constructor(modalId, formId, actions = null, preloadId) {
 
 
     var arrayModal = [];
@@ -49,15 +49,16 @@ class Main {
     } else {
       arrayForm.push(document.getElementById(formId));
     }
-    if (Array.isArray(actions)) {
-      for (let i = 0; i < formId.length; i++) {
-        arrayActions.push(actions[i]);
+    if (actions != null) {
+      if (Array.isArray(actions)) {
+        for (let i = 0; i < formId.length; i++) {
+          arrayActions.push(actions[i]);
+        }
+      } else {
+        arrayActions.push(actions);
+        arrayActions.push("hidden-input");
       }
-    } else {
-      arrayActions.push(actions);
-      arrayActions.push("hidden-input");
     }
-
     this.myForm = arrayForm;
 
     this.classActions = arrayActions;
@@ -79,7 +80,7 @@ class Main {
    */
   hiddenPreload() {
     this.preload.style.display = "none";
-    
+
   }
 
   /**

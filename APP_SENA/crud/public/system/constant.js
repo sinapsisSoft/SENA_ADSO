@@ -10,6 +10,7 @@ const URI_MANAGEMENT_GROUPS="/managementGroups/";
 const URI_PROGRAMS_STUDENT_GROUPS="/programsStudentGroups/";
 const URI_PROGRAMS_INSTRUCTOR_GROUPS="/programsInstructorGroups/";
 const URI_MODULE="/module/";
+const URI_QUESTIONS="/questions/";
 const URI_PERMISSION="/permission/";
 const URI_ROLE="/role/";
 const URI_ROLE_MODULE="/roleModule/";
