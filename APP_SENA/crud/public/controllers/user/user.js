@@ -75,23 +75,25 @@ function edit(id) {
  * deleted from the system.
  */
 async function delete_(id) {
-  method = 'GET';
+  method = 'DELETE';
   url = URI_USER + LIST_CRUD[3] + '/' + id;
   data = "";
   if (confirm(textConfirm) == true) {
     resultFetch = getData(data, method, url);
     resultFetch.then(response => response.json())
       .then(data => {
-        //console.log(data);
          //Reload View
-         reloadPage();
+        reloadPage();
       })
       .catch(error => {
         console.error(error);
-        //hidden Preload 
-        mainApp.hiddenPreload();
       })
-      .finally();
+      .finally(
+         ()=> {
+          //hidden Preload 
+          mainApp.hiddenPreload();
+        }
+      );
   } else {
   }
 }
@@ -114,17 +116,15 @@ async function getDataId(id) {
       mainApp.setDataFormJson(data[model]);
       //show Modal 
       mainApp.showModal();
-      //hidden Preload 
-      mainApp.hiddenPreload();
     })
     .catch(error => {
       console.error(error);
-      //hidden Preload 
-      mainApp.hiddenPreload();
     })
-    .finally();
+    .finally( ()=> {
+          //hidden Preload 
+          mainApp.hiddenPreload();
+        });
 }
-
 
 /**
  * The function `getData` is an asynchronous function that sends a request to a specified URL using the
@@ -184,11 +184,9 @@ mainApp.getForm().addEventListener('submit', async function (event) {
       method = 'POST';
       url = URI_USER + LIST_CRUD[0];
       data = mainApp.getDataFormJson();
-      console.log(data);
       resultFetch = getData(data, method, url);
       resultFetch.then(response => response.json())
         .then(data => {
-          //console.log(data);
           //show Modal 
           mainApp.hiddenModal();
           //Reload View
@@ -196,19 +194,20 @@ mainApp.getForm().addEventListener('submit', async function (event) {
         })
         .catch(error => {
           console.error(error);
+        })
+        .finally(
+           ()=> {
           //hidden Preload 
           mainApp.hiddenPreload();
-        })
-        .finally();
+        }
+        );
     } else {
-      method = 'POST';
+      method = 'PUT';
       url = URI_USER + LIST_CRUD[2];
       data = mainApp.getDataFormJson();
-      //console.log(data);
       resultFetch = getData(data, method, url);
       resultFetch.then(response => response.json())
         .then(data => {
-          //console.log(data);
           //show Modal 
           mainApp.hiddenModal();
           //Reload View
@@ -216,10 +215,11 @@ mainApp.getForm().addEventListener('submit', async function (event) {
         })
         .catch(error => {
           console.error(error);
+        })
+        .finally(()=> {
           //hidden Preload 
           mainApp.hiddenPreload();
-        })
-        .finally();
+        });
     }
   } else {
     alert("Data Validate");

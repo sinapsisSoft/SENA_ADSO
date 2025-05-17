@@ -25,9 +25,7 @@
       <?php require_once('../app/Views/navSlider/navSlider.php') ?>
       <!--End Navbar Slider-->
       <div class="col">
-
         <h3><?= $title ?></h3>
-
         <button type="button" class="btn btn-primary btn-actions" title="Button new User Status" onclick="add()" style="font-size: 0.5em;">
           <i class="bi bi-plus-circle-fill"></i> </button>
         <!--Container Table-->
@@ -36,20 +34,20 @@
       </div>
     </div>
   </div>
- 
   <!--End Container-->
   <!--Footer-->
   <?php require_once('../app/Views/footer/footer.php') ?>
   <!--End Footer-->
-  <!--Modal programs Group-->
+
+  <!--Modal-->
   <?php require_once('../app/Views/questions/modal.php') ?>
-  <!--End Modal programs Group-->
+  <!--End Modal-->
 
   <!--JS-->
   <?php require_once('../app/Views/assets/js/js.php') ?>
   <?php require_once('../app/Views/assets/js/dataTable.php') ?>
   <!--JS Controller-->
-  <script src="<?= base_url('controllers/questions/questions.js') ?>"></script>
+  <script src="../controllers/questions/questions.js"></script>
 
 </body>
 

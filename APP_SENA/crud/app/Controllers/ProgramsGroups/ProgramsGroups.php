@@ -64,44 +64,44 @@ class ProgramsGroups extends Controller
       $dataModel = $this->getDataModel();
       //Query Insert 
       if ($this->programsGroupsModel->insert($dataModel)) {
-        $data['message'] = 'success';
-        $data['response'] = ResponseInterface::HTTP_OK;
-        $data['data'] = $dataModel;
-        $data['csrf'] = csrf_hash();
+        $this->data['message'] = 'success';
+        $this->data['response'] = ResponseInterface::HTTP_OK;
+        $this->data['data'] = $dataModel;
+        $this->data['csrf'] = csrf_hash();
       } else {
-        $data['message'] = 'Error create program group';
-        $data['response'] = ResponseInterface::HTTP_NO_CONTENT;
-        $data['data'] = '';
+        $this->data['message'] = 'Error create program group';
+        $this->data['response'] = ResponseInterface::HTTP_NO_CONTENT;
+        $this->data['data'] = '';
       }
     } else {
-      $data['message'] = 'Error Ajax';
-      $data['response'] = ResponseInterface::HTTP_CONFLICT;
-      $data['data'] = '';
+      $this->data['message'] = 'Error Ajax';
+      $this->data['response'] = ResponseInterface::HTTP_CONFLICT;
+      $this->data['data'] = '';
     }
     //Change array to Json
-    echo json_encode($dataModel);
+    echo json_encode($this->data);
   }
   //This method consists of single Students  , obtains id the data from the GET method, return Json
   public function singleProgramsGroups($id = null)
   {    //Validate is ajax
     if ($this->request->isAJAX()) {
       //Select student  model 
-      if ($data[$this->model] = $this->programsGroupsModel->where($this->primaryKey, $id)->first()) {
-        $data['message'] = 'success';
-        $data['response'] = ResponseInterface::HTTP_OK;
-        $data['csrf'] = csrf_hash();
+      if ($this->data[$this->model] = $this->programsGroupsModel->where($this->primaryKey, $id)->first()) {
+        $this->data['message'] = 'success';
+        $this->data['response'] = ResponseInterface::HTTP_OK;
+        $this->data['csrf'] = csrf_hash();
       } else {
-        $data['message'] = 'Error Program Group';
-        $data['response'] = ResponseInterface::HTTP_NO_CONTENT;
-        $data['data'] = '';
+        $this->data['message'] = 'Error Program Group';
+        $this->data['response'] = ResponseInterface::HTTP_NO_CONTENT;
+        $this->data['data'] = '';
       }
     } else {
-      $data['message'] = 'Error Ajax';
-      $data['response'] = ResponseInterface::HTTP_CONFLICT;
-      $data['data'] = '';
+      $this->data['message'] = 'Error Ajax';
+      $this->data['response'] = ResponseInterface::HTTP_CONFLICT;
+      $this->data['data'] = '';
     }
     //Change array to Json
-    echo json_encode($data);
+    echo json_encode($this->data);
   }
   //This method consists of update , obtains id the data from the POST method, return Json
   public function update()
@@ -114,28 +114,25 @@ class ProgramsGroups extends Controller
       $dataModel['updated_at'] = $today;
       //Update data model 
       if ($this->programsGroupsModel->update($id, $dataModel)) {
-        $data['message'] = 'success';
-        $data['response'] = ResponseInterface::HTTP_OK;
-        $data['data'] = $dataModel;
-        $data['csrf'] = csrf_hash();
+        $this->data['message'] = 'success';
+        $this->data['response'] = ResponseInterface::HTTP_OK;
+        $this->data['data'] = $dataModel;
+        $this->data['csrf'] = csrf_hash();
       } else {
-        $data['message'] = 'Error update Program group';
-        $data['response'] = ResponseInterface::HTTP_NO_CONTENT;
-        $data['data'] = '';
+        $this->data['message'] = 'Error update Program group';
+        $this->data['response'] = ResponseInterface::HTTP_NO_CONTENT;
+        $this->data['data'] = '';
       }
     } else {
-      $data['message'] = 'Error Ajax';
-      $data['response'] = ResponseInterface::HTTP_CONFLICT;
-      $data['data'] = '';
+      $this->data['message'] = 'Error Ajax';
+      $this->data['response'] = ResponseInterface::HTTP_CONFLICT;
+      $this->data['data'] = '';
     }
     //Change array to Json
-    echo json_encode($dataModel);
+    echo json_encode($this->data);
   }
   //This method consists of delete user, obtains id the data from the GET method, return Json
-  public function delete($id = null)
-  {
-    
-  }
+  public function delete($id = null) {}
   //This method consists of delete user, obtains id the data from the GET method, return Json
   public function addStudent()
   {
@@ -143,22 +140,22 @@ class ProgramsGroups extends Controller
       $dataModel = $this->getDataGroupModel('students');
       //Query Insert 
       if ($this->programsGroupStudentModel->insert($dataModel)) {
-        $data['message'] = 'success';
-        $data['response'] = ResponseInterface::HTTP_OK;
-        $data['data'] = $dataModel;
-        $data['csrf'] = csrf_hash();
+        $this->data['message'] = 'success';
+        $this->data['response'] = ResponseInterface::HTTP_OK;
+        $this->data['data'] = $dataModel;
+        $this->data['csrf'] = csrf_hash();
       } else {
-        $data['message'] = 'Error add students program group';
-        $data['response'] = ResponseInterface::HTTP_NO_CONTENT;
-        $data['data'] = '';
+        $this->data['message'] = 'Error add students program group';
+        $this->data['response'] = ResponseInterface::HTTP_NO_CONTENT;
+        $this->data['data'] = '';
       }
     } else {
-      $data['message'] = 'Error Ajax';
-      $data['response'] = ResponseInterface::HTTP_CONFLICT;
-      $data['data'] = '';
+      $this->data['message'] = 'Error Ajax';
+      $this->data['response'] = ResponseInterface::HTTP_CONFLICT;
+      $this->data['data'] = '';
     }
     //Change array to Json
-    echo json_encode($dataModel);
+    echo json_encode($this->data);
   }
   public function addInstructor()
   {
@@ -166,22 +163,22 @@ class ProgramsGroups extends Controller
       $dataModel = $this->getDataGroupModel('instructors');
       //Query Insert 
       if ($this->ProgramsGroupInstructorModel->insert($dataModel)) {
-        $data['message'] = 'success';
-        $data['response'] = ResponseInterface::HTTP_OK;
-        $data['data'] = $dataModel;
-        $data['csrf'] = csrf_hash();
+        $this->data['message'] = 'success';
+        $this->data['response'] = ResponseInterface::HTTP_OK;
+        $this->data['data'] = $dataModel;
+        $this->data['csrf'] = csrf_hash();
       } else {
-        $data['message'] = 'Error add instructor program group';
-        $data['response'] = ResponseInterface::HTTP_NO_CONTENT;
-        $data['data'] = '';
+        $this->data['message'] = 'Error add instructor program group';
+        $this->data['response'] = ResponseInterface::HTTP_NO_CONTENT;
+        $this->data['data'] = '';
       }
     } else {
-      $data['message'] = 'Error Ajax';
-      $data['response'] = ResponseInterface::HTTP_CONFLICT;
-      $data['data'] = '';
+      $this->data['message'] = 'Error Ajax';
+      $this->data['response'] = ResponseInterface::HTTP_CONFLICT;
+      $this->data['data'] = '';
     }
     //Change array to Json
-    echo json_encode($dataModel);
+    echo json_encode($this->data);
   }
   public function removeInstructor($id = null)
   {
@@ -206,11 +203,10 @@ class ProgramsGroups extends Controller
     } catch (\Exception $e) {
       $this->data['message'] = $e;
       $this->data['response'] = ResponseInterface::HTTP_CONFLICT;
-      $this->data['data'] = 'Error';
+      $this->data['data'] = '';
     }
     //Change array to Json
     echo json_encode($this->data);
-
   }
   public function removeStudent($id = null)
   {
@@ -225,7 +221,7 @@ class ProgramsGroups extends Controller
         } else {
           $this->data['message'] = 'Error Ajax';
           $this->data['response'] = ResponseInterface::HTTP_CONFLICT;
-          $this->data['data'] = 'error';
+          $this->data['data'] = '';
         }
       } else {
         $this->data['message'] = 'Error Ajax';
@@ -235,56 +231,55 @@ class ProgramsGroups extends Controller
     } catch (\Exception $e) {
       $this->data['message'] = $e;
       $this->data['response'] = ResponseInterface::HTTP_CONFLICT;
-      $this->data['data'] = 'Error';
+      $this->data['data'] = '';
     }
     //Change array to Json
     echo json_encode($this->data);
-
   }
-  
+
   public function getStudentNoGroups()
   {
     //Validate is ajax
     if ($this->request->isAJAX()) {
       //Select student  model 
-      if ($data[$this->model] = $this->studentModel->sp_students_no_group()) {
-        $data['message'] = 'success';
-        $data['response'] = ResponseInterface::HTTP_OK;
-        $data['csrf'] = csrf_hash();
+      if ($this->data[$this->model] = $this->studentModel->sp_students_no_group()) {
+        $this->data['message'] = 'success';
+        $this->data['response'] = ResponseInterface::HTTP_OK;
+        $this->data['csrf'] = csrf_hash();
       } else {
-        $data['message'] = 'Error get students Group';
-        $data['response'] = ResponseInterface::HTTP_NO_CONTENT;
-        $data['data'] = '';
+        $this->data['message'] = 'Error get students Group';
+        $this->data['response'] = ResponseInterface::HTTP_NO_CONTENT;
+        $this->data['data'] = '';
       }
     } else {
-      $data['message'] = 'Error Ajax';
-      $data['response'] = ResponseInterface::HTTP_CONFLICT;
-      $data['data'] = '';
+      $this->data['message'] = 'Error Ajax';
+      $this->data['response'] = ResponseInterface::HTTP_CONFLICT;
+      $this->data['data'] = '';
     }
     //Change array to Json
-    echo json_encode($data);
+    echo json_encode($this->data);
   }
   public function getStudentGroups($id)
   {
     //Validate is ajax
     if ($this->request->isAJAX()) {
       //Select student  model 
-      if ($data[$this->model] = $this->studentModel->sp_students_group($id)) {
-        $data['message'] = 'success';
-        $data['response'] = ResponseInterface::HTTP_OK;
-        $data['csrf'] = csrf_hash();
+      if ($this->data[$this->model] = $this->studentModel->sp_students_group($id)) {
+        $this->data['message'] = 'success';
+        $this->data['response'] = ResponseInterface::HTTP_OK;
+        $this->data['csrf'] = csrf_hash();
       } else {
-        $data['message'] = 'Error get students Group';
-        $data['response'] = ResponseInterface::HTTP_NO_CONTENT;
-        $data['data'] = '';
+        $this->data['message'] = 'Error get students Group';
+        $this->data['response'] = ResponseInterface::HTTP_NO_CONTENT;
+        $this->data['data'] = '';
       }
     } else {
-      $data['message'] = 'Error Ajax';
-      $data['response'] = ResponseInterface::HTTP_CONFLICT;
-      $data['data'] = '';
+      $this->data['message'] = 'Error Ajax';
+      $this->data['response'] = ResponseInterface::HTTP_CONFLICT;
+      $this->data['data'] = '';
     }
     //Change array to Json
-    echo json_encode($data);
+    echo json_encode($this->data);
   }
   public function getInstructorGroups($id)
   {

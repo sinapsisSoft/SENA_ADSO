@@ -16,7 +16,7 @@ const modalId = 'my-modal';
 const model = 'students';
 const tableId = 'table-index';
 const preloadId = 'preloadId';
-const actionsForms = ['block-input','hidden-input'];
+const actionsForms = ['block-input', 'hidden-input'];
 const textConfirm = 'Press a button!\nEither OK or Cancel.';
 const btnActionsForm = 'btn_Submit';
 const mainApp = new Main(modalId, formId, actionsForms, preloadId);
@@ -37,7 +37,7 @@ var resultFetch = null;
 function show(id) {
   mainApp.disabledFormAll();
   mainApp.resetForm();
-  mainApp.btnEnabledDisabled(true,btnActionsForm);
+  mainApp.btnEnabledDisabled(true, btnActionsForm);
   getDataId(id);
 }
 
@@ -46,10 +46,10 @@ function show(id) {
  * modal.
  */
 function add() {
-  mainApp.disabledFormEdit(0,true);
+  mainApp.disabledFormEdit(0, true);
   mainApp.resetForm();
   insertUpdate = true;
-  mainApp.btnEnabledDisabled(false,btnActionsForm);
+  mainApp.btnEnabledDisabled(false, btnActionsForm);
   mainApp.showModal();
 }
 
@@ -63,7 +63,7 @@ function edit(id) {
   mainApp.disabledFormEdit();
   mainApp.resetForm();
   insertUpdate = false;
-  mainApp.btnEnabledDisabled(false,btnActionsForm);
+  mainApp.btnEnabledDisabled(false, btnActionsForm);
   getDataId(id);
 }
 
@@ -75,7 +75,7 @@ function edit(id) {
  * deleted from the system.
  */
 async function delete_(id) {
-  method = 'GET';
+  method = 'DELETE';
   url = URI_STUDENT + LIST_CRUD[3] + '/' + id;
   data = "";
   if (confirm(textConfirm) == true) {
@@ -83,15 +83,17 @@ async function delete_(id) {
     resultFetch.then(response => response.json())
       .then(data => {
         //console.log(data);
-         //Reload View
-         reloadPage();
+        //Reload View
+        reloadPage();
       })
       .catch(error => {
         console.error(error);
+
+      })
+      .finally(() => {
         //hidden Preload
         mainApp.hiddenPreload();
-      })
-      .finally();
+      });
   } else {
   }
 }
@@ -105,7 +107,7 @@ async function delete_(id) {
 async function getDataId(id) {
   method = 'GET';
   url = URI_STUDENT + LIST_CRUD[1] + '/' + id;
-  data = mainApp.getDataFormJson();
+  data = "";
   resultFetch = getData(data, method, url);
 
   resultFetch.then(response => response.json())
@@ -116,15 +118,16 @@ async function getDataId(id) {
       mainApp.setDataFormJson(data[model][0]);
       //show Modal
       mainApp.showModal();
-      //hidden Preload
-      mainApp.hiddenPreload();
+
     })
     .catch(error => {
       console.error(error);
-      //hidden Preload
-      mainApp.hiddenPreload();
+
     })
-    .finally();
+    .finally(() => {
+        //hidden Preload
+        mainApp.hiddenPreload();
+      });
 }
 
 /**
@@ -197,12 +200,14 @@ mainApp.getForm().addEventListener('submit', async function (event) {
         })
         .catch(error => {
           console.error(error);
-          //hidden Preload
-          mainApp.hiddenPreload();
+
         })
-        .finally();
+        .finally(() => {
+        //hidden Preload
+        mainApp.hiddenPreload();
+      });
     } else {
-      method = 'POST';
+      method = 'PUT';
       url = URI_STUDENT + LIST_CRUD[2];
       data = mainApp.getDataFormJson();
       //console.log(data);
@@ -217,10 +222,12 @@ mainApp.getForm().addEventListener('submit', async function (event) {
         })
         .catch(error => {
           console.error(error);
-          //hidden Preload
-          mainApp.hiddenPreload();
+
         })
-        .finally();
+       .finally(() => {
+        //hidden Preload
+        mainApp.hiddenPreload();
+      });
     }
   } else {
     alert("Data Validate");

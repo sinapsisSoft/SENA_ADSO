@@ -40,7 +40,7 @@
   <!--End Footer-->
 
   <!--Modal-->
-  <div class="modal fade" id="my-modal" tabindex="-1" aria-labelledby="my-modalLabel" aria-hidden="true">
+  <div class="modal fade" id="programs-modal" tabindex="-1" aria-labelledby="my-modalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -54,7 +54,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="submit" form="my-form" id="btn_actions_form" class="btn btn-primary" disabled>Send Data</button>
+          <button type="submit" form="programs-modal" id="btn_actions_form" class="btn btn-primary" disabled>Send Data</button>
         </div>
       </div>
     </div>

@@ -1,4 +1,4 @@
-<form id="my-form">
+<form id="documentType-form">
   <input type="hidden" class="form-control" id="Document_type_id" name="Document_type_id" value=null>
   <input type="hidden" class="form-control" id="updated_at" name="updated_at" value=null>
   <div class="form-floating mb-3">

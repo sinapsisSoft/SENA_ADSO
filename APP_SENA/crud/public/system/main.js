@@ -313,7 +313,13 @@ class Main {
           elements[i].value = json[elements[i].id];
           elements[i].selected = true;
         }
-      } else {
+      } else if (elements[i].tagName === 'TEXTAREA') {
+        // if (jsonKeys.includes(elements[i].id)) {
+        //   elements[i] = json[elements[i].id];
+        // }
+        
+      }
+      else {
         if (jsonKeys.includes(elements[i].id)) {
           elements[i].value = json[elements[i].id];
         }

@@ -68,44 +68,44 @@ class Instructor extends Controller
       $dataModel = $this->getDataModel();
       //Query Insert 
       if ($this->instructorModel->insert($dataModel)) {
-        $data['message'] = 'success';
-        $data['response'] = ResponseInterface::HTTP_OK;
-        $data['data'] = $dataModel;
-        $data['csrf'] = csrf_hash();
+        $this->data['message'] = 'success';
+        $this->data['response'] = ResponseInterface::HTTP_OK;
+        $this->data['data'] = $dataModel;
+        $this->data['csrf'] = csrf_hash();
       } else {
-        $data['message'] = 'Error create instructor';
-        $data['response'] = ResponseInterface::HTTP_NO_CONTENT;
-        $data['data'] = '';
+        $this->data['message'] = 'Error create instructor';
+        $this->data['response'] = ResponseInterface::HTTP_NO_CONTENT;
+        $this->data['data'] = '';
       }
     } else {
-      $data['message'] = 'Error Ajax';
-      $data['response'] = ResponseInterface::HTTP_CONFLICT;
-      $data['data'] = '';
+      $this->data['message'] = 'Error Ajax';
+      $this->data['response'] = ResponseInterface::HTTP_CONFLICT;
+      $this->data['data'] = '';
     }
     //Change array to Json
-    echo json_encode($dataModel);
+    echo json_encode($this->data);
   }
   //This method consists of single Students , obtains id the data from the GET method, return Json
   public function singleInstructor($id = null)
   {    //Validate is ajax
     if ($this->request->isAJAX()) {
       //Select student  model 
-      if ($data[$this->model] = $this->instructorModel->where($this->primaryKey, $id)->first()) {
-        $data['message'] = 'success';
-        $data['response'] = ResponseInterface::HTTP_OK;
-        $data['csrf'] = csrf_hash();
+      if ($this->data[$this->model] = $this->instructorModel->where($this->primaryKey, $id)->first()) {
+        $this->data['message'] = 'success';
+        $this->data['response'] = ResponseInterface::HTTP_OK;
+        $this->data['csrf'] = csrf_hash();
       } else {
-        $data['message'] = 'Error instructor';
-        $data['response'] = ResponseInterface::HTTP_NO_CONTENT;
-        $data['data'] = '';
+        $this->data['message'] = 'Error instructor';
+        $this->data['response'] = ResponseInterface::HTTP_NO_CONTENT;
+        $this->data['data'] = '';
       }
     } else {
-      $data['message'] = 'Error Ajax';
-      $data['response'] = ResponseInterface::HTTP_CONFLICT;
-      $data['data'] = '';
+      $this->data['message'] = 'Error Ajax';
+      $this->data['response'] = ResponseInterface::HTTP_CONFLICT;
+      $this->data['data'] = '';
     }
     //Change array to Json
-    echo json_encode($data);
+    echo json_encode($this->data);
   }
   //This method consists of update , obtains id the data from the POST method, return Json
   public function update()
@@ -118,22 +118,22 @@ class Instructor extends Controller
       $dataModel['updated_at']  = $today;
       //Update data model 
       if ($this->instructorModel->update($id, $dataModel)) {
-        $data['message'] = 'success';
-        $data['response'] = ResponseInterface::HTTP_OK;
-        $data['data'] = $dataModel;
-        $data['csrf'] = csrf_hash();
+        $this->data['message'] = 'success';
+        $this->data['response'] = ResponseInterface::HTTP_OK;
+        $this->data['data'] = $dataModel;
+        $this->data['csrf'] = csrf_hash();
       } else {
-        $data['message'] = 'Error update instructor';
-        $data['response'] = ResponseInterface::HTTP_NO_CONTENT;
-        $data['data'] = '';
+        $this->data['message'] = 'Error update instructor';
+        $this->data['response'] = ResponseInterface::HTTP_NO_CONTENT;
+        $this->data['data'] = '';
       }
     } else {
-      $data['message'] = 'Error Ajax';
-      $data['response'] = ResponseInterface::HTTP_CONFLICT;
-      $data['data'] = '';
+      $this->data['message'] = 'Error Ajax';
+      $this->data['response'] = ResponseInterface::HTTP_CONFLICT;
+      $this->data['data'] = '';
     }
     //Change array to Json
-    echo json_encode($dataModel);
+    echo json_encode( $this->data);
   }
   //This method consists of delete Instructor, obtains id the data from the GET method, return Json
   public function delete($id = null)
@@ -141,22 +141,22 @@ class Instructor extends Controller
     try {
       //Delete data model 
       if ($this->instructorModel->where($this->primaryKey, $id)->delete($id)) {
-        $data['message'] = 'success';
-        $data['response'] = ResponseInterface::HTTP_OK;
-        $data['data'] = "OK";
-        $data['csrf'] = csrf_hash();
+        $this->data['message'] = 'success';
+        $this->data['response'] = ResponseInterface::HTTP_OK;
+        $this->data['data'] = "OK";
+        $this->data['csrf'] = csrf_hash();
       } else {
-        $data['message'] = 'Error Ajax';
-        $data['response'] = ResponseInterface::HTTP_CONFLICT;
-        $data['data'] = 'error';
+        $this->data['message'] = 'Error Ajax';
+        $this->data['response'] = ResponseInterface::HTTP_CONFLICT;
+        $this->data['data'] = '';
       }
     } catch (\Exception $e) {
-      $data['message'] = $e;
-      $data['response'] = ResponseInterface::HTTP_CONFLICT;
-      $data['data'] = 'Error';
+      $this->data['message'] = $e;
+      $this->data['response'] = ResponseInterface::HTTP_CONFLICT;
+      $this->data['data'] = '';
     }
     //Change array to Json
-    echo json_encode($data);
+    echo json_encode($this->data);
   }
   //This method consists of create is model the data in the array associative, return Array
   public function getDataModel()

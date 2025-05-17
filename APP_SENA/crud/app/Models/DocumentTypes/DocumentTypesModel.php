@@ -16,7 +16,6 @@ class DocumentTypesModel extends Model
 
     protected bool $allowEmptyInserts = false;
 
-    
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
 

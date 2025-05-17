@@ -50,44 +50,44 @@ class Role extends Controller
       $dataModel = $this->getDataModel();
       //Query Insert Codeigniter
       if ($this->roleModel->insert($dataModel)) {
-        $data['message'] = 'success';
-        $data['response'] = ResponseInterface::HTTP_OK;
-        $data['data'] = $dataModel;
-        $data['csrf'] = csrf_hash();
+        $this->data['message'] = 'success';
+        $this->data['response'] = ResponseInterface::HTTP_OK;
+        $this->data['data'] = $dataModel;
+        $this->data['csrf'] = csrf_hash();
       } else {
-        $data['message'] = 'Error create user';
-        $data['response'] = ResponseInterface::HTTP_NO_CONTENT;
-        $data['data'] = '';
+        $this->data['message'] = 'Error create user';
+        $this->data['response'] = ResponseInterface::HTTP_NO_CONTENT;
+        $this->data['data'] = '';
       }
     } else {
-      $data['message'] = 'Error Ajax';
-      $data['response'] = ResponseInterface::HTTP_CONFLICT;
-      $data['data'] = '';
+      $this->data['message'] = 'Error Ajax';
+      $this->data['response'] = ResponseInterface::HTTP_CONFLICT;
+      $this->data['data'] = '';
     }
     //Change array to Json
-    echo json_encode($dataModel);
+    echo json_encode($this->data);
   }
   //This method consists of single User Status , obtains id the data from the GET method, return Json
   public function singleRole($id = null)
   {    //Validate is ajax
     if ($this->request->isAJAX()) {
       //Select user status model 
-      if ($data[$this->model] = $this->roleModel->where($this->primaryKey, $id)->first()) {
-        $data['message'] = 'success';
-        $data['response'] = ResponseInterface::HTTP_OK;
-        $data['csrf'] = csrf_hash();
+      if ($this->data[$this->model] = $this->roleModel->where($this->primaryKey, $id)->first()) {
+        $this->data['message'] = 'success';
+        $this->data['response'] = ResponseInterface::HTTP_OK;
+        $this->data['csrf'] = csrf_hash();
       } else {
-        $data['message'] = 'Error create user';
-        $data['response'] = ResponseInterface::HTTP_NO_CONTENT;
-        $data['data'] = '';
+        $this->data['message'] = 'Error create user';
+        $this->data['response'] = ResponseInterface::HTTP_NO_CONTENT;
+        $this->data['data'] = '';
       }
     } else {
-      $data['message'] = 'Error Ajax';
-      $data['response'] = ResponseInterface::HTTP_CONFLICT;
-      $data['data'] = '';
+      $this->data['message'] = 'Error Ajax';
+      $this->data['response'] = ResponseInterface::HTTP_CONFLICT;
+      $this->data['data'] = '';
     }
     //Change array to Json
-    echo json_encode($data);
+    echo json_encode($this->data);
   }
   //This method consists of update status, obtains id the data from the POST method, return Json
   public function update()
@@ -100,22 +100,22 @@ class Role extends Controller
       $dataModel['updated_at']= $today;
       //Update data model 
       if ($this->roleModel->update($id, $dataModel)) {
-        $data['message'] = 'success';
-        $data['response'] = ResponseInterface::HTTP_OK;
-        $data['data'] = $dataModel;
-        $data['csrf'] = csrf_hash();
+        $this->data['message'] = 'success';
+        $this->data['response'] = ResponseInterface::HTTP_OK;
+        $this->data['data'] = $dataModel;
+        $this->data['csrf'] = csrf_hash();
       } else {
-        $data['message'] = 'Error create user';
-        $data['response'] = ResponseInterface::HTTP_NO_CONTENT;
-        $data['data'] = '';
+        $this->data['message'] = 'Error create user';
+        $this->data['response'] = ResponseInterface::HTTP_NO_CONTENT;
+        $this->data['data'] = '';
       }
     } else {
-      $data['message'] = 'Error Ajax';
-      $data['response'] = ResponseInterface::HTTP_CONFLICT;
-      $data['data'] = '';
+      $this->data['message'] = 'Error Ajax';
+      $this->data['response'] = ResponseInterface::HTTP_CONFLICT;
+      $this->data['data'] = '';
     }
     //Change array to Json
-    echo json_encode($dataModel);
+    echo json_encode($this->data);
   }
   //This method consists of delete status, obtains id the data from the GET method, return Json
   public function delete($id = null)
@@ -123,22 +123,22 @@ class Role extends Controller
     try {
       //Delete data model 
       if ($this->roleModel->where($this->primaryKey, $id)->delete($id)) {
-        $data['message'] = 'success';
-        $data['response'] = ResponseInterface::HTTP_OK;
-        $data['data'] = "OK";
-        $data['csrf'] = csrf_hash();
+        $this->data['message'] = 'success';
+        $this->data['response'] = ResponseInterface::HTTP_OK;
+        $this->data['data'] = "OK";
+        $this->data['csrf'] = csrf_hash();
       } else {
-        $data['message'] = 'Error Ajax';
-        $data['response'] = ResponseInterface::HTTP_CONFLICT;
-        $data['data'] = 'error';
+        $this->data['message'] = 'Error Ajax';
+        $this->data['response'] = ResponseInterface::HTTP_CONFLICT;
+        $this->data['data'] = '';
       }
     } catch (\Exception $e) {
-      $data['message'] = $e;
-      $data['response'] = ResponseInterface::HTTP_CONFLICT;
-      $data['data'] = 'Error';
+      $this->data['message'] = $e;
+      $this->data['response'] = ResponseInterface::HTTP_CONFLICT;
+      $this->data['data'] = '';
     }
     //Change array to Json
-    echo json_encode($data);
+    echo json_encode($this->data);
   }
   //This method consists of create is model the data in the array associative, return Array
   public function getDataModel()

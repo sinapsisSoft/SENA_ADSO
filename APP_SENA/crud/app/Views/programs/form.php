@@ -1,4 +1,4 @@
-<form id="my-form" class="">
+<form id="programs-form" class="">
   <input type="hidden" class="form-control" id="Programs_id" name="Programs_id" value=null>
   <input type="hidden" class="form-control" id="updated_at" name="updated_at" value=null>
   <div class="form-floating mb-3">
@@ -47,7 +47,4 @@
       <option value="completed" >Completed </option>
     </select>
   </div>
-
- 
-
 </form>

@@ -9,7 +9,7 @@
 namespace App\Controllers\Questions;
 //These are the class that will be used in this controller
 use App\Models\Questions\QuestionsModel;
-use App\Models\Student\StudentModel;
+use App\Models\Questionnaires\QuestionnairesModel;
 use App\Models\Instructor\InstructorModel;
 use App\Models\Role\RoleModulesModel;
 use App\Models\Profile\ProfileModel;
@@ -22,9 +22,8 @@ class Questions extends Controller
   //Variable declarations. 
   private $primaryKey;
   private $questionsModel;
-  private $programsGroupStudentModel;
   private $ProgramsGroupInstructorModel;
-  private $studentModel;
+  private $questionnairesModel;
   private $instructorModel;
   private $profileModel;
   private $roleModuleModel;
@@ -35,7 +34,7 @@ class Questions extends Controller
   {
     $this->primaryKey = "Question_id";
     $this->questionsModel = new QuestionsModel();
-    $this->studentModel = new StudentModel();
+    $this->questionnairesModel = new QuestionnairesModel();
     $this->instructorModel = new InstructorModel();
     $this->roleModuleModel = new RoleModulesModel();
     $this->profileModel = new ProfileModel();
@@ -46,8 +45,8 @@ class Questions extends Controller
   public function index()
   {
     $this->data['title'] = "QUESTIONS";
-
     $this->data[$this->model] = $this->questionsModel->sp_questions();
+    $this->data['questionnaires'] = $this->questionnairesModel->orderBy('Questionnaire_id ', 'ASC')->findAll();
     $this->data['profile'] =  $this->profileModel->where('User_id_fk', (int)$this->getSessionIdUser()['User_id'])->first();
     $this->data['userModules'] =  $this->roleModuleModel->sp_role_modules_id((int)$this->getSessionIdUser()['Roles_fk']);
     return view('questions/questions_view', $this->data);
@@ -60,44 +59,44 @@ class Questions extends Controller
       $dataModel = $this->getDataModel();
       //Query Insert 
       if ($this->questionsModel->insert($dataModel)) {
-        $data['message'] = 'success';
-        $data['response'] = ResponseInterface::HTTP_OK;
-        $data['data'] = $dataModel;
-        $data['csrf'] = csrf_hash();
+        $this->data['message'] = 'success';
+        $this->data['response'] = ResponseInterface::HTTP_OK;
+        $this->data['data'] = $dataModel;
+        $this->data['csrf'] = csrf_hash();
       } else {
-        $data['message'] = 'Error create program group';
-        $data['response'] = ResponseInterface::HTTP_NO_CONTENT;
-        $data['data'] = '';
+        $this->data['message'] = 'Error create program group';
+        $this->data['response'] = ResponseInterface::HTTP_NO_CONTENT;
+        $this->data['data'] = '';
       }
     } else {
-      $data['message'] = 'Error Ajax';
-      $data['response'] = ResponseInterface::HTTP_CONFLICT;
-      $data['data'] = '';
+      $this->data['message'] = 'Error Ajax';
+      $this->data['response'] = ResponseInterface::HTTP_CONFLICT;
+      $this->data['data'] = '';
     }
     //Change array to Json
-    echo json_encode($dataModel);
+    echo json_encode($this->data);
   }
   //This method consists of single Students  , obtains id the data from the GET method, return Json
   public function singleQuestions($id = null)
   {    //Validate is ajax
     if ($this->request->isAJAX()) {
       //Select student  model 
-      if ($data[$this->model] = $this->questionsModel->sp_question_id($id)) {
-        $data['message'] = 'success';
-        $data['response'] = ResponseInterface::HTTP_OK;
-        $data['csrf'] = csrf_hash();
+      if ($this->data[$this->model] = $this->questionsModel->sp_question_id($id)) {
+        $this->data['message'] = 'success';
+        $this->data['response'] = ResponseInterface::HTTP_OK;
+        $this->data['csrf'] = csrf_hash();
       } else {
-        $data['message'] = 'Error Questions';
-        $data['response'] = ResponseInterface::HTTP_NO_CONTENT;
-        $data['data'] = '';
+        $this->data['message'] = 'Error Questions';
+        $this->data['response'] = ResponseInterface::HTTP_NO_CONTENT;
+        $this->data['data'] = '';
       }
     } else {
-      $data['message'] = 'Error Ajax';
-      $data['response'] = ResponseInterface::HTTP_CONFLICT;
-      $data['data'] = '';
+      $this->data['message'] = 'Error Ajax';
+      $this->data['response'] = ResponseInterface::HTTP_CONFLICT;
+      $this->data['data'] = '';
     }
     //Change array to Json
-    echo json_encode($data);
+    echo json_encode($this->data);
   }
   //This method consists of update , obtains id the data from the POST method, return Json
   public function update()
@@ -110,22 +109,22 @@ class Questions extends Controller
       $dataModel['updated_at'] = $today;
       //Update data model 
       if ($this->questionsModel->update($id, $dataModel)) {
-        $data['message'] = 'success';
-        $data['response'] = ResponseInterface::HTTP_OK;
-        $data['data'] = $dataModel;
-        $data['csrf'] = csrf_hash();
+        $this->data['message'] = 'success';
+        $this->data['response'] = ResponseInterface::HTTP_OK;
+        $this->data['data'] = $dataModel;
+        $this->data['csrf'] = csrf_hash();
       } else {
-        $data['message'] = 'Error update Program group';
-        $data['response'] = ResponseInterface::HTTP_NO_CONTENT;
-        $data['data'] = '';
+        $this->data['message'] = 'Error update Program group';
+        $this->data['response'] = ResponseInterface::HTTP_NO_CONTENT;
+        $this->data['data'] = '';
       }
     } else {
-      $data['message'] = 'Error Ajax';
-      $data['response'] = ResponseInterface::HTTP_CONFLICT;
-      $data['data'] = '';
+      $this->data['message'] = 'Error Ajax';
+      $this->data['response'] = ResponseInterface::HTTP_CONFLICT;
+      $this->data['data'] = '';
     }
     //Change array to Json
-    echo json_encode($dataModel);
+    echo json_encode($this->data);
   }
   //This method consists of delete user, obtains id the data from the GET method, return Json
   public function delete($id = null)
@@ -150,20 +149,5 @@ class Questions extends Controller
     ];
     return $data;
   }
-  //This method consists of create is model the data in the array associative, return Array
-  public function getDataGroupModel($type)
-  {
-    if ($type == "students") {
-      $data = [
-        'Program_group_fk' => $this->request->getVar('group_id'),
-        'Student_fk' => $this->request->getVar('student_id')
-      ];
-    } else {
-      $data = [
-        'Program_group_fk' => $this->request->getVar('group_id'),
-        'Instructor_fk' => $this->request->getVar('instructor_id')
-      ];
-    }
-    return $data;
-  }
+
 }

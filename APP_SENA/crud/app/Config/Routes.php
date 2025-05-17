@@ -33,18 +33,18 @@ $routes->group("documentTypes",['namespace' => 'App\Controllers\DocumentTypes','
   $routes->get("/", "DocumentTypes::index");
   $routes->get("show", "DocumentTypes::index");
   $routes->get("edit/(:num)", "DocumentTypes::singleDocumentTypes/$1");
-  $routes->get("delete/(:num)", "DocumentTypes::delete/$1");
+  $routes->delete("delete/(:num)", "DocumentTypes::delete/$1");
   $routes->post("add", "DocumentTypes::create");
-  $routes->post("update", "DocumentTypes::update");
+  $routes->put("update", "DocumentTypes::update");
 });
 //GROUP ROUTES DOCUMENTS TYPE
 $routes->group("specialty",['namespace' => 'App\Controllers\Specialty','filter' => 'AuthCheck'],function($routes){
   $routes->get("/", "Specialty::index");
   $routes->get("show", "Specialty::index");
   $routes->get("edit/(:num)", "Specialty::singleSpecialty/$1");
-  $routes->get("delete/(:num)", "Specialty::delete/$1");
+  $routes->delete("delete/(:num)", "Specialty::delete/$1");
   $routes->post("add", "Specialty::create");
-  $routes->post("update", "Specialty::update");
+  $routes->put("update", "Specialty::update");
 });
 
 //GROUP ROUTES MODULES
@@ -62,9 +62,9 @@ $routes->group("permission",['namespace' => 'App\Controllers\Permission','filter
   $routes->get("/", "Permission::index");
   $routes->get("show", "Permission::index");
   $routes->get("edit/(:num)", "Permission::singlePermission/$1");
-  $routes->get("delete/(:num)", "Permission::delete/$1");
+  $routes->delete("delete/(:num)", "Permission::delete/$1");
   $routes->post("add", "Permission::create");
-  $routes->post("update", "Permission::update");
+  $routes->put("update", "Permission::update");
 });
 
 //GROUP ROUTES ROLE
@@ -72,9 +72,9 @@ $routes->group("role",['namespace' => 'App\Controllers\Role','filter' => 'AuthCh
   $routes->get("/", "Role::index");
   $routes->get("show", "Role::index");
   $routes->get("edit/(:num)", "Role::singleRole/$1");
-  $routes->get("delete/(:num)", "Role::delete/$1");
+  $routes->delete("delete/(:num)", "Role::delete/$1");
   $routes->post("add", "Role::create");
-  $routes->post("update", "Role::update");
+  $routes->put("update", "Role::update");
 });
 
 
@@ -95,9 +95,9 @@ $routes->group("user",['namespace' => 'App\Controllers\User','filter' => 'AuthCh
   $routes->get("/", "User::index");
   $routes->get("show", "User::index");
   $routes->get("edit/(:num)", "User::singleUser/$1");
-  $routes->get("delete/(:num)", "User::delete/$1");
+  $routes->delete("delete/(:num)", "User::delete/$1");
   $routes->post("add", "User::create");
-  $routes->post("update", "User::update");
+  $routes->put("update", "User::update");
 });
 
 //GROUP ROUTES STUDENT
@@ -105,18 +105,18 @@ $routes->group("student",['namespace' => 'App\Controllers\Student','filter' => '
   $routes->get("/", "Student::index");
   $routes->get("show", "Student::index");
   $routes->get("edit/(:num)", "Student::singleStudent/$1");
-  $routes->get("delete/(:num)", "Student::delete/$1");
+  $routes->delete("delete/(:num)", "Student::delete/$1");
   $routes->post("add", "Student::create");
-  $routes->post("update", "Student::update");
+  $routes->put("update", "Student::update");
 });
 //GROUP ROUTES STUDENT STATUS
 $routes->group("studentStatus",['namespace' => 'App\Controllers\Student','filter' => 'AuthCheck'],function($routes){
   $routes->get("/", "StudentStatus::index");
   $routes->get("show", "StudentStatus::index");
   $routes->get("edit/(:num)", "StudentStatus::singleStudentStatus/$1");
-  $routes->get("delete/(:num)", "StudentStatus::delete/$1");
+  $routes->delete("delete/(:num)", "StudentStatus::delete/$1");
   $routes->post("add", "StudentStatus::create");
-  $routes->post("update", "StudentStatus::update");
+  $routes->put("update", "StudentStatus::update");
 });
 //GROUP ROUTES STUDENT
 $routes->group("instructor",['namespace' => 'App\Controllers\Instructor','filter' => 'AuthCheck'],function($routes){
@@ -133,9 +133,9 @@ $routes->group("programs",['namespace' => 'App\Controllers\Programs','filter' =>
   $routes->get("/", "Programs::index");
   $routes->get("show", "Programs::index");
   $routes->get("edit/(:num)", "Programs::singlePrograms/$1");
-  $routes->get("delete/(:num)", "Programs::delete/$1");
+  $routes->delete("delete/(:num)", "Programs::delete/$1");
   $routes->post("add", "Programs::create");
-  $routes->post("update", "Programs::update");
+  $routes->put("update", "Programs::update");
 });
 //GROUP ROUTES PROGRAMS GROUPS
 $routes->group("programsGroups",['namespace' => 'App\Controllers\ProgramsGroups','filter' => 'AuthCheck'],function($routes){
@@ -175,7 +175,7 @@ $routes->group("managementGroups",['namespace' => 'App\Controllers\ManagementGro
 $routes->group("questions",['namespace' => 'App\Controllers\Questions','filter' => 'AuthCheck'],function($routes){
   $routes->get("/", "Questions::index");
   $routes->get("show/", "Questions::index");
-  $routes->post("edit/(:num)", "Questions::singleQuestions/$1");
+  $routes->get("edit/(:num)", "Questions::singleQuestions/$1");
   $routes->delete("delete/(:num)", "Questions::delete/$1");
   $routes->post("add", "Questions::create");
   $routes->put("update", "Questions::update");

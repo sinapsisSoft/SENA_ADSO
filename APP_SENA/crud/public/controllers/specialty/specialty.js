@@ -75,7 +75,7 @@ function edit(id) {
  * deleted from the system.
  */
 async function delete_(id) {
-  method = 'GET';
+  method = 'DELETE';
   url = URI_SPECIALTY + LIST_CRUD[3] + '/' + id;
   data = "";
   if (confirm(textConfirm) == true) {
@@ -88,10 +88,12 @@ async function delete_(id) {
       })
       .catch(error => {
         console.error(error);
-        //hidden Preload 
-        mainApp.hiddenPreload();
+ 
       })
-      .finally();
+      .finally(()=>{
+          //hidden Preload 
+          mainApp.hiddenPreload();
+        });
   } else {
   }
 }
@@ -114,15 +116,14 @@ async function getDataId(id) {
       mainApp.setDataFormJson(data[model]);
       //show Modal 
       mainApp.showModal();
-      //hidden Preload 
-      mainApp.hiddenPreload();
     })
     .catch(error => {
       console.error(error);
-      //hidden Preload 
-      mainApp.hiddenPreload();
     })
-    .finally();
+    .finally(()=>{
+          //hidden Preload 
+          mainApp.hiddenPreload();
+        });
 }
 
 
@@ -200,7 +201,7 @@ mainApp.getForm().addEventListener('submit', async function (event) {
         })
         .finally();
     } else {
-      method = 'POST';
+      method = 'PUT';
       url = URI_SPECIALTY + LIST_CRUD[2];
       data = mainApp.getDataFormJson();
       const resultFetch = getData(data, method, url);
@@ -214,10 +215,11 @@ mainApp.getForm().addEventListener('submit', async function (event) {
         })
         .catch(error => {
           console.error(error);
+        })
+        .finally(()=>{
           //hidden Preload 
           mainApp.hiddenPreload();
-        })
-        .finally();
+        });
     }
   } else {
     alert("Data Validate");

@@ -36,7 +36,7 @@ var resultFetch = null;
 function show(id) {
   mainApp.disabledFormAll();
   mainApp.resetForm();
-  mainApp.btnEnabledDisabled(true,btnActionsForm);
+  mainApp.btnEnabledDisabled(true, btnActionsForm);
   getDataId(id);
 }
 
@@ -48,7 +48,7 @@ function add() {
   mainApp.enableFormAll();
   mainApp.resetForm();
   insertUpdate = true;
-  mainApp.btnEnabledDisabled(false,btnActionsForm);
+  mainApp.btnEnabledDisabled(false, btnActionsForm);
   mainApp.showModal();
 }
 
@@ -62,7 +62,7 @@ function edit(id) {
   mainApp.disabledFormEdit();
   mainApp.resetForm();
   insertUpdate = false;
-  mainApp.btnEnabledDisabled(false,btnActionsForm);
+  mainApp.btnEnabledDisabled(false, btnActionsForm);
   getDataId(id);
 }
 
@@ -74,7 +74,7 @@ function edit(id) {
  * deleted from the system.
  */
 async function delete_(id) {
-  method = 'GET';
+  method = 'DELETE';
   url = URI_ROLE + LIST_CRUD[3] + '/' + id;
   data = "";
   if (confirm(textConfirm) == true) {
@@ -82,15 +82,16 @@ async function delete_(id) {
     resultFetch.then(response => response.json())
       .then(data => {
         //console.log(data);
-         //Reload View
-         reloadPage();
+        //Reload View
+        reloadPage();
       })
       .catch(error => {
         console.error(error);
+      })
+      .finally(() => {
         //hidden Preload 
         mainApp.hiddenPreload();
-      })
-      .finally();
+      });
   } else {
   }
 }
@@ -113,15 +114,14 @@ async function getDataId(id) {
       mainApp.setDataFormJson(data[model]);
       //show Modal 
       mainApp.showModal();
-      //hidden Preload 
-      mainApp.hiddenPreload();
     })
     .catch(error => {
       console.error(error);
+    })
+    .finally(() => {
       //hidden Preload 
       mainApp.hiddenPreload();
-    })
-    .finally();
+    });
 }
 
 /**
@@ -194,12 +194,13 @@ mainApp.getForm().addEventListener('submit', async function (event) {
         })
         .catch(error => {
           console.error(error);
+        })
+        .finally(() => {
           //hidden Preload 
           mainApp.hiddenPreload();
-        })
-        .finally();
+        });
     } else {
-      method = 'POST';
+      method = 'PUT';
       url = URI_ROLE + LIST_CRUD[2];
       data = mainApp.getDataFormJson();
       //console.log(data);
@@ -214,10 +215,12 @@ mainApp.getForm().addEventListener('submit', async function (event) {
         })
         .catch(error => {
           console.error(error);
+
+        })
+        .finally(() => {
           //hidden Preload 
           mainApp.hiddenPreload();
-        })
-        .finally();
+        });
     }
   } else {
     alert("Data Validate");

@@ -11,8 +11,8 @@ window.onload = function () {
 
 /* These lines of code are declaring constants and initializing variables in a JavaScript file. Here is
 a breakdown of what each line is doing: */
-const formId = 'my-form';
-const modalId = 'my-modal';
+const formId = 'programs-form';
+const modalId = 'programs-modal';
 const model = 'programs';
 const tableId = 'table-index';
 const preloadId = 'preloadId';
@@ -75,7 +75,7 @@ function edit(id) {
  * deleted from the system.
  */
 async function delete_(id) {
-  method = 'GET';
+  method = 'DELETE';
   url = URI_PROGRAMS + LIST_CRUD[3] + '/' + id;
   data = "";
   if (confirm(textConfirm) == true) {
@@ -88,10 +88,12 @@ async function delete_(id) {
       })
       .catch(error => {
         console.error(error);
+
+      })
+      .finally(()=>{
         //hidden Preload 
         mainApp.hiddenPreload();
-      })
-      .finally();
+      });
   } else {
   }
 }
@@ -102,27 +104,30 @@ async function delete_(id) {
  * @param id - The `id` parameter in the `getDataId` function is used to specify the ID of the status
  * you want to retrieve.
  */
+
+
 async function getDataId(id) {
   method = 'GET';
   url = URI_PROGRAMS + LIST_CRUD[1] + '/' + id;
-  data = mainApp.getDataFormJson();
+  data = "";
   resultFetch = getData(data, method, url);
+
   resultFetch.then(response => response.json())
     .then(data => {
-      //console.log(data);
-      ///Set data form 
+      ///Set data form
       mainApp.setDataFormJson(data[model]);
-      //show Modal 
+      //show Modal
       mainApp.showModal();
-      //hidden Preload 
-      mainApp.hiddenPreload();
+
     })
     .catch(error => {
       console.error(error);
-      //hidden Preload 
-      mainApp.hiddenPreload();
+
     })
-    .finally();
+     .finally(()=>{
+        //hidden Preload 
+        mainApp.hiddenPreload();
+      });
 }
 
 
@@ -196,12 +201,14 @@ mainApp.getForm().addEventListener('submit', async function (event) {
         })
         .catch(error => {
           console.error(error);
-          //hidden Preload 
-          mainApp.hiddenPreload();
+
         })
-        .finally();
+         .finally(()=>{
+        //hidden Preload 
+        mainApp.hiddenPreload();
+      });
     } else {
-      method = 'POST';
+      method = 'PUT';
       url = URI_PROGRAMS + LIST_CRUD[2];
       data = mainApp.getDataFormJson();
       //console.log(data);
@@ -216,10 +223,12 @@ mainApp.getForm().addEventListener('submit', async function (event) {
         })
         .catch(error => {
           console.error(error);
-          //hidden Preload 
-          mainApp.hiddenPreload();
+
         })
-        .finally();
+         .finally(()=>{
+        //hidden Preload 
+        mainApp.hiddenPreload();
+      });
     }
   } else {
     alert("Data Validate");

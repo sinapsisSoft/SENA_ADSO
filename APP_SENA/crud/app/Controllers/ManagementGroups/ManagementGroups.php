@@ -140,7 +140,7 @@ class ManagementGroups extends Controller
         } else {
           $this->data['message'] = 'Error Ajax';
           $this->data['response'] = ResponseInterface::HTTP_CONFLICT;
-          $this->data['data'] = 'error';
+          $this->data['data'] = '';
         }
       } else {
         $this->data['message'] = 'Error Ajax';
@@ -150,7 +150,7 @@ class ManagementGroups extends Controller
     } catch (\Exception $e) {
       $this->data['message'] = $e;
       $this->data['response'] = ResponseInterface::HTTP_CONFLICT;
-      $this->data['data'] = 'Error';
+      $this->data['data'] = '';
     }
     //Change array to Json
     echo json_encode($this->data);
@@ -162,22 +162,22 @@ class ManagementGroups extends Controller
   {    //Validate is ajax
     if ($this->request->isAJAX()) {
       //Select user status model 
-      if ($data[$this->model] = $this->managementGroupsModel->where($this->primaryKey, $id)->first()) {
-        $data['message'] = 'success';
-        $data['response'] = ResponseInterface::HTTP_OK;
-        $data['csrf'] = csrf_hash();
+      if ($this->data[$this->model] = $this->managementGroupsModel->where($this->primaryKey, $id)->first()) {
+        $this->data['message'] = 'success';
+        $this->data['response'] = ResponseInterface::HTTP_OK;
+        $this->data['csrf'] = csrf_hash();
       } else {
-        $data['message'] = 'Error create user';
-        $data['response'] = ResponseInterface::HTTP_NO_CONTENT;
-        $data['data'] = '';
+        $this->data['message'] = 'Error create user';
+        $this->data['response'] = ResponseInterface::HTTP_NO_CONTENT;
+        $this->data['data'] = '';
       }
     } else {
-      $data['message'] = 'Error Ajax';
-      $data['response'] = ResponseInterface::HTTP_CONFLICT;
-      $data['data'] = '';
+      $this->data['message'] = 'Error Ajax';
+      $this->data['response'] = ResponseInterface::HTTP_CONFLICT;
+      $this->data['data'] = '';
     }
     //Change array to Json
-    echo json_encode($data);
+    echo json_encode($this->data);
   }
   //This method consists of create is model the data in the array associative, return Array
   public function getDataModel()

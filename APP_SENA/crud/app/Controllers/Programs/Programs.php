@@ -37,7 +37,7 @@ class Programs extends Controller
   public function index()
   {
     $this->data['title'] = "PROGRAMS";
-    $this->data[$this->model] = $this->programsModel->orderBy('Programs_id', 'ASC')->findAll();
+    $this->data[$this->model] = $this->programsModel->orderBy( $this->primaryKey, 'ASC')->findAll();
     $this->data['profile'] =  $this->profileModel->where('User_id_fk', (int)$this->getSessionIdUser()['User_id'])->first();
     $this->data['userModules'] =  $this->roleModuleModel->sp_role_modules_id((int)$this->getSessionIdUser()['Roles_fk']);
     return view('programs/programs_view', $this->data);
@@ -51,44 +51,44 @@ class Programs extends Controller
       $dataModel = $this->getDataModel();
       //Query Insert 
       if ($this->programsModel->insert($dataModel)) {
-        $data['message'] = 'success';
-        $data['response'] = ResponseInterface::HTTP_OK;
-        $data['data'] = $dataModel;
-        $data['csrf'] = csrf_hash();
+        $this->data['message'] = 'success';
+        $this->data['response'] = ResponseInterface::HTTP_OK;
+        $this->data['data'] = $dataModel;
+        $this->data['csrf'] = csrf_hash();
       } else {
-        $data['message'] = 'Error create program';
-        $data['response'] = ResponseInterface::HTTP_NO_CONTENT;
-        $data['data'] = '';
+        $this->data['message'] = 'Error create program';
+        $this->data['response'] = ResponseInterface::HTTP_NO_CONTENT;
+        $this->data['data'] = '';
       }
     } else {
-      $data['message'] = 'Error Ajax';
-      $data['response'] = ResponseInterface::HTTP_CONFLICT;
-      $data['data'] = '';
+      $this->data['message'] = 'Error Ajax';
+      $this->data['response'] = ResponseInterface::HTTP_CONFLICT;
+      $this->data['data'] = '';
     }
     //Change array to Json
-    echo json_encode($dataModel);
+    echo json_encode($this->data);
   }
   //This method consists of single Students  , obtains id the data from the GET method, return Json
   public function singlePrograms($id = null)
   {    //Validate is ajax
     if ($this->request->isAJAX()) {
       //Select student  model 
-      if ($data[$this->model] = $this->programsModel->where($this->primaryKey, $id)->first()) {
-        $data['message'] = 'success';
-        $data['response'] = ResponseInterface::HTTP_OK;
-        $data['csrf'] = csrf_hash();
+      if ($this->data[$this->model] = $this->programsModel->where($this->primaryKey, $id)->first()) {
+        $this->data['message'] = 'success';
+        $this->data['response'] = ResponseInterface::HTTP_OK;
+        $this->data['csrf'] = csrf_hash();
       } else {
-        $data['message'] = 'Error Program';
-        $data['response'] = ResponseInterface::HTTP_NO_CONTENT;
-        $data['data'] = '';
+        $this->data['message'] = 'Error Program';
+        $this->data['response'] = ResponseInterface::HTTP_NO_CONTENT;
+        $this->data['data'] = '';
       }
     } else {
-      $data['message'] = 'Error Ajax';
-      $data['response'] = ResponseInterface::HTTP_CONFLICT;
-      $data['data'] = '';
+      $this->data['message'] = 'Error Ajax';
+      $this->data['response'] = ResponseInterface::HTTP_CONFLICT;
+      $this->data['data'] = '';
     }
     //Change array to Json
-    echo json_encode($data);
+    echo json_encode($this->data);
   }
   //This method consists of update , obtains id the data from the POST method, return Json
   public function update()
@@ -101,22 +101,22 @@ class Programs extends Controller
       $dataModel['updated_at']=$today;
       //Update data model 
       if ($this->programsModel->update($id, $dataModel)) {
-        $data['message'] = 'success';
-        $data['response'] = ResponseInterface::HTTP_OK;
-        $data['data'] = $dataModel;
-        $data['csrf'] = csrf_hash();
+        $this->data['message'] = 'success';
+        $this->data['response'] = ResponseInterface::HTTP_OK;
+        $this->data['data'] = $dataModel;
+        $this->data['csrf'] = csrf_hash();
       } else {
-        $data['message'] = 'Error update Program';
-        $data['response'] = ResponseInterface::HTTP_NO_CONTENT;
-        $data['data'] = '';
+        $this->data['message'] = 'Error update Program';
+        $this->data['response'] = ResponseInterface::HTTP_NO_CONTENT;
+        $this->data['data'] = '';
       }
     } else {
-      $data['message'] = 'Error Ajax';
-      $data['response'] = ResponseInterface::HTTP_CONFLICT;
-      $data['data'] = '';
+      $this->data['message'] = 'Error Ajax';
+      $this->data['response'] = ResponseInterface::HTTP_CONFLICT;
+      $this->data['data'] = '';
     }
     //Change array to Json
-    echo json_encode($dataModel);
+    echo json_encode($this->data);
   }
   //This method consists of delete user, obtains id the data from the GET method, return Json
   public function delete($id = null)
@@ -124,22 +124,22 @@ class Programs extends Controller
     try {
       //Delete data model 
       if ($this->programsModel->where($this->primaryKey, $id)->delete($id)) {
-        $data['message'] = 'success';
-        $data['response'] = ResponseInterface::HTTP_OK;
-        $data['data'] = "OK";
-        $data['csrf'] = csrf_hash();
+        $this->data['message'] = 'success';
+        $this->data['response'] = ResponseInterface::HTTP_OK;
+        $this->data['data'] = "OK";
+        $this->data['csrf'] = csrf_hash();
       } else {
-        $data['message'] = 'Error Ajax';
-        $data['response'] = ResponseInterface::HTTP_CONFLICT;
-        $data['data'] = 'error';
+        $this->data['message'] = 'Error Ajax';
+        $this->data['response'] = ResponseInterface::HTTP_CONFLICT;
+        $this->data['data'] = '';
       }
     } catch (\Exception $e) {
-      $data['message'] = $e;
-      $data['response'] = ResponseInterface::HTTP_CONFLICT;
-      $data['data'] = 'Error';
+      $this->data['message'] = $e;
+      $this->data['response'] = ResponseInterface::HTTP_CONFLICT;
+      $this->data['data'] = '';
     }
     //Change array to Json
-    echo json_encode($data);
+    echo json_encode($this->data);
   }
   //This method consists of create is model the data in the array associative, return Array
   public function getDataModel()

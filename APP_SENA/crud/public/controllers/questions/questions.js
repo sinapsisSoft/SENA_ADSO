@@ -1,22 +1,25 @@
 "use strict";
 
-
+window.onload = function () {
+  console.log("Courses  Questions");
+  // Initialize the Questions
+}
 /* Author:DIEGO CASALLAS
-* Date:29/05/2024
-* Descriptions:This is controller Curse 
+* Date:13/05/2025
+* Descriptions:This is controller Questions 
 * **/
 
 /* These lines of code are declaring constants and initializing variables in a JavaScript file. Here is
 a breakdown of what each line is doing: */
-const formId = ['questions-form'];
-const modalId = ['questions-modal'];
-const model = 'programGroups';
-const tableId = ['table-questions'];
+const formId = 'questions-form';
+const modalId = 'questions-modal';
+const model = 'questions';
+const tableId = 'table-questions';
 const preloadId = 'preloadId';
-const actionsForms = ['block-input','hidden-input'];
+const classEdit = 'edit-input';
 const textConfirm = 'Press a button!\nEither OK or Cancel.';
-const btnActions = ['questions-form'];
-const mainApp = new Main(modalId, formId, actionsForms, preloadId);
+const btnActionsForm = 'btn_actions_form';
+const mainApp = new Main(modalId, formId, classEdit, preloadId);
 
 /* These lines of code are declaring and initializing variables in a JavaScript file. Here is a
 breakdown of what each variable is used for: */
@@ -25,7 +28,6 @@ var url = "";
 var method = "";
 var data = "";
 var resultFetch = null;
-var getKeyModule = { 'group_id': 0, 'student_id': 0, 'instructor_id': 0 };
 
 /**
  * The function `showStatus` disables all form elements, resets the form, enables a button, and
@@ -35,9 +37,10 @@ var getKeyModule = { 'group_id': 0, 'student_id': 0, 'instructor_id': 0 };
 function show(id) {
   mainApp.disabledFormAll();
   mainApp.resetForm();
-  mainApp.btnEnabledDisabled(true, btnActions[0]);
+  mainApp.btnEnabledDisabled(true,btnActionsForm);
   getDataId(id);
 }
+
 /**
  * The function `newStatus` enables a form, resets it, sets a flag, disables a button, and shows a
  * modal.
@@ -46,7 +49,7 @@ function add() {
   mainApp.enableFormAll();
   mainApp.resetForm();
   insertUpdate = true;
-  mainApp.btnEnabledDisabled(false, btnActions[0]);
+  mainApp.btnEnabledDisabled(false,btnActionsForm);
   mainApp.showModal();
 }
 
@@ -60,7 +63,7 @@ function edit(id) {
   mainApp.disabledFormEdit();
   mainApp.resetForm();
   insertUpdate = false;
-  mainApp.btnEnabledDisabled(false, btnActions[0]);
+  mainApp.btnEnabledDisabled(false,btnActionsForm);
   getDataId(id);
 }
 
@@ -72,7 +75,7 @@ function edit(id) {
  * deleted from the system.
  */
 async function delete_(id) {
-  method = 'GET';
+  method = 'DELETE';
   url = URI_QUESTIONS + LIST_CRUD[3] + '/' + id;
   data = "";
   if (confirm(textConfirm) == true) {
@@ -80,15 +83,16 @@ async function delete_(id) {
     resultFetch.then(response => response.json())
       .then(data => {
         //console.log(data);
-        //Reload View
-        reloadPage();
+         //Reload View
+         reloadPage();
       })
       .catch(error => {
         console.error(error);
+      })
+      .finally(()=>{
         //hidden Preload 
         mainApp.hiddenPreload();
-      })
-      .finally();
+      });
   } else {
   }
 }
@@ -100,27 +104,27 @@ async function delete_(id) {
  * you want to retrieve.
  */
 async function getDataId(id) {
-  method = 'POST';
+  method = 'GET';
   url = URI_QUESTIONS + LIST_CRUD[1] + '/' + id;
   data = mainApp.getDataFormJson();
   resultFetch = getData(data, method, url);
   resultFetch.then(response => response.json())
     .then(data => {
-      //console.log(data);
+
       ///Set data form 
-      mainApp.setDataFormJson(data[model]);
+      mainApp.setDataFormJson(data[model][0]);
       //show Modal 
       mainApp.showModal();
-      //hidden Preload 
-      mainApp.hiddenPreload();
     })
     .catch(error => {
       console.error(error);
-      //hidden Preload 
-      mainApp.hiddenPreload();
     })
-    .finally();
+     .finally(()=>{
+        //hidden Preload 
+        mainApp.hiddenPreload();
+      });
 }
+
 
 /**
  * The function `getData` is an asynchronous function that sends a request to a specified URL using the
@@ -162,6 +166,12 @@ async function getData(data, method, url) {
   return await fetch(url, parameters);
 }
 
+/* The code `$(document).ready(function () { $('#' + tableId).DataTable(); });` is using jQuery to
+initialize a DataTable on a specific HTML table element identified by the `tableId` variable. */
+$(document).ready(function () {
+  $('#' + tableId).DataTable();
+});
+
 /* The code snippet you provided is an event listener attached to the form element within the `mainApp`
 object. It listens for the `submit` event on the form and executes a series of actions when the form
 is submitted. Here is a breakdown of what the code is doing: */
@@ -186,12 +196,13 @@ mainApp.getForm().addEventListener('submit', async function (event) {
         })
         .catch(error => {
           console.error(error);
-          //hidden Preload 
-          mainApp.hiddenPreload();
         })
-        .finally();
+         .finally(()=>{
+        //hidden Preload 
+        mainApp.hiddenPreload();
+      });
     } else {
-      method = 'POST';
+      method = 'PUT';
       url = URI_QUESTIONS + LIST_CRUD[2];
       data = mainApp.getDataFormJson();
       //console.log(data);
@@ -206,18 +217,17 @@ mainApp.getForm().addEventListener('submit', async function (event) {
         })
         .catch(error => {
           console.error(error);
-          //hidden Preload 
-          mainApp.hiddenPreload();
         })
-        .finally();
+         .finally(()=>{
+        //hidden Preload 
+        mainApp.hiddenPreload();
+      });
     }
   } else {
     alert("Data Validate");
     mainApp.resetForm();
   }
 });
-
-
 /**
  * The function `reloadPage` hides a preload element, waits for 500 milliseconds, and then reloads the
  * page.
@@ -230,13 +240,3 @@ function reloadPage() {
   }, 500);
 }
 
-window.onload = function () {
-  console.log("program Questions");
-  // Initialize the programGroups
-  mainApp.showPreload();
-  mainApp.refreshTable(tableId[0]);
-  setTimeout(() => {
-    mainApp.hiddenPreload();
-  }, 1000);
-
-}

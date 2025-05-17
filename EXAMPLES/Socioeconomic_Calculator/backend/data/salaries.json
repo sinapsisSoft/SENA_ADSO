@@ -1,0 +1,113 @@
+{
+  "clases_sociales": [
+    {
+      "nombre": "Élite Global",
+      "min": 100000000,
+      "max": null,
+      "color": "#d32f2f",
+      "descripcion": "Dueños de conglomerados, multinacionales o fortunas heredadas. Controlan gran parte de la economía nacional."
+    },
+    {
+      "nombre": "Élite Económica",
+      "min": 50000000,
+      "max": 99999999,
+      "color": "#f44336",
+      "descripcion": "CEOs de grandes empresas, inversionistas internacionales."
+    },
+    {
+      "nombre": "Clase Alta-Profesional",
+      "min": 20000000,
+      "max": 49999999,
+      "color": "#4caf50",
+      "descripcion": "Ministros, magistrados, gerentes de bancos o multinacionales."
+    },
+    {
+      "nombre": "Clase Media-Alta",
+      "min": 10000000,
+      "max": 19999999,
+      "color": "#8bc34a",
+      "descripcion": "Congresistas, directivos de pymes, médicos especialistas."
+    },
+    {
+      "nombre": "Clase Media",
+      "min": 3000000,
+      "max": 9999999,
+      "color": "#ffeb3b",
+      "descripcion": "Profesionales universitarios, pequeños empresarios."
+    },
+    {
+      "nombre": "Clase Media-Baja",
+      "min": 1300000,
+      "max": 2999999,
+      "color": "#ff9800",
+      "descripcion": "Trabajadores formales (docentes, empleados de servicios)."
+    },
+    {
+      "nombre": "Clase Baja",
+      "min": 331688,
+      "max": 1299999,
+      "color": "#ff5722",
+      "descripcion": "Economía informal, ventas ambulantes, servicios no calificados."
+    },
+    {
+      "nombre": "Pobreza Extrema",
+      "min": 0,
+      "max": 331687,
+      "color": "#795548",
+      "descripcion": "42% de la población. Subsisten con ayudas estatales o trabajos ocasionales."
+    }
+  ],
+  "salarios_referencia": [
+    {
+      "nombre": "Luis Carlos Sarmiento (Multimillonario)",
+      "salario_diario": 72320000,
+      "tipo": "empresario"
+    },
+    {
+      "nombre": "CEO de Bancolombia",
+      "salario_diario": 5000000,
+      "tipo": "empresario"
+    },
+    {
+      "nombre": "Presidente de la República",
+      "salario_diario": 1333333,
+      "tipo": "político"
+    },
+    {
+      "nombre": "Ministro",
+      "salario_diario": 833333,
+      "tipo": "político"
+    },
+    {
+      "nombre": "Congresista",
+      "salario_diario": 633333,
+      "tipo": "político"
+    },
+    {
+      "nombre": "Gerente de Empresa Mediana",
+      "salario_diario": 333333,
+      "tipo": "empresario"
+    },
+    {
+      "nombre": "Ingeniero Senior",
+      "salario_diario": 166666,
+      "tipo": "profesional"
+    },
+    {
+      "nombre": "Salario Mínimo 2024",
+      "salario_diario": 43333,
+      "tipo": "referencia"
+    },
+    {
+      "nombre": "Trabajador Informal",
+      "salario_diario": 20000,
+      "tipo": "referencia"
+    }
+  ],
+  "metadata": {
+    "fuentes": "Forbes 2023, DANE 2024, Función Pública",
+    "actualizacion": "junio 2024",
+    "salario_minimo_mensual": 1300000,
+    "tasa_cambio_usd": 4000
+  }
+}
