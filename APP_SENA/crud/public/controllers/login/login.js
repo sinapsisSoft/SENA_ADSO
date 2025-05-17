@@ -56,14 +56,15 @@ mainApp.getForm().addEventListener('submit', async function (event) {
         }
         //show Modal 
         mainApp.hiddenModal();
-        mainApp.hiddenPreload();
       })
       .catch(error => {
         console.error(error);
-        //hidden Preload 
-        mainApp.hiddenPreload();
+  
       })
-      .finally();
+   .finally(()=>{
+     //hidden Preload 
+        mainApp.hiddenPreload();
+      });
 
   } else {
     alert("Data Validate");
@@ -91,15 +92,15 @@ mainApp.getForm(1).addEventListener('submit', async function (event) {
           location.assign('/dashboard');
         } else {
           alert("Error: " + data['message']);
-          mainApp.hiddenPreload();
         }
       })
       .catch(error => {
         console.error(error);
-        //hidden Preload 
-        mainApp.hiddenPreload();
       })
-      .finally();
+       .finally(()=>{
+     //hidden Preload 
+        mainApp.hiddenPreload();
+      });
   } else {
     alert("Data Validate");
     mainApp.resetForm(1);

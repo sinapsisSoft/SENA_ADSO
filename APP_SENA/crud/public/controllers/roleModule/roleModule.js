@@ -90,15 +90,14 @@ async function getDataModuleId(id, idRoleModule) {
       mainApp.setDataFormJson(newJson);
       //show Modal 
       mainApp.showModal();
-      //hidden Preload 
-      mainApp.hiddenPreload();
     })
     .catch(error => {
       console.error(error);
-      //hidden Preload 
-      mainApp.hiddenPreload();
     })
-    .finally();
+     .finally(()=>{
+     //hidden Preload 
+        mainApp.hiddenPreload();
+      });
 }
 
 /**
@@ -144,15 +143,16 @@ async function getDataPermissionId(id, idRoleModule) {
       mainApp.setDataFormJson(newJson, 1);
       //show Modal 
       mainApp.showModal(1);
-      //hidden Preload 
-      mainApp.hiddenPreload();
+
     })
     .catch(error => {
       console.error(error);
-      //hidden Preload 
-      mainApp.hiddenPreload();
+
     })
-    .finally();
+     .finally(()=>{
+     //hidden Preload 
+        mainApp.hiddenPreload();
+      });
 }
 
 

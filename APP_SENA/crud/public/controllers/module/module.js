@@ -88,10 +88,11 @@ async function delete_(id) {
       })
       .catch(error => {
         console.error(error);
-        //hidden Preload 
-        mainApp.hiddenPreload();
       })
-      .finally();
+       .finally(()=>{
+     //hidden Preload 
+        mainApp.hiddenPreload();
+      });
   } else {
   }
 }
@@ -105,7 +106,7 @@ async function delete_(id) {
 async function getDataId(id) {
   method = 'GET';
   url = URI_MODULE + LIST_CRUD[1] + '/' + id;
-  data = mainApp.getDataFormJson();
+  data = "";
   resultFetch = getData(data, method, url);
   resultFetch.then(response => response.json())
     .then(data => {
@@ -114,15 +115,14 @@ async function getDataId(id) {
       mainApp.setDataFormJson(data[model]);
       //show Modal 
       mainApp.showModal();
-      //hidden Preload 
-      mainApp.hiddenPreload();
     })
     .catch(error => {
       console.error(error);
-      //hidden Preload 
-      mainApp.hiddenPreload();
     })
-    .finally();
+     .finally(()=>{
+     //hidden Preload 
+        mainApp.hiddenPreload();
+      });
 }
 
 /**
@@ -195,10 +195,11 @@ mainApp.getForm().addEventListener('submit', async function (event) {
         })
         .catch(error => {
           console.error(error);
-          //hidden Preload 
-          mainApp.hiddenPreload();
         })
-        .finally();
+         .finally(()=>{
+     //hidden Preload 
+        mainApp.hiddenPreload();
+      });
     } else {
       method = 'POST';
       url = URI_MODULE + LIST_CRUD[2];
@@ -215,10 +216,11 @@ mainApp.getForm().addEventListener('submit', async function (event) {
         })
         .catch(error => {
           console.error(error);
-          //hidden Preload 
-          mainApp.hiddenPreload();
         })
-        .finally();
+         .finally(()=>{
+     //hidden Preload 
+        mainApp.hiddenPreload();
+      });
     }
   } else {
     alert("Data Validate");

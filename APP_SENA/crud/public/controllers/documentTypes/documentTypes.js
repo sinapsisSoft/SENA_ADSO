@@ -39,7 +39,6 @@ function show(id) {
   mainApp.btnEnabledDisabled(true, btnActionsForm);
   getDataId(id);
 }
-
 /**
  * The function `newStatus` enables a form, resets it, sets a flag, disables a button, and shows a
  * modal.
@@ -51,7 +50,6 @@ function add() {
   mainApp.btnEnabledDisabled(false, btnActionsForm);
   mainApp.showModal();
 }
-
 /**
  * The function `editStatus` disables form editing, resets the form, sets `insertUpdate` to false,
  * disables a button, and retrieves the status ID.
@@ -65,7 +63,6 @@ function edit(id) {
   mainApp.btnEnabledDisabled(false, btnActionsForm);
   getDataId(id);
 }
-
 /**
  * The function `deleteStatus` is an asynchronous function that sends a GET request to delete a status
  * based on the provided ID, with a confirmation prompt and subsequent data retrieval and page reload.

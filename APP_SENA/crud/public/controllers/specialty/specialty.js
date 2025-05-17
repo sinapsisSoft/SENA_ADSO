@@ -107,7 +107,7 @@ async function delete_(id) {
 async function getDataId(id) {
   method = 'GET';
   url = URI_SPECIALTY + LIST_CRUD[1] + '/' + id;
-  data = mainApp.getDataFormJson();
+  data = "";
   resultFetch = getData(data, method, url);
   resultFetch.then(response => response.json())
     .then(data => {

@@ -75,7 +75,6 @@ function edit(id) {
  * deleted from the system.
  */
 async function close() {
-  alert();
   method = 'POST';
   url = URI_LOGIN + 'singOff';
   data = "";
@@ -83,15 +82,15 @@ async function close() {
     resultFetch = getData(data, method, url);
     resultFetch.then(response => response.json())
       .then(data => {
-        //console.log(data);
          location.assign('/user');
       })
       .catch(error => {
         console.error(error);
-        //hidden Preload 
-        mainApp.hiddenPreload();
       })
-      .finally();
+       .finally(()=>{
+     //hidden Preload 
+        mainApp.hiddenPreload();
+      });
   } else {
   }
 }
@@ -105,7 +104,7 @@ async function close() {
 async function getDataId(id) {
   method = 'GET';
   url = URI_USER + LIST_CRUD[1] + '/' + id;
-  data = mainApp.getDataFormJson();
+  data = "";
   resultFetch = getData(data, method, url);
   resultFetch.then(response => response.json())
     .then(data => {
@@ -114,15 +113,14 @@ async function getDataId(id) {
       mainApp.setDataFormJson(data[model]);
       //show Modal 
       mainApp.showModal();
-      //hidden Preload 
-      mainApp.hiddenPreload();
     })
     .catch(error => {
       console.error(error);
-      //hidden Preload 
-      mainApp.hiddenPreload();
     })
-    .finally();
+    .finally(()=>{
+     //hidden Preload 
+        mainApp.hiddenPreload();
+      });
 }
 
 
@@ -202,7 +200,7 @@ mainApp.getForm().addEventListener('submit', async function (event) {
         })
         .finally();
     } else {
-      method = 'POST';
+      method = 'PUT';
       url = URI_USER + LIST_CRUD[2];
       data = mainApp.getDataFormJson();
       //console.log(data);

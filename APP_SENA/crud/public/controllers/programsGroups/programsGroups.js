@@ -385,15 +385,16 @@ async function getInstructorNoGroups() {
 
       ];
       mainApp.createTable('table-no-group-instructor', arrayColumn, data[model], true, arrayActions);
-      mainApp.hiddenPreload();
       mainApp.showModal(2);
     })
     .catch(error => {
       console.error(error);
-      //hidden Preload 
-      mainApp.hiddenPreload();
+
     })
-    .finally();
+     .finally(()=>{
+     //hidden Preload 
+        mainApp.hiddenPreload();
+      });
 }
 
 async function remove_instructor_group(id) {
@@ -407,14 +408,15 @@ async function remove_instructor_group(id) {
     resultFetch.then(response => response.json())
       .then(data => {
         //Create table
-        console.log(data);
+        //console.log(data);
       })
       .catch(error => {
         console.error(error);
-        //hidden Preload 
-        mainApp.hiddenPreload();
       })
-      .finally();
+       .finally(()=>{
+     //hidden Preload 
+        mainApp.hiddenPreload();
+      });
   } else {
 
   }
@@ -433,10 +435,11 @@ async function remove_student_group(id) {
       })
       .catch(error => {
         console.error(error);
-        //hidden Preload 
-        mainApp.hiddenPreload();
       })
-      .finally();
+       .finally(()=>{
+     //hidden Preload 
+        mainApp.hiddenPreload();
+      });
   } else {
 
   }
@@ -453,14 +456,15 @@ async function add_instructor_group(id) {
     resultFetch.then(response => response.json())
       .then(data => {
         //Create table
-        console.log(data);
+        //console.log(data);
       })
       .catch(error => {
         console.error(error);
-        //hidden Preload 
-        mainApp.hiddenPreload();
       })
-      .finally();
+      .finally(()=>{
+     //hidden Preload 
+        mainApp.hiddenPreload();
+      });
   } else {
 
   }

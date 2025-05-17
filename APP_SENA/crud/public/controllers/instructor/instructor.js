@@ -37,7 +37,7 @@ var resultFetch = null;
 function show(id) {
   mainApp.disabledFormAll();
   mainApp.resetForm();
-  mainApp.btnEnabledDisabled(true,btnActionsForm);
+  mainApp.btnEnabledDisabled(true, btnActionsForm);
   getDataId(id);
 }
 
@@ -49,7 +49,7 @@ function add() {
   mainApp.enableFormAll();
   mainApp.resetForm();
   insertUpdate = true;
-  mainApp.btnEnabledDisabled(false,btnActionsForm);
+  mainApp.btnEnabledDisabled(false, btnActionsForm);
   mainApp.showModal();
 }
 
@@ -63,7 +63,7 @@ function edit(id) {
   mainApp.disabledFormEdit();
   mainApp.resetForm();
   insertUpdate = false;
-  mainApp.btnEnabledDisabled(false,btnActionsForm);
+  mainApp.btnEnabledDisabled(false, btnActionsForm);
   getDataId(id);
 }
 
@@ -82,16 +82,17 @@ async function delete_(id) {
     resultFetch = getData(data, method, url);
     resultFetch.then(response => response.json())
       .then(data => {
-        //console.log(data);
-         //Reload View
-         reloadPage();
+        //Reload View
+        reloadPage();
       })
       .catch(error => {
         console.error(error);
+
+      })
+      .finally(() => {
         //hidden Preload 
         mainApp.hiddenPreload();
-      })
-      .finally();
+      });
   } else {
   }
 }
@@ -105,25 +106,23 @@ async function delete_(id) {
 async function getDataId(id) {
   method = 'GET';
   url = URI_INSTRUCTOR + LIST_CRUD[1] + '/' + id;
-  data = mainApp.getDataFormJson();
+  data = "";
   resultFetch = getData(data, method, url);
- 
+
   resultFetch.then(response => response.json())
     .then(data => {
-      //console.log(data);
       ///Set data form 
       mainApp.setDataFormJson(data[model]);
       //show Modal 
       mainApp.showModal();
-      //hidden Preload 
-      mainApp.hiddenPreload();
     })
     .catch(error => {
       console.error(error);
-      //hidden Preload 
-      mainApp.hiddenPreload();
     })
-    .finally();
+     .finally(()=>{
+     //hidden Preload 
+        mainApp.hiddenPreload();
+      });
 }
 
 /**
@@ -197,10 +196,11 @@ mainApp.getForm().addEventListener('submit', async function (event) {
         })
         .catch(error => {
           console.error(error);
-          //hidden Preload 
-          mainApp.hiddenPreload();
         })
-        .finally();
+         .finally(()=>{
+     //hidden Preload 
+        mainApp.hiddenPreload();
+      });
     } else {
       method = 'POST';
       url = URI_INSTRUCTOR + LIST_CRUD[2];
@@ -217,10 +217,11 @@ mainApp.getForm().addEventListener('submit', async function (event) {
         })
         .catch(error => {
           console.error(error);
-          //hidden Preload 
-          mainApp.hiddenPreload();
         })
-        .finally();
+         .finally(()=>{
+     //hidden Preload 
+        mainApp.hiddenPreload();
+      });
     }
   } else {
     alert("Data Validate");

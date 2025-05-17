@@ -88,10 +88,12 @@ async function delete_(id) {
       })
       .catch(error => {
         console.error(error);
-        //hidden Preload 
-        mainApp.hiddenPreload();
+
       })
-      .finally();
+       .finally(()=>{
+     //hidden Preload 
+        mainApp.hiddenPreload();
+      });
   } else {
   }
 }
@@ -114,15 +116,16 @@ async function getDataId(id) {
       mainApp.setDataFormJson(data[model]);
       //show Modal 
       mainApp.showModal();
-      //hidden Preload 
-      mainApp.hiddenPreload();
+
     })
     .catch(error => {
       console.error(error);
-      //hidden Preload 
-      mainApp.hiddenPreload();
+
     })
-    .finally();
+     .finally(()=>{
+     //hidden Preload 
+        mainApp.hiddenPreload();
+      });
 }
 
 
@@ -195,10 +198,12 @@ mainApp.getForm().addEventListener('submit', async function (event) {
         })
         .catch(error => {
           console.error(error);
-          //hidden Preload 
-          mainApp.hiddenPreload();
+
         })
-        .finally();
+       .finally(()=>{
+     //hidden Preload 
+        mainApp.hiddenPreload();
+      });
     } else {
       method = 'POST';
       url = URI_STATUS + LIST_CRUD[2];
@@ -214,10 +219,12 @@ mainApp.getForm().addEventListener('submit', async function (event) {
         })
         .catch(error => {
           console.error(error);
-          //hidden Preload 
-          mainApp.hiddenPreload();
+
         })
-        .finally();
+    .finally(()=>{
+     //hidden Preload 
+        mainApp.hiddenPreload();
+      });
     }
   } else {
     alert("Data Validate");
