@@ -134,7 +134,7 @@ class RoleModule extends Controller
             $this->data['message'] = 'Error create user';
             $this->data['response'] = ResponseInterface::HTTP_NO_CONTENT;
             $this->data['data'] = '';
-          }this->
+          }
           $this->data['message'] = 'Error Ajax';
           $this->data['response'] = ResponseInterface::HTTP_CONFLICT;
           $this->data['data'] = '';

@@ -89,9 +89,9 @@ async function delete_(id) {
         console.error(error);
       })
       .finally(() => {
-          //hidden Preload 
-          mainApp.hiddenPreload();
-        });
+        //hidden Preload 
+        mainApp.hiddenPreload();
+      });
   } else {
   }
 }
@@ -109,21 +109,18 @@ async function getDataId(id) {
   resultFetch = getData(data, method, url);
   resultFetch.then(response => response.json())
     .then(data => {
-      //console.log(data);
       ///Set data form 
       mainApp.setDataFormJson(data[model]);
       //show Modal 
       mainApp.showModal();
-
     })
     .catch(error => {
       console.error(error);
-
     })
     .finally(() => {
-          //hidden Preload 
-          mainApp.hiddenPreload();
-        });
+      //hidden Preload 
+      mainApp.hiddenPreload();
+    });
 }
 
 /**

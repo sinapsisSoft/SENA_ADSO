@@ -74,7 +74,7 @@ class StudentStatus extends Controller
     if ($this->request->isAJAX()) {
       //Select student  model 
  
-      if ($data[$this->model] = $this->studentStatusModel->where($this->primaryKey, $id)->first()) {
+      if ($this->data[$this->model] = $this->studentStatusModel->where($this->primaryKey, $id)->first()) {
         $this->data['message'] = 'success';
         $this->data['response'] = ResponseInterface::HTTP_OK;
         $this->data['csrf'] = csrf_hash();
