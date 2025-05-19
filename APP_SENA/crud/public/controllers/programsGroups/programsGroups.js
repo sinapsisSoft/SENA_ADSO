@@ -85,10 +85,11 @@ async function delete_(id) {
       })
       .catch(error => {
         console.error(error);
+      })
+      .finally(() => {
         //hidden Preload 
         mainApp.hiddenPreload();
-      })
-      .finally();
+      });
   } else {
   }
 }
@@ -111,15 +112,14 @@ async function getDataId(id) {
       mainApp.setDataFormJson(data[model]);
       //show Modal 
       mainApp.showModal();
-      //hidden Preload 
-      mainApp.hiddenPreload();
     })
     .catch(error => {
       console.error(error);
+    })
+    .finally(() => {
       //hidden Preload 
       mainApp.hiddenPreload();
-    })
-    .finally();
+    });
 }
 
 /**
@@ -186,10 +186,11 @@ mainApp.getForm().addEventListener('submit', async function (event) {
         })
         .catch(error => {
           console.error(error);
+        })
+        .finally(() => {
           //hidden Preload 
           mainApp.hiddenPreload();
-        })
-        .finally();
+        });
     } else {
       method = 'POST';
       url = URI_PROGRAMS_GROUPS + LIST_CRUD[2];
@@ -206,10 +207,11 @@ mainApp.getForm().addEventListener('submit', async function (event) {
         })
         .catch(error => {
           console.error(error);
+        })
+        .finally(() => {
           //hidden Preload 
           mainApp.hiddenPreload();
-        })
-        .finally();
+        });
     }
   } else {
     alert("Data Validate");
@@ -255,10 +257,11 @@ async function getStudentsGroups(id) {
     })
     .catch(error => {
       console.error(error);
+    })
+    .finally(() => {
       //hidden Preload 
       mainApp.hiddenPreload();
-    })
-    .finally();
+    });
 }
 
 async function getStudentsNoGroups() {
@@ -280,15 +283,15 @@ async function getStudentsNoGroups() {
 
       ];
       mainApp.createTable('table-no-group-students', arrayColumn, data[model], true, arrayActions);
-      mainApp.hiddenPreload();
       mainApp.showModal(1);
     })
     .catch(error => {
       console.error(error);
+    })
+    .finally(() => {
       //hidden Preload 
       mainApp.hiddenPreload();
-    })
-    .finally();
+    });
 }
 
 /**
@@ -308,14 +311,15 @@ async function add_student_group(id) {
     resultFetch.then(response => response.json())
       .then(data => {
         //Create table
-
+        getStudentsGroups(getKeyModule['group_id']);
       })
       .catch(error => {
         console.error(error);
+      })
+      .finally(() => {
         //hidden Preload 
         mainApp.hiddenPreload();
-      })
-      .finally();
+      });
   } else {
 
   }
@@ -355,16 +359,16 @@ async function getInstructorsGroups(id) {
       ];
       getInstructorNoGroups().then(() => {
         mainApp.createTable('table-group-instructor', arrayColumn, data[model], true, arrayActions);
-        mainApp.hiddenPreload();
         mainApp.showModal(2);
       });
     })
     .catch(error => {
       console.error(error.messages);
+    })
+    .finally(() => {
       //hidden Preload 
       mainApp.hiddenPreload();
-    })
-    .finally();
+    });
 }
 async function getInstructorNoGroups() {
   method = 'GET';
@@ -391,10 +395,10 @@ async function getInstructorNoGroups() {
       console.error(error);
 
     })
-     .finally(()=>{
-     //hidden Preload 
-        mainApp.hiddenPreload();
-      });
+    .finally(() => {
+      //hidden Preload 
+      mainApp.hiddenPreload();
+    });
 }
 
 async function remove_instructor_group(id) {
@@ -413,8 +417,8 @@ async function remove_instructor_group(id) {
       .catch(error => {
         console.error(error);
       })
-       .finally(()=>{
-     //hidden Preload 
+      .finally(() => {
+        //hidden Preload 
         mainApp.hiddenPreload();
       });
   } else {
@@ -424,20 +428,21 @@ async function remove_instructor_group(id) {
 async function remove_student_group(id) {
   if (confirm(textConfirm) == true) {
     method = 'DELETE';
-    url = URI_PROGRAMS_STUDENT_GROUPS + LIST_CRUD[3]+ '/' + id;
+    url = URI_PROGRAMS_STUDENT_GROUPS + LIST_CRUD[3] + '/' + id;
     data = getKeyModule;
     //console.log(data);
     resultFetch = getData(data, method, url);
     resultFetch.then(response => response.json())
       .then(data => {
         //Create table
-        console.log(data);
+        //console.log(data);
+        getStudentsGroups(getKeyModule['group_id']);
       })
       .catch(error => {
         console.error(error);
       })
-       .finally(()=>{
-     //hidden Preload 
+      .finally(() => {
+        //hidden Preload 
         mainApp.hiddenPreload();
       });
   } else {
@@ -461,8 +466,8 @@ async function add_instructor_group(id) {
       .catch(error => {
         console.error(error);
       })
-      .finally(()=>{
-     //hidden Preload 
+      .finally(() => {
+        //hidden Preload 
         mainApp.hiddenPreload();
       });
   } else {

@@ -142,7 +142,7 @@ class ProgramsGroups extends Controller
       if ($this->programsGroupStudentModel->insert($dataModel)) {
         $this->data['message'] = 'success';
         $this->data['response'] = ResponseInterface::HTTP_OK;
-        $this->data['data'] = $dataModel;
+        $this->data[$this->model] = $dataModel;
         $this->data['csrf'] = csrf_hash();
       } else {
         $this->data['message'] = 'Error add students program group';
@@ -213,13 +213,14 @@ class ProgramsGroups extends Controller
     try {
       //Remove instructor group 
       if ($this->request->isAJAX()) {
+        
         if ($this->programsGroupStudentModel->sp_remove_student_group($id)) {
           $this->data['message'] = 'success';
           $this->data['response'] = ResponseInterface::HTTP_OK;
           $this->data['data'] = "OK";
           $this->data['csrf'] = csrf_hash();
         } else {
-          $this->data['message'] = 'Error Ajax';
+          $this->data['message'] = 'Error remove student group';
           $this->data['response'] = ResponseInterface::HTTP_CONFLICT;
           $this->data['data'] = '';
         }
