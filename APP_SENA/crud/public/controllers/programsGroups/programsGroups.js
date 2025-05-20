@@ -79,7 +79,6 @@ async function delete_(id) {
     resultFetch = getData(data, method, url);
     resultFetch.then(response => response.json())
       .then(data => {
-        //console.log(data);
         //Reload View
         reloadPage();
       })
@@ -107,7 +106,6 @@ async function getDataId(id) {
   resultFetch = getData(data, method, url);
   resultFetch.then(response => response.json())
     .then(data => {
-      //console.log(data);
       ///Set data form 
       mainApp.setDataFormJson(data[model]);
       //show Modal 
@@ -174,11 +172,9 @@ mainApp.getForm().addEventListener('submit', async function (event) {
       method = 'POST';
       url = URI_PROGRAMS_GROUPS + LIST_CRUD[0];
       data = mainApp.getDataFormJson();
-      //console.log(data);
       resultFetch = getData(data, method, url);
       resultFetch.then(response => response.json())
         .then(data => {
-          //console.log(data);
           //show Modal 
           mainApp.hiddenModal();
           //Reload View
@@ -347,7 +343,7 @@ async function getInstructorsGroups(id) {
   resultFetch = getData(data, method, url);
   resultFetch.then(response => response.json())
     .then(data => {
-      console.log(data[model]);
+
       let arrayColumn = ['#', 'Document', 'First Name', 'Last Name', 'Specialty'];
       let arrayActions = [
         {
@@ -377,7 +373,6 @@ async function getInstructorNoGroups() {
   resultFetch = getData(data, method, url);
   resultFetch.then(response => response.json())
     .then(data => {
-      console.log(data[model]);
       let arrayColumn = ['#', 'Document', 'First Name', 'Last Name', 'Specialty'];
       let arrayActions = [
         {
@@ -407,12 +402,11 @@ async function remove_instructor_group(id) {
     method = 'DELETE';
     url = URI_PROGRAMS_INSTRUCTOR_GROUPS + LIST_CRUD[3] + '/' + id;
     data = getKeyModule;
-    //console.log(data);
     resultFetch = getData(data, method, url);
     resultFetch.then(response => response.json())
       .then(data => {
         //Create table
-        //console.log(data);
+        getInstructorsGroups(getKeyModule['group_id']);
       })
       .catch(error => {
         console.error(error);
@@ -430,12 +424,10 @@ async function remove_student_group(id) {
     method = 'DELETE';
     url = URI_PROGRAMS_STUDENT_GROUPS + LIST_CRUD[3] + '/' + id;
     data = getKeyModule;
-    //console.log(data);
     resultFetch = getData(data, method, url);
     resultFetch.then(response => response.json())
       .then(data => {
         //Create table
-        //console.log(data);
         getStudentsGroups(getKeyModule['group_id']);
       })
       .catch(error => {
@@ -456,12 +448,11 @@ async function add_instructor_group(id) {
     method = 'POST';
     url = URI_PROGRAMS_INSTRUCTOR_GROUPS + LIST_CRUD[0];
     data = getKeyModule;
-    //console.log(data);
     resultFetch = getData(data, method, url);
     resultFetch.then(response => response.json())
       .then(data => {
         //Create table
-        //console.log(data);
+         getInstructorsGroups(getKeyModule['group_id']);
       })
       .catch(error => {
         console.error(error);
