@@ -40,9 +40,12 @@
   <!--Footer-->
   <?php require_once('../app/Views/footer/footer.php') ?>
   <!--End Footer-->
-  <!--Footer-->
+  <!--Modal management-->
   <?php require_once('../app/Views/managementGroups/management_modal.php') ?>
-  <!--End Footer-->
+  <!--End Modal management-->
+    <!--Modal management-->
+  <?php require_once('../app/Views/managementGroups/instructors_modal.php') ?>
+  <!--End Modal management-->
 
   <!--JS-->
   <?php require_once('../app/Views/assets/js/js.php') ?>

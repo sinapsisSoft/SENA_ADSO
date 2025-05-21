@@ -8,14 +8,14 @@
 
 /* These lines of code are declaring constants and initializing variables in a JavaScript file. Here is
 a breakdown of what each line is doing: */
-const formId = 'management-form';
-const modalId = 'management-modal';
+const formId = ['management-form', 'instructor-form'];
+const modalId = ['management-modal', 'instructor-modal'];
 const model = 'managementGroup';
-const tableId = ['table-management','table-index-students','table-index-management', 'table-index-assessment'];
+const tableId = ['table-management', 'table-group-instructor', 'table-no-group-instructor'];
 const preloadId = 'preloadId';
-const actionsForms = ['block-input','hidden-input'];
+const actionsForms = ['block-input', 'hidden-input'];
 const textConfirm = 'Press a button!\nEither OK or Cancel.';
-const btnActions = ['btn_management_form', 'btn_students_form', 'btn_management_form', 'btn_assessment_form'];
+const btnActions = ['btn_management_form', 'btn_instructor_form'];
 const mainApp = new Main(modalId, formId, actionsForms, preloadId);
 
 /* These lines of code are declaring and initializing variables in a JavaScript file. Here is a
@@ -25,7 +25,7 @@ var url = "";
 var method = "";
 var data = "";
 var resultFetch = null;
-var getKeyModule = { 'Program_group_fk': 0};
+var getKeyModule = { 'Program_group_fk': 0 };
 
 /**
  * The function `showStatus` disables all form elements, resets the form, enables a button, and
@@ -51,10 +51,6 @@ function add(id) {
   mainApp.showModal();
   mainApp.setDataInput('Program_group_fk', id);
 }
-function  add_instructor(id){
-  
-}
-
 /**
  * The function `editStatus` disables form editing, resets the form, sets `insertUpdate` to false,
  * disables a button, and retrieves the status ID.
@@ -122,10 +118,10 @@ async function getDataId(id) {
     .catch(error => {
       console.error(error);
     })
-     .finally(()=>{
-     //hidden Preload 
-        mainApp.hiddenPreload();
-      });
+    .finally(() => {
+      //hidden Preload 
+      mainApp.hiddenPreload();
+    });
 }
 
 
@@ -182,7 +178,7 @@ mainApp.getForm().addEventListener('submit', async function (event) {
       url = URI_MANAGEMENT_GROUPS + LIST_CRUD[0];
       data = mainApp.getDataFormJson();
       console.log(data);
-      
+
       resultFetch = getData(data, method, url);
       resultFetch.then(response => response.json())
         .then(data => {
@@ -195,10 +191,10 @@ mainApp.getForm().addEventListener('submit', async function (event) {
         .catch(error => {
           console.error(error);
         })
-         .finally(()=>{
-     //hidden Preload 
-        mainApp.hiddenPreload();
-      });
+        .finally(() => {
+          //hidden Preload 
+          mainApp.hiddenPreload();
+        });
     } else {
       method = 'PUT';
       url = URI_MANAGEMENT_GROUPS + LIST_CRUD[2];
@@ -216,10 +212,10 @@ mainApp.getForm().addEventListener('submit', async function (event) {
         .catch(error => {
           console.error(error);
         })
-         .finally(()=>{
-     //hidden Preload 
-        mainApp.hiddenPreload();
-      });
+        .finally(() => {
+          //hidden Preload 
+          mainApp.hiddenPreload();
+        });
     }
   } else {
     alert("Data Validate");
@@ -227,6 +223,71 @@ mainApp.getForm().addEventListener('submit', async function (event) {
   }
 });
 
+function show_instructors(id) {
+  mainApp.btnEnabledDisabled(true, btnActions[1]);
+  mainApp.showModal(1);
+  getKeyModule['group_id'] = id;
+  getInstructorNoGroups();
+}
+
+async function getInstructorsGroups(id) {
+  method = 'GET';
+  url = URI_PROGRAMS_INSTRUCTOR_GROUPS + LIST_CRUD[4] + '/' + id;
+  data = "";
+  resultFetch = getData(data, method, url);
+  resultFetch.then(response => response.json())
+    .then(data => {
+      console.log(data);
+      let arrayColumn = ['#', 'Document', 'First Name', 'Last Name', 'Specialty'];
+      let arrayActions = [
+        {
+          name: 'remove_instructor_group',
+          label: 'Remove to Group',
+          icon: 'bi-person-dash',
+          type: 'danger'
+        }
+      ];
+      // getInstructorNoGroups().then(() => {
+      //   mainApp.createTable('table-group-instructor', arrayColumn, data[model], true, arrayActions);
+      //   mainApp.showModal(2);
+      // });
+    })
+    .catch(error => {
+      console.error(error.messages);
+    })
+    .finally(() => {
+      //hidden Preload 
+      mainApp.hiddenPreload();
+    });
+}
+async function getInstructorNoGroups() {
+  method = 'GET';
+  url = URI_PROGRAMS_INSTRUCTOR_GROUPS + LIST_CRUD[4];
+  data = "";
+  resultFetch = getData(data, method, url);
+  resultFetch.then(response => response.json())
+    .then(data => {
+      console.log(data);
+      let arrayColumn = ['#', 'Document', 'First Name', 'Last Name', 'Specialty'];
+      let arrayActions = [
+        {
+          name: 'add_instructor_group',
+          label: 'Add to Group',
+          icon: 'bi-person-plus-fill',
+          type: 'primary'
+        }
+      ];
+      // mainApp.createTable('table-no-group-instructor', arrayColumn, data[model], true, arrayActions);
+      // mainApp.showModal(2);
+    })
+    .catch(error => {
+      console.error(error);
+    })
+    .finally(() => {
+      //hidden Preload 
+      mainApp.hiddenPreload();
+    });
+}
 
 /**
  * The function `reloadPage` hides a preload element, waits for 500 milliseconds, and then reloads the

@@ -29,7 +29,7 @@
                 <div class="col-6">
                   <div class="btn-group-vertical btn-group-sm" role="group" aria-label="Basic mixed styles example">
                     <button type="button" title="Button Add Instructors to Management group"
-                      onclick="add_instructor(<?php echo $obj['Management_group_id']; ?>)" class="btn btn-info btn-actions"><i class="bi bi-person-raised-hand"></i></button>
+                      onclick="show_instructors(<?php echo $obj['Management_group_id']; ?>)" class="btn btn-info btn-actions"><i class="bi bi-person-raised-hand"></i></button>
                     
                   </div>
                 </div>

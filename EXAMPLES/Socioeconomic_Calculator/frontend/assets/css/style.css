@@ -46,3 +46,10 @@
 .min-salary {
   background-color: #5a5c69;
 }
+
+.input-error{
+    border: solid red;
+    background: #ff2c1670;
+    color: white;
+    border-radius: 1.1rem;
+}
