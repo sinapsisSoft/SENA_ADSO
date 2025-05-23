@@ -64,7 +64,7 @@
   <?php require_once('../app/Views/assets/js/js.php') ?>
   <?php require_once('../app/Views/assets/js/dataTable.php') ?>
   <!--JS Controller-->
-  <script src="../controllers/student/student.js"></script>
+  <!-- <script src="../controllers/student/student.js"></script> -->
 
 </body>
 

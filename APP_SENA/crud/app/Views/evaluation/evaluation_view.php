@@ -27,7 +27,7 @@
       <div class="col">
         <!--Container Table-->
           <!--Form-->
-          <?php require_once('../app/Views/evaluation/form.php') ?>
+          <?php require_once('../app/Views/evaluation/evaluation___view.php') ?>
           <!--End Form-->
         <!--End Container Table-->
       </div>
@@ -64,7 +64,7 @@
   <?php require_once('../app/Views/assets/js/js.php') ?>
   <?php require_once('../app/Views/assets/js/dataTable.php') ?>
   <!--JS Controller-->
-  <script src="../controllers/student/student.js"></script>
+  <!-- <script src="../controllers/student/student.js"></script> -->
 
 </body>
 

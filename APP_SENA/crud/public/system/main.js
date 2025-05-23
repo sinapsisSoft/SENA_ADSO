@@ -427,7 +427,7 @@ class Main {
    * at least 8 characters, and `false` otherwise.
    */
   validatePassword(input) {
-    if (input.value.length < 8) {
+    if (input.value.length < 6) {
       return false;
     }
     return true;

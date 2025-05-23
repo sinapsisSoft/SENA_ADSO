@@ -53,3 +53,13 @@
     color: white;
     border-radius: 1.1rem;
 }
+
+#classifications{
+  display: none;
+}
+#comparative{
+  display: none;
+}
+#references{
+  display: none;
+}

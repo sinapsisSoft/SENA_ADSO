@@ -48,6 +48,7 @@ function setDataServices(data) {
     return response.json();
   }).then(data => {
     console.log(data);
+    setDataClassifications(data['result']['class']);
     alert("Success: OK");
   }).catch(error => {
     console.error('Error:', error);
@@ -55,6 +56,43 @@ function setDataServices(data) {
   }).finally(() => {
     console.log("Request completed");
   });
+}
+
+function setDataClassifications(data) {
+  const classifications = document.getElementById("classifications");
+  let min = new Intl.NumberFormat(["ban", "id"]).format(data['min']);
+  let max = new Intl.NumberFormat(["ban", "id"]).format(data['max']); 
+  let daySalary = new Intl.NumberFormat(["ban", "id"]).format(data['DaySalary']); 
+  classifications.innerHTML = "";
+  classifications.innerHTML = `
+  <div class="col-md-8 mx-auto">
+    <div class="card salary-class-card shadow" style="border-left:5px solid ${data['color']}">
+      <div class="card-header" style="background-color: ${data['color']}; color: white;">
+        <h3 class="card-title mb-0"><i class="fas fa-crown me-2"></i>Tu Clasificación</h3>
+      </div>
+      <div class="card-body">
+        <h2 class="text-center mb-4" style="color: ${data['color']};">${data['nombre']}</h2>
+        <div class="row">
+          <div class="col-md-6">
+            <p><strong>Rango Salarial Anual:</strong></p>
+            <div class="d-flex align-items-center mb-3">
+              <span class="badge bg-dark me-2">Mín</span>
+              <span>$${min}</span>
+            </div>
+            <div class="d-flex align-items-center">
+              <span class="badge bg-dark me-2">Máx</span>
+              <span>$${max}</span>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <p><strong>Salario Diario:</strong> $${daySalary}</p>
+            <p><strong>Descripción:</strong> ${data['descripcion']}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>`;
+    classifications.style.display = "block";
 }
 
 
