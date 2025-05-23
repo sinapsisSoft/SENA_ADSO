@@ -206,5 +206,19 @@ $routes->group("dashboard",['namespace' => 'App\Controllers\Dashboard'],function
   $routes->get("/", "Dashboard::index",['filter' => 'AuthCheck']);
 
 });
+//GROUP ROUTES EVALUATION
+$routes->group("evaluations",['namespace' => 'App\Controllers\Evaluation','filter' => 'AuthCheck'],function($routes){
+
+
+  $routes->get("/", "Evaluation::index");
+
+});
+//GROUP ROUTES EVALUATION
+$routes->group("selectEvaluation",['namespace' => 'App\Controllers\Evaluation','filter' => 'AuthCheck'],function($routes){
+
+
+  $routes->get("/", "Evaluation::selectEvaluation");
+
+});
 
 $routes->get('/', 'Login::index', ['namespace' => 'App\Controllers\Login','filter' => 'AlreadyLoggedIn']);

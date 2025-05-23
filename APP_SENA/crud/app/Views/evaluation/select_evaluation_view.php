@@ -25,29 +25,46 @@
       <?php require_once('../app/Views/navSlider/navSlider.php') ?>
       <!--End Navbar Slider-->
       <div class="col">
-
-        <h3><?= $title ?></h3>
-
-        <button type="button" class="btn btn-primary btn-actions" title="Button new User Status" onclick="add()" style="font-size: 0.5em;">
-          <i class="bi bi-plus-circle-fill"></i> </button>
         <!--Container Table-->
-
+          <!--Form-->
+          <?php require_once('../app/Views/evaluation/select_evaluation.php') ?>
+          <!--End Form-->
         <!--End Container Table-->
       </div>
     </div>
   </div>
- 
   <!--End Container-->
   <!--Footer-->
   <?php require_once('../app/Views/footer/footer.php') ?>
   <!--End Footer-->
- 
+
+  <!--Modal-->
+  <div class="modal fade" id="my-modal" tabindex="-1" aria-labelledby="my-modalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="my-modalLabel"><?= $title ?></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <!--Form-->
+
+          <!--End Form-->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" form="my-form" id="btn_Submit" class="btn btn-primary">Send Data</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--End Modal-->
 
   <!--JS-->
   <?php require_once('../app/Views/assets/js/js.php') ?>
   <?php require_once('../app/Views/assets/js/dataTable.php') ?>
   <!--JS Controller-->
-  <script src="<?= base_url('controllers/programsGroups/programsGroups.js') ?>"></script>
+  <script src="../controllers/student/student.js"></script>
 
 </body>
 
