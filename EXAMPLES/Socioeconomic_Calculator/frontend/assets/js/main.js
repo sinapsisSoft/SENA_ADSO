@@ -1,9 +1,11 @@
 const objForm = document.getElementById("salaryForm");
 const getElements = objForm.querySelectorAll("input");
+
 const URL = "http://localhost:3000/api_v1/";
 const URL_SALARY = "classify";
 
 objForm.addEventListener("submit", function (e) {
+
   e.preventDefault();
   for (let i = 0; i < getElements.length; i++) {
     let element = getElements[i];
@@ -61,8 +63,8 @@ function setDataServices(data) {
 function setDataClassifications(data) {
   const classifications = document.getElementById("classifications");
   let min = new Intl.NumberFormat(["ban", "id"]).format(data['min']);
-  let max = new Intl.NumberFormat(["ban", "id"]).format(data['max']); 
-  let daySalary = new Intl.NumberFormat(["ban", "id"]).format(data['DaySalary']); 
+  let max = new Intl.NumberFormat(["ban", "id"]).format(data['max']);
+  let daySalary = new Intl.NumberFormat(["ban", "id"]).format(data['DaySalary']);
   classifications.innerHTML = "";
   classifications.innerHTML = `
   <div class="col-md-8 mx-auto">
@@ -92,9 +94,8 @@ function setDataClassifications(data) {
       </div>
     </div>
   </div>`;
-    classifications.style.display = "block";
+  classifications.style.display = "block";
 }
-
 
 
 
