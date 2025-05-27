@@ -3,22 +3,12 @@
  * Date: 2025-05-19
  * Description: This is the main server file for the backend of the application.
 */
-import express from 'express';
-import cors from 'cors';
-import uploadFile from './routers/uploadFile.router.js';
-//import salaryRouter from './routers/salary.router.js';
+import app from './app/app.js';
+import dotenv from 'dotenv';
 
 
-const app = express();
-const PORT = 3000;
-
-app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-//app.use('/api_v1',salaryRouter);
-app.use('/api_v1',uploadFile);
-
+dotenv.config();
+const PORT = process.env.SERVER_PORT || 3000; // Allow dynamic port configuration
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
