@@ -5,8 +5,9 @@
 */
 import express from 'express';
 import cors from 'cors';
-import salaryRouter from './routers/salary.router.js';
-import uploadRouter from './routers/upload.router.js';
+import uploadFile from './routers/uploadFile.router.js';
+//import salaryRouter from './routers/salary.router.js';
+
 
 const app = express();
 const PORT = 3000;
@@ -15,8 +16,9 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/api_v1',salaryRouter);
-app.use('/api_v1',uploadRouter);
+//app.use('/api_v1',salaryRouter);
+app.use('/api_v1',uploadFile);
+
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
