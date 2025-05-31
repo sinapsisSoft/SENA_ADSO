@@ -1,12 +1,17 @@
 import { Router } from "express";
 import RoleController from '../controllers/role.controller.js';
+import { verifyToken } from '../middleware/authMiddleware.js';
+// Importing necessary modules
 const router= Router();
 const name='/role';
 // Public route
-router.post(name, RoleController.register);
-router.get(name+'/',RoleController.show);
-router.get(name+'/:id',RoleController.findById);
-router.put(name+'/:id', RoleController.update);
-router.delete(name+'/:id',RoleController.delete);
+router.route(name)
+  .post(RoleController.register) // Register a new user
+  .get(verifyToken,RoleController.show);// Show all users
+
+router.route(`${name}/:id`)
+  .get(RoleController.findById)// Show a user by ID
+  .put(RoleController.update)// Update a user by ID
+  .delete(RoleController.delete);// Delete a user by ID
 
 export default router;

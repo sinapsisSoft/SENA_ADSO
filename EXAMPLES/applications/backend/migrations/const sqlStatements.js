@@ -1,15 +1,15 @@
 const sqlStatements = [
   // Drop tables in reverse order of creation (to avoid foreign key constraints)
 
-  `DROP TABLE IF EXISTS user_role;`,
+  `DROP TABLE IF EXISTS User_role;`,
   `DROP TABLE IF EXISTS Profile;`,
   `DROP TABLE IF EXISTS User;`,
   `DROP TABLE IF EXISTS Role;`,
-  `DROP TABLE IF EXISTS document_type;`,
-  `DROP TABLE IF EXISTS UserStatus;`,
+  `DROP TABLE IF EXISTS Document_type;`,
+  `DROP TABLE IF EXISTS User_status;`,
 
   // Create tables in proper order
-  `CREATE TABLE UserStatus (
+  `CREATE TABLE User_status (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(50) NOT NULL UNIQUE,
     description VARCHAR(255),
@@ -17,7 +17,7 @@ const sqlStatements = [
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
   ) ENGINE=InnoDB;`,
 
-  `CREATE TABLE document_type (
+  `CREATE TABLE Document_type (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(50) NOT NULL UNIQUE,
     description VARCHAR(255),
@@ -44,7 +44,7 @@ const sqlStatements = [
     last_login TIMESTAMP NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (status_id) REFERENCES UserStatus(id) ON DELETE RESTRICT ON UPDATE CASCADE,
+    FOREIGN KEY (status_id) REFERENCES user_status(id) ON DELETE RESTRICT ON UPDATE CASCADE,
     INDEX idx_user_username (username),
     INDEX idx_user_email (email)
   ) ENGINE=InnoDB;`,
@@ -68,7 +68,7 @@ const sqlStatements = [
     INDEX idx_profile_document (document_number)
   ) ENGINE=InnoDB;`,
 
-  `CREATE TABLE user_role (
+  `CREATE TABLE User_role (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
     role_id INT NOT NULL,
@@ -78,7 +78,7 @@ const sqlStatements = [
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (role_id) REFERENCES Role(id) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (status_id) REFERENCES UserStatus(id) ON DELETE RESTRICT ON UPDATE CASCADE,
+    FOREIGN KEY (status_id) REFERENCES user_status(id) ON DELETE RESTRICT ON UPDATE CASCADE,
     FOREIGN KEY (assigned_by) REFERENCES User(id) ON DELETE SET NULL ON UPDATE CASCADE,
     UNIQUE KEY uk_user_role (user_id, role_id),
     INDEX idx_user_role_user (user_id),
@@ -86,18 +86,31 @@ const sqlStatements = [
   ) ENGINE=InnoDB;`,
 
   // Insert initial data
-  `INSERT INTO UserStatus (name, description) VALUES 
+  `INSERT INTO User_status (name, description) VALUES 
     ('active', 'Active user'),
     ('inactive', 'Inactive user'),
     ('suspended', 'Suspended user');`,
 
-  `INSERT INTO document_type (name, description) VALUES 
-    ('DNI', 'National Identity Document'),
-    ('Passport', 'International Passport'),
-    ('Driver License', 'Driver License');`,
+  `INSERT INTO Document_type (name, description) VALUES 
+    ('CC', 'Cedula de ciudadanía'),
+    ('TI', 'Tarjeta de identidad'),
+    ('CE', 'Cédula de Extranjería');`,
 
   `INSERT INTO Role (name, description) VALUES 
     ('admin', 'System Administrator'),
     ('user', 'Regular User'),
     ('manager', 'Department Manager');`,
+  `DROP PROCEDURE IF EXISTS sp_show_user_active;`,
+  `CREATE PROCEDURE sp_show_user_active()
+    BEGIN
+    SELECT US.id,US.username,US.email,US.password_hash,US.status_id,UST.name AS status_name,US.last_login,US.created_at,US.updated_at  FROM user AS US 
+    INNER JOIN  user_status UST ON US.status_id=UST.id WHERE US.status_id=1 ORDER BY US.id;
+    END;`,
+  `DROP PROCEDURE IF EXISTS sp_show_id_user_active;`,
+  `CREATE PROCEDURE sp_show_id_user_active(IN Id INT)
+    BEGIN
+    SELECT US.id,US.username,US.email,US.password_hash,US.status_id,UST.name AS status_name,US.last_login,US.created_at,US.updated_at  FROM user AS US 
+    INNER JOIN  user_status UST ON US.status_id=UST.id WHERE US.status_id=1 AND US.id=Id ORDER BY US.id;
+    END;`,
+
 ];

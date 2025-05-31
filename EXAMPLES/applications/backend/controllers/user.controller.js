@@ -1,6 +1,8 @@
 import UserModel from '../models/user.model.js';
 import { encryptPassword, comparePassword } from '../library/appBcrypt.js';
-
+import jwt from "jsonwebtoken";
+import dotenv from 'dotenv';
+dotenv.config();
 class UserController {
 
   async register(req, res) {
@@ -8,19 +10,19 @@ class UserController {
       const { username, email, password, status } = req.body;
       // Basic validation
       if (!username || !email || !password || !status) {
-        return res.status(400).json({ error: 'Faltan campos obligatorios' });
+        return res.status(400).json({ error: 'Required fields are missing' });
       }
       // Additional validation
       if (password.length < 8) {
         return res.status(400).json({
-          error: 'La contraseña debe tener al menos 8 caracteres'
+          error: 'The password must be at least 8 characters long.'
         });
       }
       // Verify if the User already exists
       const existingUser = await UserModel.findByName(username);
       if (existingUser) {
         return res.status(409).json({
-          error: 'El nombre de usuario ya está en uso'
+          error: 'The username is already in use'
         });
       }
       const passwordHash = await encryptPassword(password);
@@ -132,6 +134,14 @@ class UserController {
         if (!passwordHash) {
           return res.status(401).json({ error: 'Invalid password' });
         } else {
+          const updateLogin = await UserModel.updateLogin(existingUser.id);
+          if (!updateLogin) {
+            return res.status(500).json({ error: 'Failed to update login time' });
+          }
+          const token = jwt.sign({ id: existingUser.id, email: existingUser.email, status: existingUser.status_id }, process.env.JWT_SECRET, {
+            expiresIn: "1h",
+            algorithm: "HS256"
+          });
           res.status(200).json({
             message: 'Login successful',
             user: {
@@ -139,7 +149,7 @@ class UserController {
               username: existingUser.username,
               email: existingUser.email,
               statusId: existingUser.statusId,
-              token: 'your_jwt_token_here' // Replace with actual JWT token generation logic
+              token: token
             }
           });
         }

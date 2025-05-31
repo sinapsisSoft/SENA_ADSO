@@ -12,6 +12,7 @@ import documentTypeRouter from '../routers/documentType.router.js';
 import roleRouter from '../routers/role.router.js';
 import userStatusRouter from '../routers/userStatus.router.js';
 import userRouter from '../routers/user.router.js';
+import profileRouter from '../routers/profile.router.js';
 
 const app = express();
 
@@ -26,6 +27,7 @@ app.use('/api_v1',documentTypeRouter);
 app.use('/api_v1',roleRouter);
 app.use('/api_v1',userStatusRouter);	
 app.use('/api_v1',userRouter);	
+app.use('/api_v1',profileRouter);	
 
 app.use((rep, res, nex) => {
   res.status(404).json({

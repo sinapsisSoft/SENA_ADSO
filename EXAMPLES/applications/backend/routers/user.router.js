@@ -4,11 +4,17 @@ const router = Router();
 const name = '/user';
 const nameLogin = '/login';
 // Public route
-router.post(name, UserController.register);
-router.get(name + '/', UserController.show);
-router.get(name + '/:id', UserController.findById);
-router.put(name + '/:id', UserController.update);
-router.delete(name + '/:id', UserController.delete);
+router.route(name)
+  .post(UserController.register) // Register a new user
+  .get(UserController.show);// Show all users
+
+router.route(`${name}/:id`)
+  .get(UserController.findById)// Show a user by ID
+  .put(UserController.update)// Update a user by ID
+  .delete(UserController.delete);// Delete a user by ID
+
 //Login route
-router.post(nameLogin, UserController.login);
+router.route(nameLogin)
+  .post(UserController.login);// Login a user
+
 export default router;

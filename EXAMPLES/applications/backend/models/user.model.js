@@ -63,5 +63,14 @@ class UserModel {
     );
     return rows[0];
   }
+  
+  static async updateLogin(id) {
+    const [result] = await connect.query(
+      'UPDATE User SET last_login = CURRENT_TIMESTAMP WHERE id = ?',
+      [id]
+    );
+    return result.affectedRows > 0 ? this.findById(id) : null;
+  }
+  
 }
 export default UserModel;
