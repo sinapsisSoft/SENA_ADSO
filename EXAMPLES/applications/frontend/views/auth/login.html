@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login | Sistema CRUD</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/auth.css">
+</head>
+
+<body class="auth-page">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6 col-lg-4">
+        <div class="card auth-card shadow">
+          <div class="card-body p-4">
+            <div class="text-center mb-4">
+              <img src="../../assets/img/logos/logo.png" alt="Logo" class="auth-logo img ">
+              <h2 class="auth-title">Iniciar Sesión</h2>
+            </div>
+
+            <form id="loginForm">
+              <div class="mb-3">
+                <label for="email" class="form-label">Correo Electrónico</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+                <div class="invalid-feedback">Por favor ingresa un correo válido</div>
+              </div>
+
+              <div class="mb-3">
+                <label for="password" class="form-label">Contraseña</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+                <div class="invalid-feedback">La contraseña es requerida</div>
+              </div>
+
+              <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="remember" name="remember">
+                <label class="form-check-label" for="remember">Recordarme</label>
+              </div>
+
+              <button type="submit" class="btn btn-primary w-100 mb-3" id="loginBtn">
+                <span class="spinner-border spinner-border-sm d-none" id="loginSpinner"></span>
+                Ingresar
+              </button>
+
+              <div class="text-center">
+                <a href="forgot-password.html" class="text-decoration-none">¿Olvidaste tu contraseña?</a>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="text-center mt-3">
+          <p class="text-muted">¿No tienes una cuenta? <a href="register.html"
+              class="text-decoration-none">Regístrate</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Toast para mensajes -->
+  <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+    <div id="authToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-header">
+        <strong class="me-auto" id="toastTitle">Mensaje</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+      <div class="toast-body" id="toastMessage"></div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script type="module" src="../../assets/js/controllers/auth/login.controller.js"></script>
+
+</body>
+
+</html>
