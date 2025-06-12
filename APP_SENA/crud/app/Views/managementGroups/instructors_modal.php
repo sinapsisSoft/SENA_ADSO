@@ -12,7 +12,7 @@
           <div class="row">
             <div class="col-6">
             <div class="table-responsive mx-auto">
-                <table class="table table-hover" id="table-no-group-instructor">
+                <table class="table table-hover" id="table-group-instructor">
                   <thead class="table-dark">
                     <tr class="text-center">
                       <th scope="col">#</th>
@@ -41,7 +41,7 @@
             <div class="col-6">
             
               <div class="table-responsive mx-auto">
-                <table class="table table-hover" id="table-group-instructor">
+                <table class="table table-hover" id="table-no-group-instructor">
                   <thead class="table-dark">
                     <tr class="text-center">
                       <th scope="col">#</th>

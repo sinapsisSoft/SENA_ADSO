@@ -7,7 +7,7 @@ const name='/role';
 // Public route
 router.route(name)
   .post(RoleController.register) // Register a new user
-  .get(verifyToken,RoleController.show);// Show all users
+  .get(RoleController.show);// Show all users
 
 router.route(`${name}/:id`)
   .get(RoleController.findById)// Show a user by ID

@@ -2,8 +2,12 @@
   <input type="hidden" class="form-control" id="User_id" name="User_id" value=null>
   <input type="hidden" class="form-control" id="updated_at" name="updated_at" value=null>
   <div class="form-floating mb-3">
-    <input type="email" class="form-control " id="User_user" name="User_user" placeholder="User" required>
+    <input type="text" class="form-control " id="User_user" name="User_user" placeholder="User" required>
     <label for="User_user">User </label>
+  </div>
+  <div class="form-floating mb-3">
+    <input type="email" class="form-control " id="User_email" name="User_email" placeholder="Email" required>
+    <label for="User_email">Email </label>
   </div>
   <div class="form-floating mb-3">
     <input type="password" size="10" minlength="8" class="form-control " id="User_password" name="User_password" placeholder="Password" required>
@@ -30,7 +34,4 @@
       <?php endif; ?>
     </select>
   </div>
- 
- 
- 
 </form>

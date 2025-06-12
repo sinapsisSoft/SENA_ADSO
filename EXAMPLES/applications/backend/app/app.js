@@ -13,6 +13,8 @@ import roleRouter from '../routers/role.router.js';
 import userStatusRouter from '../routers/userStatus.router.js';
 import userRouter from '../routers/user.router.js';
 import profileRouter from '../routers/profile.router.js';
+import tokenRouter from '../routers/token.router.js';
+
 
 const app = express();
 
@@ -28,6 +30,9 @@ app.use('/api_v1',roleRouter);
 app.use('/api_v1',userStatusRouter);	
 app.use('/api_v1',userRouter);	
 app.use('/api_v1',profileRouter);	
+app.use('/api_v1',tokenRouter);	
+
+
 
 app.use((rep, res, nex) => {
   res.status(404).json({

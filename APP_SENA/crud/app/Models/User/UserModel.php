@@ -12,7 +12,7 @@ class UserModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['User_user','User_password','Roles_fk','User_status_fk','updated_at'];
+    protected $allowedFields    = ['User_user','User_email','User_password','Roles_fk','User_status_fk','updated_at'];
 
     protected bool $allowEmptyInserts = false;
 
@@ -43,6 +43,29 @@ class UserModel extends Model
         try {
             $sql    = "CALL sp_users_students_instructors();";
             $query  = $this->db->query($sql);
+            $result = $query->getResultArray();
+        } catch (Exception $e) {
+            $result = null;
+        }
+        return $result;
+    }
+    // Get all users by id
+    public function findByName($name)
+    {
+        try {
+            $sql    = "SELECT * FROM users WHERE User_user=?";
+            $query  = $this->db->query($sql,$name);
+            $result = $query->getResultArray();
+        } catch (Exception $e) {
+            $result = null;
+        }
+        return $result;
+    }
+      public function findByEmail($email)
+    {
+        try {
+            $sql    = "SELECT * FROM users WHERE User_email=?";
+            $query  = $this->db->query($sql,$email);
             $result = $query->getResultArray();
         } catch (Exception $e) {
             $result = null;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Author:DIEGO CASALLAS
  * Date:27/04/2025
@@ -30,7 +31,7 @@ class User extends Controller
   //This method is the constructor
   public function __construct()
   {
-    
+
     $this->primaryKey = "User_id";
     $this->userModel = new UserModel();
     $this->roleModel = new RoleModel();
@@ -38,7 +39,7 @@ class User extends Controller
     $this->roleModuleModel = new RoleModulesModel();
     $this->userStatusModel = new UserStatusModel();
     $this->data = [];
- 
+
     $this->model = "users";
   }
   //This method is the index, Started the view, set parameters for send the data in the view of the html render  
@@ -53,22 +54,34 @@ class User extends Controller
     return view('user/users_view', $this->data);
   }
 
-  
+
   //This method consists of creating, obtains the data from the POST method, return Json
   public function create()
   {
     if ($this->request->isAJAX()) {
       $dataModel = $this->getDataModel();
       //Query Insert Codeigniter
-      if ($this->userModel->insert($dataModel)) {
-        $this->data['message'] = 'success';
-        $this->data['response'] = ResponseInterface::HTTP_OK;
-        $this->data['data'] = $dataModel;
-        $this->data['csrf'] = csrf_hash();
-      } else {
-        $this->data['message'] = 'Error create user';
-        $this->data['response'] = ResponseInterface::HTTP_NO_CONTENT;
+      if ($this->userModel->findByName($dataModel['User_user'])) {
+        $this->data['message'] = 'Error User already exists';
+        $this->data['response'] = ResponseInterface::HTTP_CONFLICT;
         $this->data['data'] = '';
+      } else {
+        if ($this->userModel->findByEmail($dataModel['User_email'])) {
+          $this->data['message'] = 'Error User email already exists';
+          $this->data['response'] = ResponseInterface::HTTP_CONFLICT;
+          $this->data['data'] = '';
+        } else {
+          if ($this->userModel->insert($dataModel)) {
+            $this->data['message'] = 'success';
+            $this->data['response'] = ResponseInterface::HTTP_OK;
+            $this->data['data'] = $dataModel;
+            $this->data['csrf'] = csrf_hash();
+          } else {
+            $this->data['message'] = 'Error create user';
+            $this->data['response'] = ResponseInterface::HTTP_NO_CONTENT;
+            $this->data['data'] = '';
+          }
+        }
       }
     } else {
       $this->data['message'] = 'Error Ajax';
@@ -108,7 +121,7 @@ class User extends Controller
       $today = date("Y-m-d H:i:s");
       $id = $this->request->getVar($this->primaryKey);
       $dataModel = $this->getDataModel();
-      $dataModel['updated_at']=$today;
+      $dataModel['updated_at'] = $today;
       //Update data model 
       if ($this->userModel->update($id, $dataModel)) {
         $this->data['message'] = 'success';
@@ -145,7 +158,7 @@ class User extends Controller
       }
     } catch (\Exception $e) {
       $this->data['message'] = $e;
-      $this->data['response'] = ResponseInterface::HTTP_CONFLICT;
+      $this->data['response'] = ResponseInterface::HTTP_INTERNAL_SERVER_ERROR;
       $this->data['data'] = 'Error';
     }
     //Change array to Json
@@ -157,7 +170,8 @@ class User extends Controller
     $data = [
       'User_id' => $this->request->getVar('User_id'),
       'User_user' => $this->request->getVar('User_user'),
-      'User_password' => password_hash($this->request->getVar('User_password'),PASSWORD_DEFAULT),
+      'User_email' => $this->request->getVar('User_email'),
+      'User_password' => password_hash($this->request->getVar('User_password'), PASSWORD_DEFAULT),
       'Roles_fk' => $this->request->getVar('Roles_fk'),
       'User_status_fk' => $this->request->getVar('User_status_fk'),
       'updated_at' => $this->request->getVar('updated_at'),

@@ -9,6 +9,7 @@ integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0Ec
 <script src="<?= base_url('system/main.js') ?>"></script>
 <script src="<?= base_url('system/alert.js') ?>"></script>
 <script src="<?= base_url('system/script.js') ?>"></script>
+<script src="<?= base_url('system/toast.js') ?>"></script>
 
 
 

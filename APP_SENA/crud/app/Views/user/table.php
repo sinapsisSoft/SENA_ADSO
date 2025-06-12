@@ -4,6 +4,7 @@
       <tr class="text-center">
         <th scope="col">#</th>
         <th scope="col">User</th>
+        <th scope="col">Email</th>
         <th scope="col">Password</th>
         <th scope="col">Role</th>
         <th scope="col">User Status</th>
@@ -16,6 +17,7 @@
           <tr class="text-center">
             <td><?php echo $obj['User_id']; ?></td>
             <td><?php echo $obj['User_user']; ?></td>
+            <td><?php echo $obj['User_email']; ?></td>
             <td><input style="border: 0px;" size="5" type="password" value="<?php echo $obj['User_password']; ?>" disabled></td>
             <td><?php echo $obj['Roles_name']; ?></td>
             <td><?php echo $obj['User_status_name']; ?></td>
@@ -37,6 +39,7 @@
       <tr class="text-center">
       <th scope="col">#</th>
         <th scope="col">User</th>
+         <th scope="col">Email</th>
         <th scope="col">Password</th>
         <th scope="col">Role</th>
         <th scope="col">User Status</th>

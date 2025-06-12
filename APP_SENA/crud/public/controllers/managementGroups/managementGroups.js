@@ -11,6 +11,7 @@ a breakdown of what each line is doing: */
 const formId = ['management-form', 'instructor-form'];
 const modalId = ['management-modal', 'instructor-modal'];
 const model = 'managementGroup';
+const modelProgramGroups = 'programGroups';
 const tableId = ['table-management', 'table-group-instructor', 'table-no-group-instructor'];
 const preloadId = 'preloadId';
 const actionsForms = ['block-input', 'hidden-input'];
@@ -227,7 +228,8 @@ function show_instructors(id) {
   mainApp.btnEnabledDisabled(true, btnActions[1]);
   mainApp.showModal(1);
   getKeyModule['group_id'] = id;
-  getInstructorNoGroups();
+  //getInstructorNoGroups();
+  getInstructorsGroups(id);
 }
 
 async function getInstructorsGroups(id) {
@@ -237,20 +239,20 @@ async function getInstructorsGroups(id) {
   resultFetch = getData(data, method, url);
   resultFetch.then(response => response.json())
     .then(data => {
-      console.log(data);
+      //console.log(data);
       let arrayColumn = ['#', 'Document', 'First Name', 'Last Name', 'Specialty'];
       let arrayActions = [
         {
-          name: 'remove_instructor_group',
-          label: 'Remove to Group',
-          icon: 'bi-person-dash',
-          type: 'danger'
+         name: 'add_instructor_group',
+          label: 'Add to Group',
+          icon: 'bi-person-plus-fill',
+          type: 'primary'
         }
       ];
-      // getInstructorNoGroups().then(() => {
-      //   mainApp.createTable('table-group-instructor', arrayColumn, data[model], true, arrayActions);
+       getInstructorNoGroups().then(() => {
+         mainApp.createTable('table-group-instructor', arrayColumn, data[modelProgramGroups], true, arrayActions);
       //   mainApp.showModal(2);
-      // });
+       });
     })
     .catch(error => {
       console.error(error.messages);
@@ -260,6 +262,9 @@ async function getInstructorsGroups(id) {
       mainApp.hiddenPreload();
     });
 }
+function add_instructor_group (id) {
+  alert("Add Instructor to Group");
+}
 async function getInstructorNoGroups() {
   method = 'GET';
   url = URI_PROGRAMS_INSTRUCTOR_GROUPS + LIST_CRUD[4];
@@ -267,18 +272,18 @@ async function getInstructorNoGroups() {
   resultFetch = getData(data, method, url);
   resultFetch.then(response => response.json())
     .then(data => {
-      console.log(data);
+      //console.log(data);
       let arrayColumn = ['#', 'Document', 'First Name', 'Last Name', 'Specialty'];
       let arrayActions = [
         {
-          name: 'add_instructor_group',
-          label: 'Add to Group',
-          icon: 'bi-person-plus-fill',
-          type: 'primary'
+          name: 'remove_instructor_group',
+          label: 'Remove to Group',
+          icon: 'bi-person-dash',
+          type: 'danger'
         }
       ];
-      // mainApp.createTable('table-no-group-instructor', arrayColumn, data[model], true, arrayActions);
-      // mainApp.showModal(2);
+      mainApp.createTable('table-no-group-instructor', arrayColumn, data[modelProgramGroups], true, arrayActions);
+      
     })
     .catch(error => {
       console.error(error);

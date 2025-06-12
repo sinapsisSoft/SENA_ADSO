@@ -20,6 +20,7 @@ const classEdit = 'edit-input';
 const textConfirm = 'Press a button!\nEither OK or Cancel.';
 const btnActionsForm = 'btn_actions_form';
 const mainApp = new Main(modalId, formId, classEdit, preloadId);
+const toastApp = new Toast("liveToast");
 
 /* These lines of code are declaring and initializing variables in a JavaScript file. Here is a
 breakdown of what each variable is used for: */
@@ -37,7 +38,7 @@ var resultFetch = null;
 function show(id) {
   mainApp.disabledFormAll();
   mainApp.resetForm();
-  mainApp.btnEnabledDisabled(true,btnActionsForm);
+  mainApp.btnEnabledDisabled(true, btnActionsForm);
   getDataId(id);
 }
 
@@ -49,7 +50,7 @@ function add() {
   mainApp.enableFormAll();
   mainApp.resetForm();
   insertUpdate = true;
-  mainApp.btnEnabledDisabled(false,btnActionsForm);
+  mainApp.btnEnabledDisabled(false, btnActionsForm);
   mainApp.showModal();
 }
 
@@ -63,8 +64,9 @@ function edit(id) {
   mainApp.disabledFormEdit();
   mainApp.resetForm();
   insertUpdate = false;
-  mainApp.btnEnabledDisabled(false,btnActionsForm);
+  mainApp.btnEnabledDisabled(false, btnActionsForm);
   getDataId(id);
+
 }
 
 /**
@@ -82,16 +84,23 @@ async function delete_(id) {
     resultFetch = getData(data, method, url);
     resultFetch.then(response => response.json())
       .then(data => {
-         //Reload View
-        reloadPage();
+        //Reload View
+
+        if (data['response'] == 200) {
+          toastApp.show("Delete ", "Delete User", "Delete user successfully", 0);
+        } else {
+          toastApp.show("Delete ", "Delete User", "Error when deleting user successfully", 3);
+        }
+
       })
       .catch(error => {
         console.error(error);
       })
       .finally(
-         ()=> {
+        () => {
           //hidden Preload 
           mainApp.hiddenPreload();
+          reloadPage();
         }
       );
   } else {
@@ -116,14 +125,15 @@ async function getDataId(id) {
       mainApp.setDataFormJson(data[model]);
       //show Modal 
       mainApp.showModal();
+
     })
     .catch(error => {
       console.error(error);
     })
-    .finally( ()=> {
-          //hidden Preload 
-          mainApp.hiddenPreload();
-        });
+    .finally(() => {
+      //hidden Preload 
+      mainApp.hiddenPreload();
+    });
 }
 
 /**
@@ -188,18 +198,23 @@ mainApp.getForm().addEventListener('submit', async function (event) {
       resultFetch.then(response => response.json())
         .then(data => {
           //show Modal 
+          console.log(data);
           mainApp.hiddenModal();
-          //Reload View
-          reloadPage();
+          if (data['response'] == 200) {
+            toastApp.show("Add ", "Add User", "Add user successfully", 0);
+          } else {
+            toastApp.show("Add ", "Add User", data['message'], 3);
+          }
         })
         .catch(error => {
-          console.error(error);
+          console.error(error.message);
         })
         .finally(
-           ()=> {
-          //hidden Preload 
-          mainApp.hiddenPreload();
-        }
+          () => {
+            //hidden Preload 
+            mainApp.hiddenPreload();
+            reloadPage();
+          }
         );
     } else {
       method = 'PUT';
@@ -210,15 +225,21 @@ mainApp.getForm().addEventListener('submit', async function (event) {
         .then(data => {
           //show Modal 
           mainApp.hiddenModal();
-          //Reload View
-          reloadPage();
+          if (data['response'] == 200) {
+            toastApp.show("Add ", "Update User", "Add user successfully", 0);
+          } else {
+            toastApp.show("Add ", "Update User", data['message'], 3);
+          }
+
         })
         .catch(error => {
           console.error(error);
         })
-        .finally(()=> {
+        .finally(() => {
           //hidden Preload 
           mainApp.hiddenPreload();
+          //Reload View
+          reloadPage();
         });
     }
   } else {
@@ -235,6 +256,6 @@ function reloadPage() {
     //hidden Preload 
     mainApp.hiddenPreload();
     location.reload();
-  }, 500);
+  }, 1200);
 }
 

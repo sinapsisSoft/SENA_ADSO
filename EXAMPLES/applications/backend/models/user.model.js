@@ -24,10 +24,10 @@ class UserModel {
     return rows[0];
   }
 
-  static async update(id, { email, status }) {
+  static async update(id, { email, status_id }) {
     const [result] = await connect.query(
-      'UPDATE User SET email = ?, status_id = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
-      [email, status, id]
+      'UPDATE user SET email = ?, status_id = ?, updated_at =CURRENT_TIMESTAMP WHERE id = ?',
+      [email, status_id, id]
     );
     return result.affectedRows > 0 ? this.findById(id) : null;
   }
@@ -63,7 +63,7 @@ class UserModel {
     );
     return rows[0];
   }
-  
+
   static async updateLogin(id) {
     const [result] = await connect.query(
       'UPDATE User SET last_login = CURRENT_TIMESTAMP WHERE id = ?',
@@ -71,6 +71,6 @@ class UserModel {
     );
     return result.affectedRows > 0 ? this.findById(id) : null;
   }
-  
+
 }
 export default UserModel;

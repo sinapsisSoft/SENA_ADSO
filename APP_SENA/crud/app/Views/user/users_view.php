@@ -12,6 +12,7 @@
 </head>
 
 <body>
+
   <!--Preload -->
   <?php require_once('../app/Views/preload/preload.php') ?>
   <!--End Preload -->
@@ -19,6 +20,7 @@
   <?php require_once('../app/Views/nav/navbar.php') ?>
   <!--End Navbar-->
   <!--Container-->
+
   <div class="container-fluid">
     <div class="row">
       <!--Navbar Slider-->
@@ -33,6 +35,7 @@
         <!--End Container Table-->
       </div>
     </div>
+
   </div>
   <!--End Container-->
   <!--Footer-->
@@ -60,13 +63,14 @@
     </div>
   </div>
   <!--End Modal-->
-
+ <!--Toast -->
+  <?php require_once('../app/Views/toast/toast.php') ?>
+  <!--End Toast -->
   <!--JS-->
   <?php require_once('../app/Views/assets/js/js.php') ?>
   <?php require_once('../app/Views/assets/js/dataTable.php') ?>
   <!--JS Controller-->
   <script src="../controllers/user/user.js"></script>
-
 </body>
 
 </html>

@@ -1,0 +1,32 @@
+body {
+  background: #191919;
+  color: #fff;
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+}
+
+.mi-form {
+  width: auto;
+  text-align: center;
+}
+
+.container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 5px;
+  background: #776868;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  color: black;
+}
+
+.input-form {
+  margin: 3px;
+  background: beige;
+  
+}
+
+.error{
+  border: solid 1px red;
+  box-shadow: 0px 0px 5px #f00;
+}

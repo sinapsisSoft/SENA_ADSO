@@ -7,13 +7,13 @@ class UserController {
 
   async register(req, res) {
     try {
-      const { username, email, password, status } = req.body;
+      const { username, email, password_hash, status_id} = req.body;
       // Basic validation
-      if (!username || !email || !password || !status) {
+      if (!username || !email || !password_hash || !status_id) {
         return res.status(400).json({ error: 'Required fields are missing' });
       }
       // Additional validation
-      if (password.length < 8) {
+      if (password_hash.length < 8) {
         return res.status(400).json({
           error: 'The password must be at least 8 characters long.'
         });
@@ -25,12 +25,12 @@ class UserController {
           error: 'The username is already in use'
         });
       }
-      const passwordHash = await encryptPassword(password);
+      const passwordHash = await encryptPassword(password_hash);
       const userId = await UserModel.create({
         username,
         email,
         passwordHash,
-        statusId: status
+        statusId: status_id
       });
       res.status(201).json({
         message: 'User created successfully',
@@ -61,17 +61,23 @@ class UserController {
 
   async update(req, res) {
     try {
-      const { email, status } = req.body;
-      const id = req.params.id;
-      // Basic validate
-      if (!email || !status || !id) {
+         const {  email,  status_id} = req.body;
+         const id = req.params.id;
+      // Basic validation
+      if (!email || !status_id|| !id) {
         return res.status(400).json({ error: 'Required fields are missing' });
       }
+      // Verify if the User already exists  
+      const existingUser = await UserModel.findByIdActive(id);
+      if (existingUser.length === 0) {
+        return res.status(409).json({ data:'',error: 'The User no already exists' });
+      }   
 
-      const updateUserModel = await UserModel.update(id, { email, status });
+      const updateUserModel = await UserModel.update(id, { email, status_id});
       res.status(201).json({
         message: 'User update successfully',
         data: updateUserModel
+
       });
     } catch (error) {
       console.error('Error in registration:', error);
