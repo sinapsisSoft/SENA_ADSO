@@ -65,8 +65,6 @@ class Form {
     return true;
   };
 
-
-
   validateInputs(input) {
     const type = input.type;
     const validation = this.VALIDATIONS[type];

@@ -76,11 +76,12 @@
             <div class="modal-body">
               <!--Form-->
               <form id="userForm">
+
                 <div class="mb-3">
                   <label for="name" class="form-label required"></label>
                   <div class="form-floating">
-                    <input type="text" class="form-control edit-input" placeholder="User" id="username" name="username"
-                      required value="">
+                    <input type="text" class="form-control " placeholder="User" id="username" name="username" required
+                      value="">
                     <label for="username">Name</label>
                   </div>
                 </div>
@@ -89,7 +90,6 @@
                   <div class="form-floating">
                     <input type="email" class="form-control" placeholder="email" id="email" name="email" required
                       value="">
-                     
                     <label for="email">Email</label>
                   </div>
                 </div>
@@ -103,8 +103,9 @@
                 </div>
                 <div class="mb-3">
                   <label for="status_id">Select Status</label>
-                  <select class="form-select form-select-sm" id="status_id" name="status_id" aria-label=".form-select-sm example" required>
-                    
+                  <select class="form-select form-select-sm" id="status_id" name="status_id"
+                    aria-label=".form-select-sm example" required>
+
                   </select>
                 </div>
 
@@ -154,10 +155,11 @@
   <script src="https://cdn.datatables.net/2.3.2/js/dataTables.js"></script>
   <!-- JS personalizado -->
   <script src="../../assets/js/app/constants.js"></script>
-  <script src="../../assets/js/app/app.js"></script>
+  <script src="../../assets/js/storage/appStorage.js"></script>
   <script src="../../assets/js/services/services.js"></script>
-  <script src="../../assets/js/utils/Form.js"></script>
+  <script src="../../assets/js/app/app.js"></script>
 
+  <script src="../../assets/js/utils/Form.js"></script>
   <script src="../../assets/js/controllers/user/user.controller.js"></script>
 
 </body>

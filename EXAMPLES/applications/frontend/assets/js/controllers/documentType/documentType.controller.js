@@ -1,5 +1,15 @@
 
 
+document.addEventListener('DOMContentLoaded', async ()=> {
+  document.querySelector('body').style.display = 'none';
+  document.querySelector('body').style.opacity = 0;
+ 
+  await checkAuth();
+  console.log('document type controller has been loaded');
+  fadeInElement(document.querySelector('body'), 1000);
+  // Initialize the loading screen
+    
+});
 const objForm = new Form('documentTypeForm', 'edit-input');
 const objModal = new bootstrap.Modal(document.getElementById('appModal'));
 const objTableBody = document.getElementById('app-table-body');

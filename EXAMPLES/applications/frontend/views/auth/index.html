@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <!-- Data table -->
   <link rel="stylesheet" href="https://cdn.datatables.net/2.3.2/css/dataTables.dataTables.css">
-    <!-- Loading -->
+  <!-- Loading -->
   <link rel="stylesheet" href="../../assets/css/loading.css">
 </head>
 
@@ -27,44 +27,44 @@
     <!--Content data-->
     <main>
 
-       <div class="row justify-content-center">
-      <div class="col-md-6 col-lg-4">
-        <div class="card auth-card shadow">
-          <div class="card-body p-4">
-            <div class="text-center mb-4">
-              <img src="../../assets/img/logos/logo.png" width="50" alt="Logo" class="auth-logo img ">
-              <h2 class="auth-title">Iniciar Sesión</h2>
+      <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-4">
+          <div class="card auth-card shadow">
+            <div class="card-body p-4">
+              <div class="text-center mb-4">
+                <img src="../../assets/img/logos/logo.png" width="50" alt="Logo" class="auth-logo img ">
+                <h2 class="auth-title">Iniciar Sesión</h2>
+              </div>
+              <!--Form-->
+              <form id="loginForm">
+                <div class="mb-3">
+                  <label for="user" class="form-label">Usuario</label>
+                  <input type="text" class="form-control" id="user" name="user" required>
+                  <div class="invalid-feedback">Por favor ingresa un usuario válido</div>
+                </div>
+                <div class="mb-3">
+                  <label for="password" class="form-label">Contraseña</label>
+                  <input type="password" class="form-control" id="password" name="password" autocomplete="on" required>
+                  <div class="invalid-feedback">La contraseña es requerida</div>
+                </div>
+                <div class="mb-3 form-check">
+                  <input type="checkbox" class="form-check-input" id="remember" name="remember">
+                  <label class="form-check-label" for="remember">Recordarme</label>
+                </div>
+                <button type="submit" class="btn btn-primary w-100 mb-3" id="loginBtn">
+                  <span class="spinner-border spinner-border-sm d-none" id="loginSpinner"></span>
+                  Ingresar
+                </button>
+                <div class="text-center">
+                  <a href="forgot-password.html" class="text-decoration-none">¿Olvidaste tu contraseña?</a>
+                </div>
+              </form>
+              <!--End Form-->
             </div>
-            <!--Form-->
-            <form id="loginForm">
-              <div class="mb-3">
-                <label for="user" class="form-label">Usuario</label>
-                <input type="text" class="form-control" id="user" name="user" required>
-                <div class="invalid-feedback">Por favor ingresa un usuario válido</div>
-              </div>
-              <div class="mb-3">
-                <label for="password" class="form-label">Contraseña</label>
-                <input type="password" class="form-control" id="password" name="password" autocomplete="on" required>
-                <div class="invalid-feedback">La contraseña es requerida</div>
-              </div>
-              <div class="mb-3 form-check">
-                <input type="checkbox" class="form-check-input" id="remember" name="remember">
-                <label class="form-check-label" for="remember">Recordarme</label>
-              </div>
-              <button type="submit" class="btn btn-primary w-100 mb-3" id="loginBtn">
-                <span class="spinner-border spinner-border-sm d-none" id="loginSpinner"></span>
-                Ingresar
-              </button>
-              <div class="text-center">
-                <a href="forgot-password.html" class="text-decoration-none">¿Olvidaste tu contraseña?</a>
-              </div>
-            </form>
-            <!--End Form-->
           </div>
+
         </div>
-        
       </div>
-    </div>
     </main>
     <!--End Content data-->
 
@@ -91,10 +91,12 @@
   <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
   <script src="https://cdn.datatables.net/2.3.2/js/dataTables.js"></script>
   <!-- JS personalizado -->
-   <script src="../../assets/js/app/constants.js"></script>
-   <script src="../../assets/js/app/app.js"></script>
-      <script src="../../assets/js/storage/appStorage.js"></script>
-  <script src="../../assets/js/services/services.js"></script>
+  <script src="../../assets/js/app/constants.js"></script>
+  <script src="../../assets/js/storage/appStorage.js"></script>
+    <script src="../../assets/js/services/services.js"></script> 
+  <script src="../../assets/js/app/app.js"></script>
+
+
   <script src="../../assets/js/utils/Form.js"></script>
 
   <script src="../../assets/js/controllers/auth/login.controller.js"></script>

@@ -1,3 +1,13 @@
+document.addEventListener('DOMContentLoaded', async ()=> {
+  document.querySelector('body').style.display = 'none';
+  document.querySelector('body').style.opacity = 0;
+ 
+  await checkAuth();
+  console.log('user controller has been loaded');
+  fadeInElement(document.querySelector('body'), 1000);
+  // Initialize the loading screen
+    
+});
 
 
 const objForm = new Form('userForm', 'edit-input');
@@ -31,7 +41,7 @@ myForm.addEventListener('submit', (e) => {
     endpointUrl = URL_USER + keyId;
   }
   documentData = objForm.getDataForm();
-  console.log(documentData);
+  //console.log(documentData);
 
   const resultServices = getDataServices(documentData, httpMethod, endpointUrl);
   resultServices.then(response => {
