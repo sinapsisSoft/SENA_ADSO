@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reporte Salon 304</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .equipment-card {
+            margin-bottom: 20px;
+            border-left: 4px solid #0d6efd;
+        }
+        .status-true {
+            color: #198754;
+        }
+        .status-false {
+            color: #dc3545;
+        }
+        .header-section {
+            background-color: #f8f9fa;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 5px;
+        }
+        .observation-card {
+            background-color: #fff8e1;
+            border-left: 4px solid #ffc107;
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-4">
+        <h1 class="text-center mb-4">Reporte de Equipos - Salon 304</h1>
+        
+        <!-- Header Information -->
+        <div class="row header-section">
+            <div class="col-md-4">
+                <h5>Información General</h5>
+                <p><strong>Instructor:</strong> Diego Hernando Casallas Vanegas</p>
+                <p><strong>Ficha:</strong> 2823503</p>
+                <p><strong>Vocero:</strong> Angela Salgado</p>
+            </div>
+            <div class="col-md-4">
+                <h5>Fecha de Inicio</h5>
+                <p><strong>Fecha:</strong> 2025-06-14</p>
+                <p><strong>Hora Inicial:</strong> 12:00:00 M</p>
+                <p><strong>Hora Cierre:</strong> 5:00 pm</p>
+            </div>
+            <div class="col-md-4">
+                <h5>Fecha de Fin</h5>
+                <p><strong>Fecha:</strong> 2025-06-15</p>
+                <p><strong>Hora Inicial:</strong> 7:00 am</p>
+                <p><strong>Hora Cierre:</strong> 5:00 pm</p>
+            </div>
+        </div>
+        
+        <!-- Equipment Status -->
+        <h3 class="mb-3">Estado de Equipos</h3>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>#</th>
+                                <th>Equipo</th>
+                                <th>Pantalla</th>
+                                <th>Mouse</th>
+                                <th>Teclado</th>
+                                <th>Sistema Operativo</th>
+                                <th>Cable de poder</th>
+                                <th>Cable de Pantalla</th>
+                                <th>Conversor HDMI</th>
+                                <th>Observaciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>20</td>
+                                <td>Escritorio</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td>Ninguna</td>
+                            </tr>
+                            <tr>
+                                <td>36</td>
+                                <td>Escritorio</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-false">✗</td>
+                                <td>No tiene conversor de Display Port Macho A Vga Hembra</td>
+                            </tr>
+                            <tr>
+                                <td>41</td>
+                                <td>Escritorio</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td>Conversor HDMI dañado</td>
+                            </tr>
+                            <tr>
+                                <td>50</td>
+                                <td>Escritorio</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-false">✗</td>
+                                <td>No tiene conversor de Display Port Macho A Vga Hembra</td>
+                            </tr>
+                            <tr>
+                                <td>63</td>
+                                <td>Escritorio</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td>Ninguna</td>
+                            </tr>
+                            <tr>
+                                <td>74</td>
+                                <td>Escritorio</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-false">✗</td>
+                                <td>No tiene conversor de Display Port Macho A Vga Hembra</td>
+                            </tr>
+                            <tr>
+                                <td>78</td>
+                                <td>Escritorio</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td>Ninguna</td>
+                            </tr>
+                            <tr>
+                                <td>79</td>
+                                <td>Escritorio</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td>Ninguna</td>
+                            </tr>
+                            <tr>
+                                <td>88</td>
+                                <td>Escritorio</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td>Ninguna</td>
+                            </tr>
+                            <tr>
+                                <td>94</td>
+                                <td>Escritorio</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td>Ninguna</td>
+                            </tr>
+                            <tr>
+                                <td>102</td>
+                                <td>Escritorio</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td>Conversor HDMI dañado</td>
+                            </tr>
+                            <tr>
+                                <td>131</td>
+                                <td>Escritorio</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td>Ninguna</td>
+                            </tr>
+                            <tr>
+                                <td>136</td>
+                                <td>Escritorio</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td>Ninguna</td>
+                            </tr>
+                            <tr>
+                                <td>137</td>
+                                <td>Escritorio</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td>Ninguna</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Escritorio</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td>Tiene un convertidor HDMI adicional suelto, este equipo no se usa en la formación, por solicitudes de no tocar.</td>
+                            </tr>
+                            <tr>
+                                <td>-</td>
+                                <td>All in One</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-false">✗</td>
+                                <td class="status-false">✗</td>
+                                <td>Ninguna</td>
+                            </tr>
+                            <tr>
+                                <td>-</td>
+                                <td>Smart TV</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-false">✗</td>
+                                <td class="status-false">✗</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-true">✓</td>
+                                <td class="status-false">✗</td>
+                                <td>
+                                    El Smart TV, tiene dañado el botón de ajustes y encendido, no permite cambiar el puerto para conectar con el PC.<br>
+                                    El cable HDMI conectado al equipo no funciona.<br>
+                                    Solo permite conexión de manera remota para proyectar.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <!-- General Observations -->
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <div class="card observation-card">
+                    <div class="card-header bg-warning text-dark">
+                        <h4>Observaciones Generales</h4>
+                    </div>
+                    <div class="card-body">
+                        <p>Los equipos en general funcionan, pero se presentan muchos inconvenientes en la configuración de las herramientas necesaria para la formación de ADSO, como bloqueos de puertos de base de datos con contraseña de administrador, para algunas aplicaciones como Xammp server u otras, los cables de red en su mayoría tiene los RJ45 dañados, dificultando la conexión a internet.</p>
+                        <p>Las sillas en buen estado son 22 - sillas dañadas son 6</p>
+                        <p>Tras los inconvenientes de los equipos, en temas de programas, opte por conexión remota con los PC de los aprendices, se les explicó como hacerlo, para la formación de fin de semana, todos se conectan remoto al pc de su casa y los que pueden traen el equipo propio lo traen, para no tener dificultades y retrasos por temas técnicos, puesto que en no se tiene soporte en esa jornada.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Recommendations -->
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <div class="card border-primary">
+                    <div class="card-header bg-primary text-white">
+                        <h4>Recomendaciones</h4>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">- Instalar herramientas necesarias para la formación en compañía de un instructor para validar las configuraciones adecuadas</li>
+                            <li class="list-group-item">- No instalar los navegadores para juegos y juegos, todos los PC tiene opera gamer</li>
+                            <li class="list-group-item">- No instalar aplicaciones que bloquean los puertos de base de datos como Spotify u otras</li>
+                            <li class="list-group-item">- No se puede instalar todo desde una misma imagen, porque los programas quedan instalados, pero con usuario administrador y no permite conectarse a los puertos necesarios o hacacer ajustes.</li>
+                            <li class="list-group-item">- Dejar un usuario admin en el pc del instructor para tener todo lo necesario para la formación y no ocupar otros equipos, teniendo en cuenta la escasez de los mismos, con un usuario administrado en el pc del instructor no se debe desconfigurar los entornos para las explicaciones o que cada instructor tenga un usuario admin en solo este pc.</li>
+                            <li class="list-group-item">- La mayoría de cables HDMI que presta logística no sirven, y son muy pocos, dificultado la formación.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

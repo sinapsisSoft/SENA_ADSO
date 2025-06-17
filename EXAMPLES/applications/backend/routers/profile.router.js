@@ -1,13 +1,19 @@
 import { Router } from "express";
-import ProfileController from '../controllers/profile.controller.js';
+import ProfileController from "../controllers/profile.controller.js";
 const router = Router();
 const name = '/profile';
 
 // Public route
-router.post(name, ProfileController.register);
-router.get(name + '/', ProfileController.show);
-router.get(name + '/:id', ProfileController.findById);
-router.put(name + '/:id', ProfileController.update);
-router.delete(name + '/:id', ProfileController.delete);
+
+
+router.route(name)
+  .post(ProfileController.register) // Register a new profile
+  .get(ProfileController.show);// Show all profile
+
+router.route(`${name}/:id`)
+  .get(ProfileController.findById)// Show a profile by ID
+  .put(ProfileController.update)// Update a profile by ID
+  .delete(ProfileController.delete);// Delete a profile by ID
+
 
 export default router;

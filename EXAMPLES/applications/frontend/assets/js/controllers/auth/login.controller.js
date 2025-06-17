@@ -42,10 +42,8 @@ myForm.addEventListener('submit', async (e) => {
     } else {
       appStorage.setItem(KEY_TOKEN, data['user'].token);
       console.log("Login Success");
-      window.location.href = '../dashboard/';
+      window.location.href = '../../';
     }
-
-
   }).catch(error => {
     console.log(error);
   }).finally(() => {

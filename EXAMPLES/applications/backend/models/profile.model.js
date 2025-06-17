@@ -2,26 +2,30 @@ import { connect } from '../config/db/connectMysql.js';
 
 class ProfileModel {
 
-  static async create({ userId, first_name, last_name, address, phone, documentTypeId, documentNumber, photoUrl, birthDate }) {
+  static async create({user_id, first_name, last_name, address, phone, document_type_id, document_number, photo_url, birth_date }) {
     const [result] = await connect.query(
       'INSERT INTO Profile (user_id, first_name, last_name, address,phone,document_type_id,document_number,photo_url,birth_date) VALUES (?, ?, ?, ?,?, ?, ?, ?, ?)',
-      [userId, first_name, last_name, address, phone, documentTypeId, documentNumber, photoUrl, birthDate]
+      [user_id, first_name, last_name, address, phone, document_type_id, document_number, photo_url, birth_date]
     );
     return result.insertId;
   }
 
+  
   static async show() {
-    const [rows] = await connect.query(
-      'SELECT * FROM Profile ORDER BY id'
-    );
-    return rows[0];
+    try {
+      let sqlQuery = "SELECT * FROM Profile ORDER BY id";
+      const [result] = await connect.query(sqlQuery);
+      return result;
+    } catch (error) {
+      return [0];
+    }
   }
 
  
-  static async update(id, { userId, first_name, last_name, address, phone, documentTypeId, documentNumber, photoUrl, birthDate}) {
+  static async update(id, { user_id, first_name, last_name, address, phone, document_type_id, document_number, photo_url, birth_date }) {
     const [result] = await connect.query(
-      'UPDATE Profile SET user_id=?, first_name=?, last_name=?, address=?,phone=?,document_type_id=?,document_number=?,photo_url=?,birth_date=? updated_at = CURRENT_TIMESTAMP WHERE id = ?',
-      [userId, first_name, last_name, address, phone, documentTypeId, documentNumber, photoUrl, birthDate, id]
+      'UPDATE Profile SET user_id=?, first_name=?, last_name=?, address=?,phone=?,document_type_id=?,document_number=?,photo_url=?,birth_date=?, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
+      [user_id, first_name, last_name, address, phone, document_type_id, document_number, photo_url, birth_date , id]
     );
     return result.affectedRows > 0 ? this.findById(id) : null;
   }
@@ -34,12 +38,16 @@ class ProfileModel {
     return result.affectedRows > 0 ? this.findById(id) : null;
   }
 
+  
   static async findById(id) {
-    const [rows] = await connect.query(
-      'SELECT * FROM Profile WHERE id = ?',
-      [id]
-    );
-    return rows[0];
+    try {
+      let sqlQuery = 'SELECT * FROM `Profile` WHERE `id`= ?';
+      const [result] = await connect.query(sqlQuery, id);
+      return result;
+    } catch (error) {
+      return [0];
+    }
+
   }
  
 }

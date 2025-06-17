@@ -4,7 +4,7 @@ async function checkAuth() {
   toggleLoading(true);
   const storage = new AppStorage();
   const getToken = storage.getItem(KEY_TOKEN);
-  const moduleLogin = "/auth/";
+  const moduleLogin = "auth/";
   const moduleDashboard = "/dashboard/";
   const getUrl = window.location.href;
 
@@ -12,8 +12,9 @@ async function checkAuth() {
     //console.log("No token found, redirecting to login page.");
     // No token found, redirecting to login page.
     if (!getUrl.includes(moduleLogin)) {
-      window.location.href = `..${moduleLogin}`
+      window.location.href = `views/auth`
     }
+    toggleLoading(false);
     return false;
   }
 

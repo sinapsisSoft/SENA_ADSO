@@ -115,6 +115,8 @@ const sqlStatements = [
     ('admin', 'System Administrator'),
     ('user', 'Regular User'),
     ('manager', 'Department Manager');`,
+  `INSERT INTO user (username, email,password_hash,status_id) VALUES 
+    ('admin', 'admin@gmail.com','$2b$10$pRvxy7sQXQIpwAGlCOMRzO6cIpiFN6xd4RCQKoZ4eiRLqF2atnXNm',1);`,
   `DROP PROCEDURE IF EXISTS sp_show_user_active;`,
   `CREATE PROCEDURE sp_show_user_active()
     BEGIN

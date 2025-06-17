@@ -5,14 +5,14 @@ class ProfileController {
 
   async register(req, res) {
     try {
-      const {userId, first_name, last_name, address, phone, documentTypeId, documentNumber, photoUrl, birthDate} = req.body;
+      const {user_id, first_name, last_name, address, phone, document_type_id, document_number, photo_url, birth_date} = req.body;
       // Basic validation
-      if (!userId || !first_name || !last_name || !address||!phone || !documentTypeId || !documentNumber || !photoUrl || !birthDate) {
+      if (!user_id || !first_name || !last_name || !address||!phone || !document_type_id || !document_number || !photo_url || !birth_date) {
         return res.status(400).json({ error: 'Required fields are missing' });
       }
      
       const profileId = await ProfileModel.create({
-        userId, first_name, last_name, address, phone, documentTypeId, documentNumber, photoUrl, birthDate
+        user_id, first_name, last_name, address, phone, document_type_id, document_number, photo_url, birth_date
       });
       res.status(201).json({
         message: 'Profile created successfully',
@@ -43,14 +43,14 @@ class ProfileController {
 
   async update(req, res) {
     try {
-      const { userId, first_name, last_name, address, phone, documentTypeId, documentNumber, photoUrl, birthDate} = req.body;
+      const { user_id, first_name, last_name, address, phone, document_type_id, document_number, photo_url, birth_date} = req.body;
       const id = req.params.id;
       // Basic validate
-      if (!userId || !first_name || !last_name || !address||!phone || !documentTypeId || !documentNumber || !photoUrl || !birthDate) {
+      if (!user_id || !first_name || !last_name || !address||!phone || !document_type_id || !document_number || !photo_url || !birth_date) {
         return res.status(400).json({ error: 'Required fields are missing' });
       }
-
-      const updateProfileModel = await ProfileModel.update(id, { userId, first_name, last_name, address, phone, documentTypeId, documentNumber, photoUrl, birthDate});
+      
+      const updateProfileModel = await ProfileModel.update(id, { user_id, first_name, last_name, address, phone, document_type_id, document_number, photo_url, birth_date});
       res.status(201).json({
         message: 'Profile update successfully',
         data: updateProfileModel

@@ -1,0 +1,48 @@
+ body {
+   display: flex;
+   flex-direction: column;
+   min-height: 100vh;
+ }
+ .sidebar {
+   width: 250px;
+   height: 100vh;
+   position: fixed;
+   left: 0;
+   top: 56px;
+   /* Altura del navbar */
+   transition: all 0.3s;
+   z-index: 1000;
+   overflow-y: auto;
+ }
+
+ .main-content {
+   margin-left: 250px;
+   transition: all 0.3s;
+   flex: 1;
+ }
+
+ .sidebar-collapsed {
+   transform: translateX(-250px);
+ }
+
+ .content-expanded {
+   margin-left: 0;
+ }
+
+ @media (max-width: 992px) {
+   .sidebar {
+     transform: translateX(-250px);
+   }
+
+   .sidebar.show {
+     transform: translateX(0);
+   }
+
+   .main-content {
+     margin-left: 0;
+   }
+ }
+
+ footer {
+   margin-top: auto;
+ }

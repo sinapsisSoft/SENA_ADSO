@@ -7,6 +7,7 @@ const URL_USER_STATUS=HOST+"/userStatus/";
 const URL_ROLE=HOST+"/role/";
 const URL_USER=HOST+"/user/";
 const URL_LOGIN=HOST+"/login/";
+const URL_PROFILE=HOST+"/profile/";
 
 
 const KEY_TOKEN="token-app";

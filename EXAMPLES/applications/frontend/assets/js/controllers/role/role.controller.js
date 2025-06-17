@@ -147,6 +147,7 @@ function getData() {
 function createTable(data) {
   objTableBody.innerHTML = ""; // Clear previous table data
   let getData = data['data'];
+
   if (getData[0] === 0) return;//Validate if the data is empty
   let rowLong = getData.length;
   for (let i = 0; i < rowLong; i++) {
