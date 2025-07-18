@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulario de Estado de Usuario</title>
+    <!-- Favicon -->
+  <link rel="icon" href="../../assets//img/logos/logo.png" type="image/png">
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome para iconos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Data table -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/2.3.2/css/dataTables.dataTables.css">
+    <!-- Loading -->
+  <link rel="stylesheet" href="../../assets/css/loading.css">
+</head>
+
+<body>
+ 
+  <!--Container -->
+  <div class="container-fluid d-flex flex-column min-vh-100">
+   
+    <!--Content data-->
+    <main>
+      <h1 class="text-center">Formulario de Estado de Usuario</h1>
+      <button type="button" title="Add Document Type " class="btn btn-primary" onclick="add()"> <i
+          class="fa fa-address-card me-1"></i></button>
+
+      <!--Table-->
+      <div class="table-responsive">
+        <table class="table table-dark table-hover" id="app-table">
+          <thead class=" ">
+            <tr class="table-primary text-center">
+              <th>#</th>
+              <th>Name</th>
+              <th>Description</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="app-table-body" class="text-center">
+
+          </tbody>
+          <tfoot>
+            <tr class="table-primary text-center">
+              <td>#</td>
+              <td>Name</td>
+              <td>Description</td>
+              <td>Actions</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+
+      <!-- Modal -->
+      <div class="modal fade" id="appModal" tabindex="-1" aria-labelledby="appModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="appModalLabel">Tipo de Documento</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <!--Form-->
+              <form id="userStatusForm">
+                <div class="mb-3">
+                  <label for="name" class="form-label required"></label>
+                  <div class="form-floating">
+                    <input type="text" class="form-control" placeholder="Name" id="name" name="name" required value="">
+                    <label for="name">Name</label>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <div class="form-floating">
+                    <textarea class="form-control" placeholder="Description" id="description" name="description"
+                      style="height: 100px" required> </textarea>
+                    <label for="description">Description</label>
+                  </div>
+                </div>
+                <div class="mb-1 col-12">
+                  <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                    <button type="reset" class="btn btn-outline-secondary me-md-2"><i class="fas fa-undo me-1"></i>Reset
+                      Form</button>
+                    <button type="submit" class="btn btn-outline-primary me-md-2"><i
+                        class="fas fa-paper-plane me-1"></i> Send</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+    <!--End Content data-->
+
+  </div>
+  <!--End Container -->
+ 
+
+  <!--Loading -->
+  <div id="loading-screen">
+    <div class="spinner-border text-light spinner" role="status">
+      <span class="visually-hidden">Loading ...</span>
+    </div>
+    <p class="mt-3">Data loading, please wait...</p>
+  </div>
+  <!--End Loading -->
+
+  <!-- Bootstrap 5 JS Bundle con Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Data table -->
+  <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+  <script src="https://cdn.datatables.net/2.3.2/js/dataTables.js"></script>
+
+  <!-- JS personalizado -->
+  <script src="../../config/constants.js"></script>
+  <script src="../../storage/appStorage.js"></script>
+  <script src="../../services/services.js"></script>
+ <script src="../../config/main.js"></script>
+
+  <script src="../../utils/Form.js"></script>
+  <script src="../../controllers/userStatus/userStatus.controller.js"></script>
+
+</body>
+
+</html>

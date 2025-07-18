@@ -6,8 +6,8 @@
 import app from './app/app.js';
 import dotenv from 'dotenv';
 
-
 dotenv.config();
+
 const PORT = process.env.SERVER_PORT || 3000; // Allow dynamic port configuration
 
 app.listen(PORT, () => {

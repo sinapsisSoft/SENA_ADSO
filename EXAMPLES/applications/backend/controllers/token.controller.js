@@ -10,7 +10,7 @@ export const verifyToken = (req, res) => {
 
   try {
     const verified = jwt.verify(token.replace("Bearer ", ""), process.env.JWT_SECRET);
-    res.status(200).json({message:"Verified", valid: true});
+    res.status(200).json({message:"Verified", valid: true,data: verified});
   } catch (err) {
     res.status(400).json({ error: "Invalid Token",valid: false });
   }

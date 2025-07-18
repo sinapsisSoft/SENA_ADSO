@@ -1,5 +1,5 @@
 // migrate.js
-import { runMigration } from './migration_v2.js';
+import { runMigration } from './migration_v3.js';
 
 runMigration()
   .then((result) => {

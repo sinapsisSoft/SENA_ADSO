@@ -12,13 +12,11 @@ class ProfileModel {
 
   
   static async show() {
-    try {
-      let sqlQuery = "SELECT * FROM Profile ORDER BY id";
-      const [result] = await connect.query(sqlQuery);
-      return result;
-    } catch (error) {
-      return [0];
-    }
+    
+    const [rows] = await connect.query(
+      'CALL sp_show_profile()'
+    );
+    return rows[0];
   }
 
  
