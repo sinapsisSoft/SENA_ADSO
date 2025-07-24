@@ -17,7 +17,7 @@ class Form {
    */
   constructor(idForm, classEditInput) {
     this.objForm = document.getElementById(idForm);
-    this.classEdit = classEditInput;
+    this.classEdit = classEditInput;    
 
     // Configuración de validaciones por tipo de input
     this.VALIDATIONS = {

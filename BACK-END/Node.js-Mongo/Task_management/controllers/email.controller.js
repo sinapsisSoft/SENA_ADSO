@@ -1,3 +1,10 @@
+/*
+  author: Diego Casallas
+  date: 14/07/2025  
+  description: Backend application using Node.js and MongoDB.
+  version: 1.0.0    
+  license: MIT License
+*/
 import transporter from '../config/email/emailConfig.js';
 import { fileURLToPath } from 'url';
 import path from 'path';

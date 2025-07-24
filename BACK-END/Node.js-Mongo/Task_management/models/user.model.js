@@ -1,3 +1,10 @@
+/*
+  author: Diego Casallas
+  date: 14/07/2025  
+  description: Backend application using Node.js and MongoDB.
+  version: 1.0.0    
+  license: MIT License
+*/
 import { mongoose } from '../config/db/connection.js'; // Import mongoose from the connection
 import { encryptPassword  } from '../library/appBcrypt.js';
 

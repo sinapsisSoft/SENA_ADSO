@@ -1,4 +1,12 @@
 
+/*
+  author: Diego Casallas
+  date: 14/07/2025  
+  description: Backend application using Node.js and MongoDB.
+  version: 1.0.0    
+  license: MIT License
+*/
+
 import UserModel from '../models/user.model.js';// Import the user model
 import jwt from 'jsonwebtoken';
 import {  comparePassword } from '../library/appBcrypt.js';
@@ -36,10 +44,8 @@ class AuthController {
       const { email, password } = req.body;
       const userModel = await UserModel.findOne({ email });
       if (!userModel) throw new Error('User not found');
-
       const isMatch = await comparePassword(password, userModel.password);
       if (!isMatch) throw new Error('Incorrect password');
-
       const token = jwt.sign({ id: userModel._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
       res.cookie('token', token, { httpOnly: true });
       res.status(200).json({ message: 'Successful login', token: token });
@@ -47,7 +53,6 @@ class AuthController {
       res.status(400).json({ error: err.message });
     }
   };
-
 }
 
 export default new AuthController();
