@@ -10,7 +10,7 @@ router.route(name)
   .get(RoleController.show);// Show all users
 
 router.route(`${name}/:id`)
-  .get(RoleController.findById)// Show a user by ID
+  .get(verifyToken,RoleController.findById)// Show a user by ID
   .put(RoleController.update)// Update a user by ID
   .delete(RoleController.delete);// Delete a user by ID
 
