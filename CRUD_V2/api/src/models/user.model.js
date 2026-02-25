@@ -14,14 +14,14 @@ class UserModel {
   async addUser(req, res) {
     // Logic to add user to the database
     try {
-      const { user, password, status, role } = req.body;
-      if (!user || !password || !status || !role) {
+      const { user, email, password, status, role } = req.body;
+      if (!user || !email || !password || !status || !role) {
         return res.status(400).json({ error: "Missing required fields" });
       }
       const hashedPassword = await encryptPassword(password);
 
-      let sqlQuery = "INSERT INTO users (User_user,User_password,User_status_fk,Roles_fk ) VALUES (?,?,?,?)";
-      const [result] = await connect.query(sqlQuery, [user, hashedPassword, status, role]);
+      let sqlQuery = "INSERT INTO users (User_user,User_email,User_password,User_status_fk,Roles_fk ) VALUES (?,?,?,?,?)";
+      const [result] = await connect.query(sqlQuery, [user, email, hashedPassword, status, role]);
       res.status(201).json({
         data: [{ id: result.insertId, user, hashedPassword, status, role }],
         status: 201
@@ -38,12 +38,12 @@ class UserModel {
       if (!user || !status || !role) {
         return res.status(400).json({ error: "Missing required fields" });
       }
-      let sqlQuery = "UPDATE users SET User_user=?,User_status_fk=?,Roles_fk  =?,update_at=? WHERE User_id= ?";
-      const update_at = new Date().toLocaleString("en-CA", { timeZone: "America/Bogota" }).replace(",", "").replace("/", "-").replace("/", "-");
-      const [result] = await connect.query(sqlQuery, [user, status, role, update_at, req.params.id]);
+      let sqlQuery = "UPDATE users SET User_user=?,User_status_fk=?,Roles_fk  =?,updated_at=? WHERE User_id= ?";
+      const updated_at = new Date().toLocaleString("en-CA", { timeZone: "America/Bogota" }).replace(",", "").replace("/", "-").replace("/", "-");
+      const [result] = await connect.query(sqlQuery, [user, status, role, updated_at, req.params.id]);
       if (result.affectedRows === 0) return res.status(404).json({ error: "user not found" });
       res.status(200).json({
-        data: [{ user, status, role, update_at }],
+        data: [{ user, status, role, updated_at }],
         status: 200,
         updated: result.affectedRows
       });

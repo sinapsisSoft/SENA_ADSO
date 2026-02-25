@@ -1,4 +1,8 @@
 import UserApiModel from '../models/userApi.model.js';
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 export const showApiUser = async (req, res) => {
   try {
@@ -54,6 +58,23 @@ export const loginApiUser = async (req, res) => {
     userApiModel.loginApiUser(req, res);
   } catch (error) {
     res.status(500).json({ error: "Error logging in user", details: error.message });
+  }
+};
+
+// Middleware to verify the token
+export const verifyTokenLogin = (req, res) => {
+  
+  const token = req.body.token || req.query.token ;
+  if (!token) return res.status(401).json({ error: "Access denied" });
+
+  try {
+    const verified = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = verified;
+    //See data token encrypted
+    //console.log(verified);
+    res.status(200).json({ message: "Token is valid", user: verified });
+  } catch (err) {
+    res.status(400).json({ error: "Invalid Token" });
   }
 };
 
