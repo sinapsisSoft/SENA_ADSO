@@ -1,12 +1,10 @@
-import { connect } from '../config/db/connect.js';
-import {encryptPassword} from '../library/appBcrypt.js';
+import UserModel from '../models/user.model.js';
 
 
 export const showUser = async (req, res) => {
   try {
-    let sqlQuery = "SELECT * FROM users" ;
-    const [result] = await connect.query(sqlQuery);
-    res.status(200).json(result);
+    const userInstance = new UserModel();
+    userInstance.showUser(res);
   } catch (error) {
     res.status(500).json({ error: "Error fetching users , details: error.message" });
   }
@@ -14,28 +12,17 @@ export const showUser = async (req, res) => {
 
 export const showUserId = async (req, res) => {
   try {
-    const [result] = await connect.query('SELECT * FROM users WHERE User_id = ?', [req.params.id]);
-    if (result.length === 0) return res.status(404).json({ error: "user not found" });
-    res.status(200).json(result[0]);
+    const userInstance = new UserModel();
+    userInstance.showUserById(res, req);
   } catch (error) {
-    res.status(500).json({ error: "Error fetching users , details: error.message "});
+    res.status(500).json({ error: "Error fetching users , details: error.message " });
   }
 };
 
 export const addUser = async (req, res) => {
   try {
-    const { user, password, status, role } = req.body;
-    if (!user || !password || !status || !role ) {
-      return res.status(400).json({ error: "Missing required fields" });
-    }
-     const hashedPassword = await encryptPassword(password);
-   
-    let sqlQuery = "INSERT INTO users (User_user,User_password,User_status_fk,Roles_fk ) VALUES (?,?,?,?)";
-    const [result] = await connect.query(sqlQuery, [user, hashedPassword, status, role]);
-    res.status(201).json({
-      data: [{ id: result.insertId, user, hashedPassword, status, role }],
-      status: 201
-    });
+    const userInstance = new UserModel();
+    userInstance.addUser(req, res);
   } catch (error) {
     res.status(500).json({ error: "Error adding user", details: error.message });
   }
@@ -43,19 +30,8 @@ export const addUser = async (req, res) => {
 
 export const updateUser = async (req, res) => {
   try {
-    const { user, status, role } = req.body;
-    if (!user || !status || !role ) {
-      return res.status(400).json({ error: "Missing required fields" });
-    }
-    let sqlQuery = "UPDATE users SET User_user=?,User_status_fk=?,Roles_fk  =?,update_at=? WHERE User_id= ?";
-    const update_at = new Date().toLocaleString("en-CA", { timeZone: "America/Bogota" }).replace(",", "").replace("/", "-").replace("/", "-");
-    const [result] = await connect.query(sqlQuery, [user, status, role,update_at, req.params.id]);
-    if (result.affectedRows === 0) return res.status(404).json({ error: "user not found" });
-    res.status(200).json({
-      data: [{ user, status, role,update_at }],
-      status: 200,
-      updated: result.affectedRows
-    });
+    const userInstance = new UserModel();
+    userInstance.updateUser(req, res);
   } catch (error) {
     res.status(500).json({ error: "Error updating user", details: error.message });
   }
@@ -63,14 +39,8 @@ export const updateUser = async (req, res) => {
 
 export const deleteUser = async (req, res) => {
   try {
-    let sqlQuery = "DELETE FROM users WHERE User_id = ?";
-    const [result] = await connect.query(sqlQuery, [req.params.id]);
-    if (result.affectedRows === 0) return res.status(404).json({ error: "user not found" });
-    res.status(200).json({
-      data: [],
-      status: 200,
-      deleted: result.affectedRows
-    });
+    const userInstance = new UserModel();
+    userInstance.deleteUser(req, res);
   } catch (error) {
     res.status(500).json({ error: "Error deleting user", details: error.message });
   }

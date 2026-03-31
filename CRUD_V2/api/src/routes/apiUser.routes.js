@@ -4,7 +4,7 @@
 *Description:	Index file for the API - NODEJS
 **/
 import { Router } from 'express';
-import { showApiUser, showApiUserId, addApiUser, updateApiUser, deleteApiUser, loginApiUser } from '../controllers/apiUser.controller.js';
+import { showApiUser, showApiUserId, addApiUser, updateApiUser, deleteApiUser, loginApiUser,verifyTokenLogin } from '../controllers/apiUser.controller.js';
 
 const router = Router();
 const apiName = '/apiUser';
@@ -15,6 +15,9 @@ router.route(apiName)
 
 router.route('/apiUserLogin')
   .post(loginApiUser); // Login
+
+  router.route('/apiUserVerifyToken')
+  .post(verifyTokenLogin); // Verify Token
 
 router.route(`${apiName}/:id`)
   .get(showApiUserId)  // Get user by Id

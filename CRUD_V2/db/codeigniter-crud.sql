@@ -21,37 +21,39 @@ SET time_zone = "+00:00";
 -- Base de datos: `codeigniter-crud`
 --
 
+CREATE DATABASE IF NOT EXISTS `codeigniter-crud` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+
 DELIMITER $$
 --
 -- Procedimientos
 --
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_permissions_module_id` (IN `roleModulesId` INT)   BEGIN
+CREATE PROCEDURE `sp_permissions_module_id` (IN `roleModulesId` INT)   BEGIN
 SELECT  CONCAT('permission_',PM.Permissions_fk) AS "permission", 1 AS 'Status',RM.Modules_fk AS Modules_id FROM permissions_modules AS PM
 INNER JOIN permissions P ON PM.Permissions_fk=P.Permissions_id
 INNER JOIN role_modules RM ON PM.RoleModules_fk=RM.RoleModules_id
 WHERE PM.RoleModules_fk=roleModulesId;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_role_modules` ()   BEGIN
+CREATE PROCEDURE `sp_role_modules` ()   BEGIN
 SELECT RM.RoleModules_id,RM.Modules_fk,M.Modules_name,RM.Roles_fk,R.Roles_name,RM.update_at  FROM role_modules as RM
 INNER JOIN modules M ON RM.Modules_fk=M.Modules_id
 INNER JOIN roles R ON RM.Roles_fk=R.Roles_id;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_role_modules_id` (IN `roleId` INT)   BEGIN
+CREATE PROCEDURE `sp_role_modules_id` (IN `roleId` INT)   BEGIN
 SELECT RM.Modules_fk, MO.Modules_name,MO.Modules_route,MO.Modules_icon,MO.Modules_submodule,MO.Modules_parent_module, MO.Modules_description
 FROM role_modules as RM
 INNER JOIN modules MO ON RM.Modules_fk=MO.Modules_id
 WHERE RM.Roles_fk=roleId;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_role_module_id` (IN `roleId` INT)   BEGIN
+CREATE PROCEDURE `sp_role_module_id` (IN `roleId` INT)   BEGIN
 SELECT  CONCAT('module_',RM.Modules_fk) AS "modules", 1 AS Status, RM.Roles_fk AS Roles_id FROM role_modules as RM
 INNER JOIN modules M ON RM.Modules_fk=M.Modules_id
 WHERE RM.Roles_fk=roleId;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_users` ()   BEGIN
+CREATE PROCEDURE `sp_users` ()   BEGIN
 SELECT US.User_id,US.User_user,US.User_password,US.update_at,RL.Roles_name, US.Roles_fk,UST.User_status_name, US.User_status_fk FROM users AS US 
 INNER JOIN roles RL ON US.Roles_fk=RL.Roles_id
 INNER JOIN user_status UST ON US.User_status_fk=UST.User_status_id 
@@ -88,7 +90,7 @@ TRUNCATE TABLE `api_users`;
 --
 
 INSERT INTO `api_users` (`Api_user_id`, `Api_user`, `Api_password`, `Api_role`, `Api_status`, `Created_at`, `Updated_at`) VALUES
-(1, 'user@email.com', '$2b$10$A.RezjA04B1GcvfGDnnve.elhd56BPN.44qUtvgyVG5Jy8IkwxoFi', 'Admin', 'Active', '2025-03-30 20:22:51', NULL);
+(1, 'user@email.com', '$2b$10$A.RezjA04B1GcvfGDnnve.elhd56BPN.44qUtvgyVG5Jy8IkwxoFi', 'Admin', 'Active', '2026-02-15 20:22:51', NULL);
 
 -- --------------------------------------------------------
 

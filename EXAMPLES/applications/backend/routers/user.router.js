@@ -1,5 +1,6 @@
 import { Router } from "express";
 import UserController from '../controllers/user.controller.js';
+import { verifyToken } from '../middleware/authMiddleware.js';
 const router = Router();
 const name = '/user';
 const nameLogin = '/login';
@@ -9,9 +10,9 @@ router.route(name)
   .get(UserController.show);// Show all users
 
 router.route(`${name}/:id`)
-  .get(UserController.findById)// Show a user by ID
-  .put(UserController.update)// Update a user by ID
-  .delete(UserController.delete);// Delete a user by ID
+  .get(verifyToken, UserController.findById)// Show a user by ID
+  .put(verifyToken, UserController.update)// Update a user by ID
+  .delete(verifyToken, UserController.delete);// Delete a user by ID
 
 //Login route
 router.route(nameLogin)

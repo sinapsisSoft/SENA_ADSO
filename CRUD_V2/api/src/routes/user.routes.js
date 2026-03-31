@@ -16,7 +16,7 @@ router.route(apiName)
   .post(addUser); // Add user
 
 router.route(`${apiName}/:id`)
-  .get(showUserId)  // Get user by Id
+  .get(verifyToken,showUserId)  // Get user by Id
   .put(updateUser)  // Update user by Id
   .delete(deleteUser); // Delete user by Id
 
